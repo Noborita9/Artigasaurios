@@ -57,8 +57,8 @@ the reader can see, costs a full re-verification pass, and fights the muscle mem
 matters most under contest time pressure. We adopt KACTL's *machinery*, not its *idiom*.
 
 Consequence: `content/contest/template.cpp` remains the team's existing template, since
-it defines the macros every other file assumes. `make test-compiles` enforces that
-contract — a snippet using an undefined macro fails the build.
+it defines the macros every other file assumes. That contract is not machine-enforced
+during this port; see "Compile checking is deferred" below.
 
 ### Licensing
 
@@ -71,11 +71,11 @@ rather than asserting ownership.
 
 ```
 Artigasaurios/
-├── Makefile                      fast · notebook · clean · test-compiles · showexcluded
+├── Makefile                      fast · notebook · clean · veryclean · showexcluded
 ├── README.md                     English: what it is, how to build, how to add a snippet
 ├── LICENSE                       CC0
 ├── .gitignore                    build/, .DS_Store, *.aux *.log *.fls *.fdb_latexmk *.toc *.out
-├── .github/workflows/build.yml   make notebook + make test-compiles on push
+├── .github/workflows/build.yml   builds the PDF on push; advisory compile report
 ├── content/
 │   ├── notebook.tex              document root; \university{ORT Uruguay} \team{Artigasaurios}{...}
 │   ├── tex/
@@ -226,13 +226,26 @@ across the board — honest, and it doubles as the queue for what to stress-test
 |---|---|
 | `make fast` | One `pdflatex -shell-escape` pass. Iteration loop. |
 | `make notebook` | Two passes, so TOC and `\pageref{LastPage}` settle. |
-| `make test-compiles` | Compiles every `.h` standalone against `template.cpp`. |
 | `make showexcluded` | Lists `.h` files no `chapter.tex` imports. |
 | `make clean` / `veryclean` | Remove build intermediates / also the PDF. |
 
-`make test-compiles` is the real regression net: it is what catches the port silently
-dropping a `#include`, or a snippet depending on a macro the template does not define.
-It runs in CI on every push alongside `make notebook`.
+**Compile checking is deferred, by team decision.** Measurement during planning found that
+**32 of the 70 source snippets do not compile as standalone translation units.** This is a
+structural difference from KACTL, not a defect in the port: KACTL's headers are
+self-contained and `#include` one another, whereas these snippets are fragments meant to be
+pasted into a solution file, relying on globals (`N`, `g`, `oo`, `MD`, `BS`), type aliases
+(`pii`, `pll`, `vi`), or a surrounding function scope.
+
+Making them standalone is genuine work the team has chosen to defer. Consequently **no build
+step gates on compilation.** CI runs an advisory, non-blocking compile report so the data is
+already collected when the team returns to it, and `docs/known-issues.md` records the
+findings — including three that look like real bugs rather than missing context
+(`Eertree.h`, `FenwickTree2d.h`, `MatrixExponentiation.h`).
+
+Compile checks run **only in CI**, on Ubuntu x86-64. Neither compiler on the team's
+macOS/arm64 machine can build the whole notebook: Apple clang lacks `__gnu_pbds` (needed by
+`OrderStatisticTree.h`) and homebrew GCC rejects the x86-only `#pragma GCC target("avx2")`
+in `template.cpp`.
 
 The per-snippet content hash comes from `content/contest/hash.sh`:
 `cpp -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum | cut -c-6`, matching KACTL's,

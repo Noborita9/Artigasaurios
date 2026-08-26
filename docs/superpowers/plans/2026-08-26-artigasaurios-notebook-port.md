@@ -35,6 +35,15 @@ Every task's requirements implicitly include this section.
   - `nahuepera5` → `Joaquin Bonora` (former member, reattributed at the team's request)
 - **Never commit generated files.** `build/`, `*.aux`, `*.log`, `*.fls`, `*.fdb_latexmk`, `*.toc`, `*.out`, `.DS_Store`. `notebook.pdf` is a CI artifact, not a tracked file.
 - **Do not fix algorithms.** This is a port. Code that is wrong stays wrong, marked `untested`.
+- **Compile checking is deferred.** Measurement during planning showed 32 of 70 snippets do
+  not compile as standalone translation units — they are fragments meant to be pasted into a
+  solution, unlike KACTL's self-contained headers. Making them standalone is real work the
+  team has chosen to defer. **No task gates on compilation.** CI runs an advisory,
+  non-blocking compile report so the data accumulates for that later pass.
+- **No local compile checking.** Neither compiler on the team's macOS/arm64 machine can build
+  the whole notebook (Apple clang lacks `__gnu_pbds`; homebrew GCC rejects the x86-only
+  `#pragma GCC target("avx2")` in `template.cpp`). Compile checks run only in CI on Ubuntu
+  x86-64.
 - **Page count / the 25-page ICPC limit is out of scope.** Report the number; prune nothing.
 - **`Time:` uses LaTeX math**, e.g. `O(N \log N)`. The preprocessor rewrites `O(...)` into `\bigo{...}`.
 - **All `make` targets run from the repo root.** `preprocessor.py`'s path is hardcoded relative to CWD.
@@ -58,7 +67,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | — (new) | `content/contest/hash.sh` |
 | — (new) | `content/contest/troubleshoot.txt` |
 
-### data-structures/ (Task 4)
+### data-structures/ (Task 3)
 | Source | Target |
 |---|---|
 | `src/DataStructure/BIT.cpp` | `FenwickTree.h` |
@@ -74,7 +83,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/DataStructure/SQRTDecomp.cpp` | `SqrtDecomposition.h` |
 | `src/Other/Mo.cpp` | `MoQueries.h` |
 
-### graph/ (Task 5) — includes the former `Tree/` section
+### graph/ (Task 4) — includes the former `Tree/` section
 | Source | Target |
 |---|---|
 | `src/Graph/bellman.cpp` | `BellmanFord.h` |
@@ -95,7 +104,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/Tree/LCA_const.cpp` | `LcaConstant.h` |
 | `src/Tree/LCA_log.cpp` | `LcaBinaryLifting.h` |
 
-### dp/ (Task 6)
+### dp/ (Task 5)
 | Source | Target |
 |---|---|
 | `src/DP/coinChange.cpp` | `CoinChange.h` |
@@ -107,7 +116,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/DP/LCS.cpp` | `Lcs.h` |
 | `src/DP/LIS.cpp` | `Lis.h` |
 
-### strings/ (Task 7)
+### strings/ (Task 6)
 | Source | Target |
 |---|---|
 | `src/String/AhoCorasick.cpp` | `AhoCorasick.h` |
@@ -121,7 +130,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/String/TRIE.cpp` | `Trie.h` |
 | `src/String/Z_FUNCTION.cpp` | `ZFunction.h` |
 
-### number-theory/ (Task 8)
+### number-theory/ (Task 7)
 | Source | Target |
 |---|---|
 | `src/Math/EUCLIDEAN_EXTENDED.cpp` | `EuclidExtended.h` |
@@ -131,7 +140,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/Math/GetDivisors.cpp` | `GetDivisors.h` |
 | `src/MathFormulas/Mobius.tex` | `mobius-formulas.tex` |
 
-### numerical/ (Task 9)
+### numerical/ (Task 8)
 | Source | Target |
 |---|---|
 | `src/Math/fft.cpp` | `FastFourierTransform.h` |
@@ -141,7 +150,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/Math/SIMPLEX.cpp` | `Simplex.h` |
 | `src/Math/SIMPSON.cpp` | `SimpsonIntegration.h` |
 
-### combinatorial/ (Task 10)
+### combinatorial/ (Task 9)
 | Source | Target |
 |---|---|
 | `src/Math/JOSEPHUS.cpp` | `Josephus.h` |
@@ -150,7 +159,7 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/MathFormulas/Combinatorias.tex` | `combinatorics.tex` |
 | `src/MathFormulas/Burnside.tex` | `burnside.tex` |
 
-### geometry/ (Task 11)
+### geometry/ (Task 10)
 | Source | Target |
 |---|---|
 | `src/Geometry/CONVEX_HULL.cpp` | `ConvexHull.h` |
@@ -163,13 +172,13 @@ The complete source→target mapping. Tasks 4–13 each implement one block.
 | `src/MathFormulas/GeometryAreas.tex` | `areas.tex` |
 | `src/MathFormulas/Trigonometry.tex` | `trigonometry.tex` |
 
-### various/ (Task 12)
+### various/ (Task 11)
 | Source | Target |
 |---|---|
 | `src/Search/ternary.cpp` | `TernarySearch.h` |
 | `src/Search/SimulatedAnnealing.cpp` | `SimulatedAnnealing.h` |
 
-### appendix/ (Task 13)
+### appendix/ (Task 12)
 | Source | Target |
 |---|---|
 | `src/MathFormulas/Discreta.tex` | `discrete-math.tex` |
@@ -303,7 +312,6 @@ help:
 	@echo ""
 	@echo "	make fast		- build once (quick iteration)"
 	@echo "	make notebook		- build properly (two passes)"
-	@echo "	make test-compiles	- compile every header standalone"
 	@echo "	make showexcluded	- list headers no chapter.tex imports"
 	@echo "	make clean		- remove build intermediates"
 	@echo "	make veryclean		- also remove notebook.pdf"
@@ -332,7 +340,8 @@ showexcluded: | build
 .PHONY: help fast notebook clean veryclean showexcluded
 ```
 
-`test-compiles` is added to this file in Task 3; the Task 1 Makefile ends at the `.PHONY` line.
+The Task 1 Makefile ends at the `.PHONY` line. There is no `test-compiles` target; compile
+checking lives only in CI (see Global Constraints).
 
 Portability note: `showexcluded` deliberately avoids `grep -P`, which BSD/macOS grep does not support.
 
@@ -486,112 +495,9 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 
 ---
 
-## Task 3: Verification harness
+## Tasks 3–12: Chapter ports
 
-Adds `make test-compiles`, the regression net every later task uses as its test. Must come before bulk content work.
-
-**Files:**
-- Create: `scripts/test-compiles.sh`
-- Modify: `Makefile`
-
-**Interfaces:**
-- Produces: `make test-compiles` — compiles every `content/**/*.h` standalone against `template.cpp`; exits non-zero listing failures.
-- Consumed by: Tasks 4–13, as their pass/fail gate.
-
-- [ ] **Step 1: Write the failing test**
-
-Create a header that cannot compile, so we can prove the harness catches it:
-
-```bash
-mkdir -p content/data-structures
-cat > content/data-structures/CanaryBroken.h <<'EOF'
-/**
- * Author: Joaquin Bonora
- * Date: 2026-08-26
- * License: CC0
- * Description: Temporary canary, deleted in this task.
- * Time: O(1).
- * Status: untested
- */
-#pragma once
-this is not valid c++;
-EOF
-```
-
-- [ ] **Step 2: Write `scripts/test-compiles.sh`**
-
-Each header is compiled as a translation unit whose prelude is the team template with `main` stripped, so the macro dialect is in scope.
-
-```bash
-#!/usr/bin/env bash
-# Compile every content header standalone against the team template.
-set -uo pipefail
-cd "$(dirname "$0")/.."
-
-TMP=$(mktemp -d)
-trap 'rm -rf "$TMP"' EXIT
-
-# Template minus its main()/solve() bodies: keeps includes, macros, typedefs.
-sed '/^void solve/,$d' content/contest/template.cpp > "$TMP/prelude.h"
-
-fail=0
-while IFS= read -r header; do
-	{ cat "$TMP/prelude.h"; echo "#include \"$PWD/$header\""; echo "int main(){}"; } > "$TMP/tu.cpp"
-	if ! err=$(g++ -std=c++20 -fsyntax-only -w "$TMP/tu.cpp" 2>&1); then
-		echo "FAIL $header"
-		echo "$err" | head -5 | sed 's/^/      /'
-		fail=1
-	fi
-done < <(find content -name '*.h' | sort)
-
-if [ "$fail" -eq 0 ]; then echo "All headers compile."; fi
-exit "$fail"
-```
-
-```bash
-chmod +x scripts/test-compiles.sh
-```
-
-- [ ] **Step 3: Add the Makefile target**
-
-Append to `Makefile`, and add `test-compiles` to `.PHONY`:
-
-```makefile
-test-compiles:
-	./scripts/test-compiles.sh
-```
-
-- [ ] **Step 4: Run it to verify it FAILS on the canary**
-
-Run: `make test-compiles`
-Expected: **exit code 1**, output contains `FAIL content/data-structures/CanaryBroken.h`. If it passes, the harness is not actually compiling anything — fix it before continuing, or every later task's gate is worthless.
-
-- [ ] **Step 5: Delete the canary and verify it now PASSES**
-
-```bash
-rm content/data-structures/CanaryBroken.h
-```
-
-Run: `make test-compiles`
-Expected: exit code 0, `All headers compile.`
-
-- [ ] **Step 6: Commit**
-
-```bash
-git add -A
-git commit -m "Add test-compiles harness
-
-Compiles every content header standalone against the team template.
-Verified it catches a deliberately broken header.
-
-Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
-```
-
----
-
-## Tasks 4–13: Chapter ports
-
-**Tasks 4–13 all follow the identical cycle below.** The only differences are the directory, the file list (see File Mapping Reference), and the chapter title. The cycle is written out once here in full; each task section then states only its specifics.
+**Tasks 3–12 all follow the identical cycle below.** The only differences are the directory, the file list (see File Mapping Reference), and the chapter title. The cycle is written out once here in full; each task section then states only its specifics.
 
 ### The chapter port cycle
 
@@ -628,23 +534,19 @@ struct FT { // 1-Index
 
 - [ ] **Step 5: Register the chapter** in `content/notebook.tex` by adding `\nbchapter{<dir>}` inside the `multicols*` block, in print order.
 
-- [ ] **Step 6: Run the compile gate.**
-Run: `make test-compiles`
-Expected: exit 0. A failure here almost always means the snippet used a macro the template does not define, or needs an `#include` the template lacks. Fix by adding the include to the header, **not** by rewriting the snippet.
-
-- [ ] **Step 7: Run the exclusion check.**
+- [ ] **Step 6: Run the exclusion check.**
 Run: `make showexcluded`
 Expected: lists only `content/contest/template.java` (intentionally unprinted). Any other file listed means you created a `.h` and forgot its `\nbimport`.
 
-- [ ] **Step 8: Build.**
+- [ ] **Step 7: Build.**
 Run: `make fast`
 Expected: exit 0.
 
-- [ ] **Step 9: Verify the chapter rendered.**
+- [ ] **Step 8: Verify the chapter rendered.**
 Run: `pdftotext notebook.pdf - | grep -c "<a distinctive identifier from one of the new files>"`
 Expected: at least 1.
 
-- [ ] **Step 10: Commit.**
+- [ ] **Step 9: Commit.**
 ```bash
 git add -A
 git commit -m "Port the <chapter> chapter
@@ -655,49 +557,49 @@ untested; no algorithm changes.
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ```
 
-### Task 4: data-structures
+### Task 3: data-structures
 Directory `content/data-structures/`, title `Data structures`, 12 files (see mapping).
 `OrderStatisticTree.h` needs `#include <ext/pb_ds/assoc_container.hpp>` and `using namespace __gnu_pbds;` retained from the source — keep them inside the header.
 Suggested `chapter.tex` order: UnionFind, IndexCompression, SparseTable, FenwickTree, FenwickTree2d, SegmentTree, SegmentTreeIterative, SegmentTreePersistent, SqrtDecomposition, LineContainer, OrderStatisticTree, MoQueries.
 
-### Task 5: graph
+### Task 4: graph
 Directory `content/graph/`, title `Graph`, 17 files (see mapping — includes the former `Tree/`).
 Note `EulerTour.h` is flagged `% TODO: Test implementation` in the predecessor. Port as-is with `Status: untested`; do not attempt a fix.
 Suggested order: Dijkstra, BellmanFord, FloydWarshall, Scc, BridgesArticulation, TwoSat, EulerTour, DirectedMST, Kuhn, HopcroftKarp, Hungarian, Dinic, MinCostMaxFlow, LcaBinaryLifting, LcaConstant, HeavyLightDecomposition, CentroidDecomposition.
 
-### Task 6: dp
+### Task 5: dp
 Directory `content/dp/`, title `Dynamic Programming`, 8 files.
 Suggested order: Kadane, CoinChange, Knapsack, Lcs, EditDistance, Lis, DivideAndConquerDP, KnuthDP.
 
-### Task 7: strings
+### Task 6: strings
 Directory `content/strings/`, title `Strings`, 10 files.
 Suggested order: Hashing, Lps, Kmp, ZFunction, Manacher, Trie, AhoCorasick, SuffixArray, SuffixAutomaton, Eertree.
 
-### Task 8: number-theory
+### Task 7: number-theory
 Directory `content/number-theory/`, title `Number theory`, 5 headers + 1 `.tex`.
 `chapter.tex` ends with a raw include for the formulas: `\input{content/number-theory/mobius-formulas.tex}`.
 Suggested order: EuclidExtended, EulerTotient, GetDivisors, Mobius, PollardRho, then the formulas.
 
-### Task 9: numerical
+### Task 8: numerical
 Directory `content/numerical/`, title `Numerical`, 6 files.
 Suggested order: GaussElimination, MatrixExponentiation, SimpsonIntegration, Simplex, FastFourierTransform, NumberTheoreticTransform.
 
-### Task 10: combinatorial
+### Task 9: combinatorial
 Directory `content/combinatorial/`, title `Combinatorial`, 1 header + 3 `.tex` + 1 image asset.
 Copy `num_catalanes.png` alongside; `catalan-numbers.tex` references it — verify the `\includegraphics` path still resolves after the move, and fix the path if not.
 `chapter.tex`: `\nbimport{Josephus.h}` then `\input{}` for combinatorics.tex, catalan-numbers.tex, burnside.tex.
 
-### Task 11: geometry
+### Task 10: geometry
 Directory `content/geometry/`, title `Geometry`, 6 headers + 3 `.tex`.
 `Point.h` and `PointOperations.h` are two incompatible point representations (a `pt` struct vs. free functions over `pair<ll,ll>`). Port both unchanged; reconciliation is the team's, explicitly out of scope.
-Because both define geometry symbols, confirm `make test-compiles` passes with both present — if they collide, that is a real finding to report, not to silently fix.
+Both were measured during planning to fail standalone compilation (they need `pt` from `Point.h`); that is expected and not something to fix here.
 Suggested order: Point, PointOperations, ConvexHull, PolygonArea, RayCasting, PlanarFaces, then the formula includes.
 
-### Task 12: various
+### Task 11: various
 Directory `content/various/`, title `Various`, 2 files.
 Suggested order: TernarySearch, SimulatedAnnealing.
 
-### Task 13: appendix
+### Task 12: appendix
 Directory `content/appendix/`, title `Appendix`, 2 ported `.tex` + `techniques.txt` (new).
 `techniques.txt` is a plain-text list of problem-solving techniques to scan when stuck (greedy, binary search on answer, small-to-large, bitmask DP, meet in the middle, sqrt decomposition, coordinate compression, two pointers, inclusion-exclusion, randomization). Write it in English, one technique per line, grouped by heading.
 Register the appendix in `notebook.tex` in its own trailing `multicols*` block, matching KACTL:
@@ -709,13 +611,13 @@ Register the appendix in `notebook.tex` in its own trailing `multicols*` block, 
 
 ---
 
-## Task 14: README and CI
+## Task 13: README, known issues, and CI
 
 **Files:**
-- Create: `README.md`, `.github/workflows/build.yml`
+- Create: `README.md`, `docs/known-issues.md`, `.github/workflows/build.yml`
 
 **Interfaces:**
-- Consumes: `make notebook`, `make test-compiles` from Tasks 1 and 3.
+- Consumes: `make notebook` from Task 1.
 
 - [ ] **Step 1: Write `.github/workflows/build.yml`**
 
@@ -739,8 +641,25 @@ jobs:
             texlive-latex-recommended texlive-latex-extra \
             texlive-fonts-recommended poppler-utils
 
-      - name: Compile all headers
-        run: make test-compiles
+      - name: Advisory compile report (non-blocking)
+        continue-on-error: true
+        run: |
+          # Snippets are fragments, not standalone TUs; this reports, never gates.
+          # See docs/known-issues.md. Ubuntu x86-64 has both __gnu_pbds and avx2.
+          TMP=$(mktemp -d)
+          sed -e '/^#pragma GCC/d' -e '/^void solve/,$d' content/contest/template.cpp > "$TMP/prelude.h"
+          pass=0; fail=0
+          for h in $(find content -name '*.h' | sort); do
+            { cat "$TMP/prelude.h"; echo "#include \"$PWD/$h\""; echo "int main(){}"; } > "$TMP/tu.cpp"
+            if g++ -std=c++20 -fsyntax-only -w "$TMP/tu.cpp" 2>/dev/null; then
+              pass=$((pass+1))
+            else
+              fail=$((fail+1)); echo "- \`$h\`" >> "$TMP/failing"
+            fi
+          done
+          { echo "### Standalone compile report"; echo "$pass compile, $fail do not."; \
+            echo; echo "<details><summary>Not standalone</summary>"; echo; \
+            cat "$TMP/failing" 2>/dev/null; echo; echo "</details>"; } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build the notebook
         run: make notebook
@@ -763,35 +682,48 @@ Note `-shell-escape` is required by the build and is enabled by the Makefile, no
 Run: `python3 -c "import yaml,sys; yaml.safe_load(open('.github/workflows/build.yml')); print('valid')"`
 Expected: `valid`. (If PyYAML is unavailable, skip — CI will report syntax errors on push.)
 
-- [ ] **Step 3: Write `README.md`**
+- [ ] **Step 3: Write `docs/known-issues.md`**
 
-Must cover, in English: what the repo is; the team; that it descends from Dividimos y no Conquistamos; how to build (`make notebook`); the `-shell-escape` requirement and what its failure looks like; how to add a snippet (create `content/<chapter>/Foo.h` with a doc header, add `\nbimport{Foo.h}` to that chapter's `chapter.tex`, run `make test-compiles && make fast`); the doc-header field reference; that `notebook.pdf` is a CI artifact and is not committed; and credit to KACTL for the build machinery, with a link and a note that it is CC0.
+Record what planning measured, so the deferred compile pass has a starting point. Must state: that 32 of 70 snippets do not compile standalone and why (fragments, not translation units); the four categories (missing shared context such as `N`/`g`/`oo`/`MD`/`BS`/`BLOCK_SIZE`/`inverse`/`my_clock`; geometry files needing `pt` from `Point.h`; file-scope loops and capturing lambdas in `floyd`/`Mo`/`DnCopt`/`SIMPSON`; missing aliases `pii`/`pll`/`vi`); and the three that look like genuine bugs rather than missing context:
+
+| File | Compiler says | Note |
+|---|---|---|
+| `strings/Eertree.h` | `'curr' was not declared; did you mean 'cur'?` | Likely introduced by commit `66cf9b9` "Shorten eertree". **This code is in the current printed PDF.** |
+| `data-structures/FenwickTree2d.h` | `class 'BIT' does not have any field named 'sz'` | Constructor initialises a member that does not exist |
+| `numerical/MatrixExponentiation.h` | `'mult' was not declared in this scope` | Helper function missing |
+
+State plainly that these are unverified compiler output, not a confirmed diagnosis, and that nothing was fixed during the port.
+
+- [ ] **Step 4: Write `README.md`**
+
+Must cover, in English: what the repo is; the team; that it descends from Dividimos y no Conquistamos; how to build (`make notebook`); the `-shell-escape` requirement and what its failure looks like; how to add a snippet (create `content/<chapter>/Foo.h` with a doc header, add `\nbimport{Foo.h}` to that chapter's `chapter.tex`, run `make fast`); the doc-header field reference; that `notebook.pdf` is a CI artifact and is not committed; and credit to KACTL for the build machinery, with a link and a note that it is CC0.
 
 Do not hand-maintain an index of snippets in the README. That is exactly the drift that made the predecessor's README wrong, and `chapter.tex` is now the single source of truth.
 
-- [ ] **Step 4: Verify the documented workflow actually works**
+- [ ] **Step 5: Verify the documented workflow actually works**
 
 Follow your own README from a clean state:
 ```bash
-make veryclean && make notebook && make test-compiles
+make veryclean && make notebook
 ```
-Expected: both succeed. If a README step is wrong, fix the README.
+Expected: succeeds. If a README step is wrong, fix the README.
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
 git add -A
-git commit -m "Add README and CI
+git commit -m "Add README, known issues, and CI
 
-CI compiles every header, builds the notebook, reports page count, and
-uploads the PDF as an artifact.
+CI builds the notebook, reports page count, uploads the PDF, and runs a
+non-blocking standalone-compile report. Known issues from planning are
+recorded for the deferred compile pass.
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 ```
 
 ---
 
-## Task 15: Publish
+## Task 14: Publish
 
 **Files:** none
 
@@ -800,11 +732,11 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 Run:
 ```bash
 make veryclean
-make test-compiles && make notebook
+make notebook
 make showexcluded
 git status --porcelain
 ```
-Expected: compiles pass; build succeeds; `showexcluded` lists only `template.java`; **`git status` is empty** — if any generated file shows up, `.gitignore` is wrong. Fix before pushing.
+Expected: build succeeds; `showexcluded` lists only `template.java`; **`git status` is empty** — if any generated file shows up, `.gitignore` is wrong. Fix before pushing.
 
 - [ ] **Step 2: Report the page count**
 
@@ -828,14 +760,14 @@ Expected: the `build` workflow succeeds. If TeX Live in CI lacks a package the l
 
 - [ ] **Step 5: Report to the user**
 
-State: the repo URL, the page count, the count of snippets ported per chapter, anything that failed to compile and was left broken, and the fact that every snippet is marked `Status: untested`.
+State: the repo URL, the page count, the count of snippets ported per chapter, the CI advisory compile numbers, and the fact that every snippet is marked `Status: untested` and nothing was compile-verified.
 
 ---
 
 ## Self-Review Notes
 
-**Spec coverage:** every spec section maps to a task — repo/build architecture → Tasks 1, 3, 14; chapter taxonomy → Tasks 4–13; snippet format → the chapter cycle Step 3; build and verification → Tasks 1, 3, 14; risks (shell-escape, page count) → Tasks 1 Step 9, 14 Step 1, 15 Step 2. Out-of-scope items (stress tests, new KACTL staples, geometry reconciliation, pruning, org move) have deliberately **no** tasks.
+**Spec coverage:** every spec section maps to a task — repo/build architecture → Tasks 1, 13; chapter taxonomy → Tasks 3–12; snippet format → the chapter cycle Step 3; build and verification → Tasks 1, 13; risks (shell-escape, page count) → Tasks 1 Step 9, 13 Step 1, 14 Step 2. Out-of-scope items (stress tests, new KACTL staples, geometry reconciliation, pruning, org move) have deliberately **no** tasks.
 
-**Naming consistency:** `\nbimport` / `\nbchapter` / `\nbcontentdir` / `\nbref` / `\nberror` / `\nbwarning` are the only macro names used, and Task 1 Step 4 verifies the `.sty` and `.py` agree on them. Make targets `fast` / `notebook` / `clean` / `veryclean` / `showexcluded` / `test-compiles` are consistent across Tasks 1, 3, 14, 15.
+**Naming consistency:** `\nbimport` / `\nbchapter` / `\nbcontentdir` / `\nbref` / `\nberror` / `\nbwarning` are the only macro names used, and Task 1 Step 4 verifies the `.sty` and `.py` agree on them. Make targets `fast` / `notebook` / `clean` / `veryclean` / `showexcluded` are consistent across Tasks 1, 13, 14. There is no `test-compiles` target by design.
 
-**Known deferrals** (deliberate, not placeholders): the ORT logo asset (Task 1 Step 7 documents the swap); `stress-tests/` is not created at all, since the spec lists it as follow-up work.
+**Known deferrals** (deliberate, not placeholders): the ORT logo asset (Task 1 Step 7 documents the swap); `stress-tests/` is not created, per the spec's follow-up list; standalone compilation of the 32 fragment snippets, recorded in `docs/known-issues.md` for a later pass at the team's direction.
