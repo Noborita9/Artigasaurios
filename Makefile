@@ -30,6 +30,6 @@ build:
 
 showexcluded: | build
 	grep -Rho '\\nbimport[^{]*{[^}]*}' content/ | sed 's/.*{//; s/}//' > build/headers_included
-	find ./content -name "*.h" -o -name "*.py" -o -name "*.java" | grep -vFf build/headers_included || true
+	find ./content -path ./content/tex -prune -o \( -name "*.h" -o -name "*.py" -o -name "*.java" \) -print | grep -vFf build/headers_included || true
 
 .PHONY: help fast notebook clean veryclean showexcluded
