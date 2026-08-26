@@ -1,0 +1,147 @@
+% --- DiscreteCounting.tex (useful discrete/comb formulas; labels right, equations centered) ---
+
+% ===== Basic binomial tools =====
+\rlabel{Vandermonde convolution:}
+\[
+\sum_{k=0}^{n} \binom{r}{k}\binom{s}{n-k}=\binom{r+s}{n}
+\]
+
+\rlabel{Multinomial theorem:}
+\[
+(x_1+\cdots+x_m)^n=\sum_{\substack{a_1+\cdots+a_m=n\\a_i\ge 0}}
+\frac{n!}{a_1!\cdots a_m!}\,x_1^{a_1}\cdots x_m^{a_m}
+\]
+
+\rlabel{Binomial inversion (sequence form):}
+\[
+g(n)=\sum_{k=0}^{n}\binom{n}{k}f(k)
+\quad\Longleftrightarrow\quad
+f(n)=\sum_{k=0}^{n}(-1)^{\,n-k}\binom{n}{k}g(k)
+\]
+
+% ===== Stars and bars / compositions =====
+\rlabel{Stars and bars (nonnegative):}
+\[
+x_1+\cdots+x_k=n,\ x_i\ge 0 \ \Rightarrow\ \#=\binom{n+k-1}{k-1}
+\]
+
+\rlabel{Positive parts:}
+\[
+x_1+\cdots+x_k=n,\ x_i\ge 1 \ \Rightarrow\ \#=\binom{n-1}{k-1}
+\]
+
+\rlabel{Compositions of n:}
+\[
+\#\{\text{ordered positive sum of }n\text{ into }k\text{ parts}\}=\binom{n-1}{k-1},
+\quad
+\#\{\text{all compositions}\}=2^{\,n-1}
+\]
+
+\rlabel{Upper bounds via inclusion-exclusion:}
+\[
+x_1+\cdots+x_k=n,\ 0\le x_i\le u_i \Rightarrow
+\#=\sum_{S\subseteq\{1,\dots,k\}} (-1)^{|S|}
+\binom{n-\sum_{i\in S}(u_i+1)+k-1}{k-1}
+\]
+\[
+\text{(toma } \binom{t}{k-1}=0 \text{ si } t<k-1)
+\]
+
+% ===== Multisets and permutations =====
+\rlabel{Multiset combinations:}
+\[
+\#\{\text{$k$-multicombinations from $n$ types}\}=\binom{n+k-1}{k}
+\]
+
+\rlabel{Multiset permutations:}
+\[
+\#\{\text{perm of multiset with counts }m_1,\dots,m_r\}
+=\frac{(m_1+\cdots+m_r)!}{m_1!\cdots m_r!}
+\]
+
+\rlabel{Circular permutations:}
+\[
+\#\{\text{distinct cyclic orders of }n\text{ items}\}=(n-1)!
+\]
+
+% ===== Inclusion–Exclusion classics =====
+\rlabel{Surjections count (onto functions):}
+\[
+\#\{f:[m]\to[n]\text{ onto}\}
+=\sum_{j=0}^{n}(-1)^j\binom{n}{j}(n-j)^{m}
+= n!\,S(m,n)
+\]
+
+\rlabel{Derangements:}
+\[
+!n=n!\sum_{i=0}^{n}\frac{(-1)^i}{i!}
+\quad\text{and}\quad
+!n\approx \frac{n!}{e}
+\]
+
+% ===== Stirling, Bell, falling factorials =====
+\rlabel{Stirling numbers (second kind):}
+\[
+S(n,k)=k\,S(n-1,k)+S(n-1,k-1),\quad S(0,0)=1
+\]
+
+\rlabel{Stirling numbers (first kind, unsigned):}
+\[
+c(n,k)=c(n-1,k-1)+(n-1)\,c(n-1,k),\quad c(0,0)=1
+\]
+
+\rlabel{Expansions with falling powers:}
+\[
+x^{\underline{n}}=\sum_{k=0}^{n} s(n,k)\,x^{k},
+\qquad
+x^{n}=\sum_{k=0}^{n} S(n,k)\,x^{\underline{k}}
+\]
+\[
+\text{(here }x^{\underline{k}}=x(x-1)\cdots(x-k+1),\ s(n,k)=(-1)^{n-k}c(n,k)\text{)}
+\]
+
+\rlabel{Bell numbers:}
+\[
+B_n=\sum_{k=0}^{n} S(n,k),
+\qquad
+\sum_{n\ge 0} B_n\frac{x^n}{n!}=\exp(e^{x}-1)
+\]
+
+% ===== Graph counting quickies =====
+\rlabel{Cayley trees:}
+\[
+\#\{\text{labeled trees on }n\text{ vertices}\}=n^{\,n-2}
+\]
+
+\rlabel{Perfect matchings in complete graph:}
+\[
+\#\{\text{perfect matchings in }K_{2n}\}=(2n-1)!!=\frac{(2n)!}{2^{n}n!}
+\]
+
+% ===== Lattice paths and Catalan-related =====
+\rlabel{Grid shortest paths:}
+\[
+\#\{\text{monotone paths from }(0,0)\text{ to }(a,b)\}=\binom{a+b}{a}
+\]
+
+\rlabel{Ballot (Bertrand special case):}
+\[
+p>q\Rightarrow
+\#\{\text{prefix-wise leading sequences}\}=\frac{p-q}{p+q}\binom{p+q}{q}
+\]
+
+% ===== Alternating binomial sums =====
+\rlabel{Alternating binomial sums:}
+\[
+\sum_{k=0}^{n}(-1)^k\binom{n}{k}=0\ (n\ge 1),
+\qquad
+\sum_{k=0}^{n}(-1)^k\binom{n}{k}k^{m}=0\ (0\le m<n)
+\]
+
+% ===== Lucas (mod prime) =====
+\rlabel{Lucas theorem (mod prime p):}
+\[
+n=\sum n_i p^{\,i},\quad k=\sum k_i p^{\,i}
+\ \Rightarrow\
+\binom{n}{k}\equiv \prod_i \binom{n_i}{k_i}\pmod p
+\]

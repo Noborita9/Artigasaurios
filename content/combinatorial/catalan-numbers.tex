@@ -1,0 +1,52 @@
+\rlabel{Recursive definition:}
+\[
+C_0 = C_1 = 1
+\]
+\[
+C_n = \sum_{k=0}^{n-1} C_k\,C_{\,n-1-k}, \quad n \ge 2
+\]
+
+\rlabel{Closed form:}
+\[
+C_n = \frac{1}{n+1}\binom{2n}{n}
+\]
+
+\rlabel{Combinatorial equivalent:}
+\[
+C_n = \binom{2n}{n} - \binom{2n}{n-1}
+     = \frac{1}{n+1}\binom{2n}{n}, \quad n \ge 0
+\]
+
+\rlabel{Combinatorial meaning:}
+\rtext{Number of ways to: (i) arrange $n$ balanced parenthesis pairs; (ii) full binary trees with $n{+}1$ leaves; (iii) Dyck paths of length $2n$ that never cross the diagonal.}
+
+\rlabel{Generalized form $(k)$:}
+\[
+C_n^{(k)} = \frac{k+1}{n+k+1}\binom{2n+k}{n}
+\]
+
+\rlabel{Extended recurrence:}
+\[
+C_n^{(k)} = \sum_{a_1+\cdots+a_k=n} C_{a_1}C_{a_2}\cdots C_{a_k},
+\qquad C_0 = 1
+\]
+
+\rlabel{Efficient recurrence (for computation):}
+\[
+C_n = \frac{2(2n-1)}{n+1}\,C_{n-1}, \quad n \ge 1
+\]
+
+\rlabel{Generating function:}
+\[
+C(x) = \sum_{n=0}^{\infty} C_n x^n = \frac{1-\sqrt{1-4x}}{2x}
+\]
+
+\rlabel{Asymptotic behavior:}
+\[
+C_n \sim \frac{4^n}{n^{3/2}\sqrt{\pi}}
+\]
+
+\rlabel{Examples:}
+\[
+C_0=1,\ C_1=1,\ C_2=2,\ C_3=5,\ C_4=14,\ C_5=42
+\]

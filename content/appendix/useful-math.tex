@@ -1,0 +1,154 @@
+% --- UsefulMath.tex (CP-friendly formulas: labels right, equations centered) ---
+
+% ===== Series & sums =====
+\rlabel{Arithmetic series:}
+\[
+\sum_{k=1}^{n} k = \frac{n(n+1)}{2}
+\]
+
+\rlabel{Squares \& cubes:}
+\[
+\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6},\qquad
+\sum_{k=1}^{n} k^3 = \left(\frac{n(n+1)}{2}\right)^{2}
+\]
+
+\rlabel{Geometric series ($r\ne 1$):}
+\[
+\sum_{i=0}^{n-1} r^{i}=\frac{r^{n}-1}{r-1}
+\]
+\rtext{For mod prime $p$: multiply by $(r-1)^{-1}\equiv (r-1)^{p-2}\bmod p$.}
+
+\rlabel{Power sum of base $a$:}
+\[
+1+a+\dots+a^{n}=\frac{a^{n+1}-1}{a-1}\ (a\ne 1),\quad =n+1\ (a=1)
+\]
+
+\rlabel{Harmonic numbers:}
+\[
+H_n=\sum_{k=1}^{n}\frac{1}{k}\approx \ln n+\gamma+\frac{1}{2n}
+\]
+\rtext{$\gamma\approx 0.57721$ (Euler--Mascheroni). Useful for estimates.}
+
+% ===== Modular arithmetic =====
+\rlabel{Basic mod rules:}
+\[
+(a\pm b)\bmod m = ((a\bmod m)\pm(b\bmod m))\bmod m
+\]
+\[
+(a\cdot b)\bmod m = ((a\bmod m)\cdot(b\bmod m))\bmod m
+\]
+
+\rlabel{Fermat little theorem (prime $p$):}
+\[
+a^{p-1}\equiv 1\ (\bmod\ p)\quad\text{if }p\nmid a,\qquad
+a^{-1}\equiv a^{p-2}\ (\bmod\ p)
+\]
+
+\rlabel{Euler theorem:}
+\[
+a^{\varphi(m)}\equiv 1\ (\bmod\ m)\ \text{if }\gcd(a,m)=1
+\]
+
+\rlabel{Chinese remainder (pairwise coprime):}
+\[
+x\equiv a_i\ (\bmod\ m_i)\ \Rightarrow\ x\equiv \sum_i a_i M_i y_i\ (\bmod\ M)
+\]
+\rtext{$M=\prod m_i$, $M_i=M/m_i$, $y_i\equiv M_i^{-1}\ (\bmod\ m_i)$.}
+
+\rlabel{gcd/lcm relation:}
+\[
+\operatorname{lcm}(a,b)=\frac{|ab|}{\gcd(a,b)}
+\]
+
+% ===== Combinatorics =====
+\rlabel{Binomial theorem:}
+\[
+(x+y)^n=\sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^{k}
+\]
+
+\rlabel{Stars and bars (non-neg.):}
+\[
+x_1+\cdots+x_k=n,\ x_i\ge 0\ \Rightarrow\ \#=\binom{n+k-1}{k-1}
+\]
+
+\rlabel{Permutations \& combinations:}
+\[
+P(n,k)=\frac{n!}{(n-k)!},\qquad \binom{n}{k}=\frac{n!}{k!(n-k)!}
+\]
+
+\rlabel{Derangements (approx):}
+\[
+!n=\left\lfloor \frac{n!}{e}+\tfrac12\right\rfloor,\qquad
+!n = n!\sum_{i=0}^{n}\frac{(-1)^i}{i!}
+\]
+
+\rlabel{Stirling approximation:}
+\[
+n!\ \approx\ \sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}
+\]
+
+\rlabel{Inclusion-Exclusion (finite):}
+\[
+\Big|\bigcup_{i=1}^{m} A_i\Big|=\sum_{i}|A_i|
+-\sum_{i<j}|A_i\cap A_j|+\cdots+(-1)^{m+1}\big|A_1\cap\cdots\cap A_m\big|
+\]
+
+% ===== Vector \& geometry (2D) =====
+\rlabel{Dot and cross (2D):}
+\[
+u\cdot v = u_x v_x + u_y v_y = |u||v|\cos\theta,\quad
+u\times v = u_x v_y - u_y v_x
+\]
+\rtext{$|u\times v|=2\times$ triangle area$(u,v)$. Orientation by sign of $u\times v$.}
+
+\rlabel{Distance point to line $AB$:}
+\[
+\operatorname{dist}(P,AB)=\frac{|(B-A)\times(P-A)|}{|B-A|}
+\]
+
+\rlabel{Projection length on $AB$:}
+\[
+\operatorname{proj}_{AB}(P)=\frac{(P-A)\cdot(B-A)}{|B-A|}
+\]
+
+% ===== Inequalities =====
+\rlabel{AM-GM (non-neg.):}
+\[
+\frac{x_1+\cdots+x_n}{n}\ \ge\ (x_1\cdots x_n)^{1/n}
+\]
+
+\rlabel{Cauchy--Schwarz:}
+\[
+\left(\sum_{i} a_i b_i\right)^2 \le \left(\sum_{i} a_i^2\right)\left(\sum_{i} b_i^2\right)
+\]
+
+% ===== Logs \& exponents =====
+\rlabel{Log rules:}
+\[
+\log_a b = \frac{\ln b}{\ln a},\qquad \log(ab)=\log a+\log b
+\]
+
+\rlabel{Fast exponent splits:}
+\[
+a^{x+y}=a^x a^y,\qquad a^{2^k}=\underbrace{(\cdots(a^2)^2\cdots)^2}_{k\ \text{times}}
+\]
+
+% ===== Sieve facts (divisors) =====
+\rlabel{Divisor count/sum (multiplicative):}
+\[
+n=\prod p_i^{e_i}\Rightarrow
+\tau(n)=\prod (e_i+1),\qquad
+\sigma(n)=\prod \frac{p_i^{e_i+1}-1}{p_i-1}
+\]
+\rtext{$\tau(n)$ = number of divisors, $\sigma(n)$ = sum of divisors.}
+
+% ===== Probability =====
+\rlabel{Linearity of expectation:}
+\[
+\mathbb{E}\Big[\sum_i X_i\Big]=\sum_i \mathbb{E}[X_i]\quad\text{(no independence needed)}
+\]
+
+\rlabel{Binomial distribution:}
+\[
+X\sim\mathrm{Bin}(n,p)\Rightarrow \mathbb{E}[X]=np,\ \operatorname{Var}(X)=np(1-p)
+\]

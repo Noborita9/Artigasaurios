@@ -1,0 +1,56 @@
+% Trigonometry identities (ASCII-only, right-aligned, compact)
+
+\begin{flushright}
+\small
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+
+% Basic
+$$ \sin(-x)=-\sin x,\qquad \cos(-x)=\cos x,\qquad \tan(-x)=-\tan x $$
+$$ \sin^2 x+\cos^2 x=1,\qquad 1+\tan^2 x=\sec^2 x,\qquad 1+\cot^2 x=\csc^2 x $$
+
+% Sum / difference
+$$ \sin(\alpha\pm\beta)=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta $$
+$$ \cos(\alpha\pm\beta)=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta $$
+$$ \tan(\alpha\pm\beta)=\frac{\tan\alpha\pm\tan\beta}{1\mp\tan\alpha\tan\beta} $$
+
+% Double / triple / half
+$$ \sin(2x)=2\sin x\cos x $$
+$$ \cos(2x)=\cos^2 x-\sin^2 x=1-2\sin^2 x=2\cos^2 x-1 $$
+$$ \tan(2x)=\frac{2\tan x}{1-\tan^2 x} $$
+$$ \sin(3x)=3\sin x-4\sin^3 x,\qquad \cos(3x)=4\cos^3 x-3\cos x $$
+$$ \sin^2\!\frac{x}{2}=\frac{1-\cos x}{2},\qquad
+   \cos^2\!\frac{x}{2}=\frac{1+\cos x}{2},\qquad
+   \tan\!\frac{x}{2}=\frac{\sin x}{1+\cos x}=\frac{1-\cos x}{\sin x} $$
+
+% Product <-> sum
+$$ \sin\alpha\sin\beta=\tfrac12\big[\cos(\alpha-\beta)-\cos(\alpha+\beta)\big] $$
+$$ \cos\alpha\cos\beta=\tfrac12\big[\cos(\alpha-\beta)+\cos(\alpha+\beta)\big] $$
+$$ \sin\alpha\cos\beta=\tfrac12\big[\sin(\alpha+\beta)+\sin(\alpha-\beta)\big] $$
+$$ \sin\alpha\pm\sin\beta=2\sin\!\frac{\alpha\pm\beta}{2}\,\cos\!\frac{\alpha\mp\beta}{2} $$
+$$ \cos\alpha+\cos\beta=2\cos\!\frac{\alpha+\beta}{2}\,\cos\!\frac{\alpha-\beta}{2} $$
+$$ \cos\alpha-\cos\beta=-2\sin\!\frac{\alpha+\beta}{2}\,\sin\!\frac{\alpha-\beta}{2} $$
+
+% Finite sums
+$$ \sum_{k=0}^{n-1}\cos(a+kd)=\frac{\sin(\tfrac{nd}{2})}{\sin(\tfrac{d}{2})}
+   \cos\!\left(a+\tfrac{(n-1)d}{2}\right) $$
+$$ \sum_{k=0}^{n-1}\sin(a+kd)=\frac{\sin(\tfrac{nd}{2})}{\sin(\tfrac{d}{2})}
+   \sin\!\left(a+\tfrac{(n-1)d}{2}\right) $$
+
+% Triangle laws
+$$ \text{Law of sines:}\quad \frac{a}{\sin A}=\frac{b}{\sin B}=\frac{c}{\sin C}=2R $$
+$$ \text{Law of cosines:}\quad c^2=a^2+b^2-2ab\cos C \quad (\text{and cyclic}) $$
+$$ \text{Area:}\quad \Delta=\tfrac12 ab\sin C=\tfrac12 bc\sin A=\tfrac12 ca\sin B $$
+
+% Rotation
+$$ (x',y')=(x\cos\theta-y\sin\theta,\; x\sin\theta+y\cos\theta) $$
+
+% Exponential form
+$$ e^{ix}=\cos x+i\sin x,\qquad
+   \cos x=\tfrac{e^{ix}+e^{-ix}}{2},\quad
+   \sin x=\tfrac{e^{ix}-e^{-ix}}{2i} $$
+
+% Degrees / radians
+$$ \pi\ \text{rad}=180^{\circ},\qquad 1^{\circ}=\frac{\pi}{180}\ \text{rad} $$
+
+\end{flushright}

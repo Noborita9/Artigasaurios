@@ -1,0 +1,99 @@
+% --- GeometryAreas.tex (labels aligned like Catalan sheet; equations centered) ---
+
+\rlabel{Rectangle:}
+\[
+A = b\,h
+\]
+\rtext{Area with base $b$ and height $h$.}
+
+\rlabel{Triangle:}
+\[
+A = \tfrac{1}{2}\,b\,h
+\]
+\[
+A = \sqrt{s(s-a)(s-b)(s-c)},\quad s=\tfrac{a+b+c}{2}\quad \text{(Heron)}
+\]
+\rtext{Base--height or Heron using side lengths $a,b,c$.}
+
+\rlabel{Parallelogram \& rhombus:}
+\[
+A_{\text{parallelogram}} = b\,h,\qquad
+A_{\text{rhombus}} = \tfrac{D\,d}{2}
+\]
+\rtext{$D,d$ are diagonals of a rhombus.}
+
+\rlabel{Trapezoid:}
+\[
+A = \tfrac{(B+b)}{2}\,h
+\]
+\rtext{$B$ and $b$ are the parallel sides (bases).}
+
+\rlabel{Regular $n$-gon:}
+\[
+A = \tfrac{1}{2}\,P\,a = \tfrac{n\,l\,a}{2}
+\]
+\rtext{$P$ perimeter, $l$ side, $a$ apothem.}
+
+\rlabel{Circle:}
+\[
+A = \pi r^2,\qquad C = 2\pi r
+\]
+
+\rlabel{Circular sector (angle in radians):}
+\[
+A = \tfrac{1}{2}r^2\theta,\qquad \text{arc length } L = r\theta
+\]
+
+\rlabel{Circular segment (height $h$):}
+\[
+A = r^2\arccos\!\left(\frac{r-h}{r}\right) - (r-h)\sqrt{2rh-h^2}
+\]
+\rtext{Region cut by a chord; $0<h<2r$.}
+
+\rlabel{Annulus (circular crown):}
+\[
+A = \pi(R^2 - r^2)
+\]
+\rtext{Difference of two concentric disks ($R>r$).}
+
+\rlabel{Ellipse:}
+\[
+A = \pi a b
+\]
+\rtext{$a,b$ are semi-axes.}
+
+\rlabel{Polygon by coordinates (shoelace):}
+\[
+A = \tfrac{1}{2}\left|\sum_{i=1}^{n} (x_i y_{i+1} - x_{i+1} y_i)\right|,
+\qquad (x_{n+1},y_{n+1})=(x_1,y_1)
+\]
+\rtext{Works for any simple polygon in the plane.}
+
+\rlabel{Triangle by coordinates:}
+\[
+A = \tfrac{1}{2}\left|x_1(y_2-y_3)+x_2(y_3-y_1)+x_3(y_1-y_2)\right|
+\]
+
+\rlabel{Triangle from sides and circumradius/inradius:}
+\[
+A = \tfrac{abc}{4R},\qquad A = r\,s
+\]
+\rtext{$R$ circumradius, $r$ inradius, $s$ semiperimeter.}
+
+\rlabel{Lune (difference of two circular sectors):}
+\[
+A_{\text{lune}} = \tfrac{1}{2}r_1^2\theta_1 - \tfrac{1}{2}r_2^2\theta_2
+\]
+\rtext{Two sectors overlapping with angles $\theta_1,\theta_2$ matching the same chord.}
+
+\rlabel{Lens (two equal circles radius $r$, center distance $d$):}
+\[
+A = 2r^2\arccos\!\left(\frac{d}{2r}\right) - \frac{d}{2}\sqrt{4r^2-d^2},\quad 0<d<2r
+\]
+\rtext{Intersection of two equal disks.}
+
+\rlabel{Spherical cap (radius $R$, height $h$):}
+\[
+A_{\text{cap}} = 2\pi R h
+\]
+\rtext{Surface area of the cap on a sphere. (Volume: $V=\tfrac{\pi h^2}{3}(3R-h)$)}

@@ -1,0 +1,39 @@
+Techniques
+	Read the constraints first. They name the intended complexity.
+	n <= 20        bitmask / meet in the middle / brute force
+	n <= 100       O(n^3), Floyd-Warshall, matrix DP
+	n <= 5000      O(n^2) DP
+	n <= 1e5       O(n log n): sort, segment tree, binary search on answer
+	n <= 1e6       O(n) or O(n log n) with a small constant
+	n <= 1e18      O(log n): binary exponentiation, digit DP, math
+
+When stuck on the approach
+	Binary search on the answer. Is the predicate monotone?
+	Sort the input. Does order make the problem easier?
+	Two pointers, or a sliding window with a deque.
+	Think backwards from the goal state.
+	Small to large merging on trees.
+	Root the tree. Is it a subtree DP?
+	Complement counting: count the bad cases and subtract.
+	Inclusion-exclusion over a small set of properties.
+	Is it bipartite matching, flow, or min cut in disguise?
+	Coordinate compression when values are large but few.
+	Offline: reorder the queries (Mo's, sort by right endpoint).
+	Randomization: shuffle, random pivots, hashing.
+	Precompute prefix sums, or a sparse table for idempotent queries.
+	Is the answer a known sequence? Catalan, Fibonacci, Stirling.
+
+When stuck on a wrong answer
+	Re-read the statement. Especially the output format.
+	Write a brute force and stress test against it.
+	Try n=0, n=1, all-equal, all-distinct, and the maximum bound.
+	Are ties broken the way the statement says?
+	Overflow: does an intermediate product exceed ll?
+	Precision: comparing doubles with == or an EPS that is wrong.
+
+When stuck on TLE
+	Recount the real complexity, including the constant.
+	Are you passing large structures by value?
+	Replace map with unordered_map or a sorted vector.
+	endl flushes. Use "\n".
+	Can the inner loop be a prefix sum or a bitset?
