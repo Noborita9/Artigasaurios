@@ -1,0 +1,75 @@
+% --- Mobius.tex (Mobius function and inversion; labels right, equations centered) ---
+
+\rlabel{Mobius function mu:}
+\[
+\mu(1)=1
+\]
+\[
+\mu(n)=0 \text{ if } \exists p^2\mid n,\qquad
+\mu(n)=(-1)^k \text{ if } n \text{ is square-free with } k \text{ distinct primes.}
+\]
+
+\rlabel{Basic convolutions:}
+\[
+\sum_{d\mid n}\mu(d)=
+\begin{cases}
+1,& n=1,\\[2pt]
+0,& n>1,
+\end{cases}
+\qquad
+(\mu * \mathbf{1})(n)=\varepsilon(n).
+\]
+
+\rlabel{Mobius inversion (divisor-sum):}
+If
+\[
+g(n)=\sum_{d\mid n} f(d),
+\]
+then
+\[
+f(n)=\sum_{d\mid n}\mu(d)\,g\!\left(\frac{n}{d}\right)
+=\sum_{d\mid n}\mu\!\left(\frac{n}{d}\right)g(d).
+\]
+
+\rlabel{Inversion over multiples:}
+If
+\[
+G(n)=\sum_{k\ge 1} f(k\,n),
+\]
+then
+\[
+f(n)=\sum_{k\ge 1}\mu(k)\,G(k\,n).
+\]
+
+\rlabel{Euler totient via mu:}
+\[
+\varphi(n)=\sum_{d\mid n}\mu(d)\,\frac{n}{d}.
+\]
+
+\rlabel{Counting coprimes up to x:}
+\[
+\#\{1\le m\le x:\gcd(m,n)=1\}
+=\sum_{d\mid n}\mu(d)\,\Big\lfloor \frac{x}{d}\Big\rfloor.
+\]
+
+\rlabel{Square-free count up to x:}
+\[
+Q(x)=\#\{n\le x: n \text{ square-free}\}
+=\sum_{k\le \sqrt{x}}\mu(k)\,\Big\lfloor \frac{x}{k^2}\Big\rfloor.
+\]
+
+\rlabel{GCD=1 k-tuples:}
+\[
+\#\{1\le x_1,\dots,x_k\le n:\gcd(x_1,\dots,x_k)=1\}
+=\sum_{d=1}^{n}\mu(d)\,\Big\lfloor \frac{n}{d}\Big\rfloor^{k}.
+\]
+
+\rlabel{Dirichlet series:}
+\[
+\sum_{n=1}^{\infty}\frac{\mu(n)}{n^{s}}=\frac{1}{\zeta(s)},\qquad \Re(s)>1.
+\]
+
+\rlabel{Mertens function:}
+\[
+M(x)=\sum_{n\le x}\mu(n).
+\]
