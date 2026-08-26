@@ -20,7 +20,7 @@ The predecessor repo works but has three structural problems this design fixes:
 3. `guide.tex` is a hand-maintained flat list of `\cppfile{}` calls with content
    commented in and out, and `README.md` is a separately hand-maintained index that has
    already drifted out of sync with `src/` (it lists a `5.6` twice, references files
-   that moved, and omits roughly a third of the tree).
+   that moved, and covers 41 entries against ~80 files in `src/`).
 
 Success criteria: `make notebook` produces a 3-column PDF where every snippet is
 preceded by its description and time complexity and annotated with a content hash;
@@ -137,7 +137,7 @@ notebook.sty  ──\write18──▶  preprocessor.py -i content/graph/Dinic.h 
 
 ## Chapter taxonomy
 
-The predecessor's 10 sections become 13. The only substantive regrouping is splitting
+The predecessor's 11 sections become 12. The only substantive regrouping is splitting
 its overloaded `Math/` (13 files spanning three unrelated fields) three ways.
 
 | Predecessor | New chapter | Note |
@@ -236,11 +236,16 @@ so a team member can verify mid-contest that what they typed matches the page.
 
 ## Risks
 
-**Page count.** The predecessor is exactly 25 pages (the ICPC limit) in 2 columns with
-~60 of its ~80 snippets active. The new build is 3 columns (denser) but carries all ~80
-plus per-snippet descriptions (less dense). The resulting page count is genuinely not
-predictable from here. The first successful build reports the real number and pruning
-decisions are made from it — not guessed at now. Prune candidates, in order:
+**Page count — pruning is mandatory, not optional.** Measured, not assumed: rebuilding
+the predecessor from source yields **27 pages**, matching its committed `guide.pdf`. It is
+already 2 pages over the ICPC 25-page limit, with ~60 of its ~80 snippets active. (Commit
+`a789306`, "Remove Point Definition So Guide is 25 pages", no longer holds.)
+
+The new build pulls in both directions: 3 columns is denser, but all ~80 snippets plus
+per-snippet descriptions is less dense. The net is not predictable from here, and the
+starting point is already over budget — so the port must be followed by a pruning pass
+before the notebook is contest-legal. The first successful build reports the real number
+and pruning decisions are made from it. Prune candidates, in order:
 `coinChange`, `editDistance`, `kadane`, `knapsack`, `LCS`, `TRIE`, `LPS`, `LCA_log`,
 `SQRTDecomp`, `SimulatedAnnealing`, `template.java`.
 
