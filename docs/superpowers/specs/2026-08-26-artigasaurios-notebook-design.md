@@ -32,7 +32,9 @@ no generated file is tracked in git; and adding a snippet means adding one `.h` 
 - Fixing or optimizing the algorithms themselves. This is a port. Code that is wrong
   today stays wrong today, marked `Status: untested`.
 - Converting snippets to KACTL's macro dialect. See "Macro vocabulary" below.
-- Meeting the 25-page limit in the first build. See "Page count" below.
+- Pruning content to meet the ICPC 25-page limit. The team owns this decision and will
+  make it after seeing a real build. The port drops nothing on its own. See "Page
+  budget" under Risks for the measured starting point.
 
 ## Decisions
 
@@ -40,7 +42,7 @@ no generated file is tracked in git; and adding a snippet means adding one `.h` 
 |---|---|---|
 | Repo | New `Noborita9/Artigasaurios`, public, **fresh history** | Clean slate; old repo survives as the archive |
 | Prose language | English | Matches KACTL and matches ICPC problem statements |
-| Content scope | Port **all** ~80 snippets, including ones currently commented out of `guide.tex` | Prune from evidence after we can see a real page count |
+| Content scope | Port **all** ~80 snippets, including ones currently commented out of `guide.tex` | Nothing is dropped during the port; pruning is the team's call (see Non-goals) |
 | Machinery | Full port of `kactlpkg.sty` + `preprocessor.py` | User chose full fidelity in both organization and PDF output |
 | Macro vocabulary | Keep the **team's** (`L`, `SZ`, `ALL`, `vec`, `pb`, `eb`) | See below |
 | PDF in git | No. CI builds it and attaches to a release | Root cause of the dirty-tree problem |
@@ -82,7 +84,6 @@ Artigasaurios/
 │   ├── contest/
 │   ├── data-structures/
 │   ├── graph/
-│   ├── trees/
 │   ├── dp/
 │   ├── strings/
 │   ├── number-theory/
@@ -137,16 +138,17 @@ notebook.sty  ──\write18──▶  preprocessor.py -i content/graph/Dinic.h 
 
 ## Chapter taxonomy
 
-The predecessor's 11 sections become 12. The only substantive regrouping is splitting
-its overloaded `Math/` (13 files spanning three unrelated fields) three ways.
+The predecessor's 11 sections map to 11 chapters. Two substantive regroupings: its
+overloaded `Math/` (13 files spanning three unrelated fields) splits three ways, and its
+`Tree/` section folds into `graph/`.
 
 | Predecessor | New chapter | Note |
 |---|---|---|
 | `Details/` | `contest/` | + `hash.sh`, `troubleshoot.txt` (new) |
 | `DataStructure/`, `Other/Mo.cpp` | `data-structures/` | Mo joins DS, as in KACTL |
 | `Graph/` | `graph/` | |
-| `Tree/` | `trees/` | Kept separate; KACTL folds these into graph, but the team already treats trees as its own section |
-| `DP/` | `dp/` | Own chapter; the team carries more DP than KACTL, which files DP opts under `various` |
+| `Tree/` | `graph/` | Folded in, as KACTL does. HLD, Centroid and both LCAs become graph entries |
+| `DP/` | `dp/` | **Kept as its own chapter** at the team's request; the team carries more DP than KACTL, which files DP opts under `various` |
 | `String/` | `strings/` | |
 | `Math/` → | `number-theory/` | Euclid, Totient, Mobius, Rho, GetDivisors |
 | | `numerical/` | FFT, NTT, Gauss, MatExp, Simplex, Simpson |
@@ -184,8 +186,10 @@ the non-obvious cases; exact names confirmed against file contents during implem
 | `Math/MAT_EXP.cpp` | `numerical/MatrixExponentiation.h` |
 | `String/HASHING.cpp` | `strings/Hashing.h` |
 | `String/Z_FUNCTION.cpp` | `strings/ZFunction.h` |
-| `Tree/LCA_const.cpp` | `trees/LcaConstant.h` |
-| `Tree/LCA_log.cpp` | `trees/LcaBinaryLifting.h` |
+| `Tree/LCA_const.cpp` | `graph/LcaConstant.h` |
+| `Tree/LCA_log.cpp` | `graph/LcaBinaryLifting.h` |
+| `Tree/HLD.cpp` | `graph/HeavyLightDecomposition.h` |
+| `Tree/Centroid.cpp` | `graph/CentroidDecomposition.h` |
 
 Note `Geometry/OPERATIONS.cpp` and `Geometry/Point.cpp` are two *incompatible* point
 representations (`pair<ll,ll>` free functions vs. a `pt` struct with operators). Both are
@@ -236,18 +240,16 @@ so a team member can verify mid-contest that what they typed matches the page.
 
 ## Risks
 
-**Page count — pruning is mandatory, not optional.** Measured, not assumed: rebuilding
-the predecessor from source yields **27 pages**, matching its committed `guide.pdf`. It is
-already 2 pages over the ICPC 25-page limit, with ~60 of its ~80 snippets active. (Commit
-`a789306`, "Remove Point Definition So Guide is 25 pages", no longer holds.)
+**Page budget — measured baseline, team-owned decision.** Rebuilding the predecessor
+from source yields **27 pages**, matching its committed `guide.pdf`. It is already 2 pages
+over the ICPC 25-page limit, with ~60 of its ~80 snippets active. (Commit `a789306`,
+"Remove Point Definition So Guide is 25 pages", no longer holds.)
 
 The new build pulls in both directions: 3 columns is denser, but all ~80 snippets plus
-per-snippet descriptions is less dense. The net is not predictable from here, and the
-starting point is already over budget — so the port must be followed by a pruning pass
-before the notebook is contest-legal. The first successful build reports the real number
-and pruning decisions are made from it. Prune candidates, in order:
-`coinChange`, `editDistance`, `kadane`, `knapsack`, `LCS`, `TRIE`, `LPS`, `LCA_log`,
-`SQRTDecomp`, `SimulatedAnnealing`, `template.java`.
+per-snippet descriptions is less dense, so the net is not predictable from here. This is
+recorded so the team is deciding from a measured number rather than a stale assumption.
+**Getting under 25 pages is explicitly not part of this port** — the implementation
+reports the page count the first successful build produces, and stops there.
 
 **`\write18` / shell-escape.** The whole preprocessor design depends on
 `pdflatex -shell-escape`. If a team member's TeX distribution restricts it, the build
