@@ -1,0 +1,28 @@
+Pre-submit checklist
+	Read the full problem statement again.
+	Is the output format exactly right? Trailing newline, case, spacing.
+	Integer overflow? Are you using ll where the bound needs it?
+	Array bounds: is MAXN big enough? Off by one in 0- vs 1-indexing?
+	Did you reset global state between test cases?
+	Multiple test cases: did you clear vectors/maps/adjacency lists?
+
+Wrong answer
+	Test the sample by hand, then n=1, n=0, and the maximum bound.
+	Write a brute force and stress test against it.
+	Are you printing a double with enough precision? setprecision.
+	Is the comparator strict-weak-ordering? (a<b, never a<=b)
+
+Runtime error
+	Out of bounds, or recursion too deep for the stack.
+	Division by zero, including modulo by zero.
+	Reading past EOF.
+
+Time limit exceeded
+	What is the real complexity? Count the nested loops again.
+	Are you copying a large structure by value into a function?
+	endl flushes; use "\n".
+	Is cin untied? cin.tie(0)->sync_with_stdio(0).
+
+Memory limit exceeded
+	Is the array bound larger than it needs to be?
+	Are you storing what you could recompute?
