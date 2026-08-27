@@ -364,14 +364,10 @@
 
 %%% Macros carried over from the predecessor's preamble.tex.
 %%% Required by the formula .tex files imported in later chapters.
-\newcommand{\rlabel}[1]{%
-  \par\noindent\makebox[\linewidth][c]{\textbf{#1}}\par
-}
+%%% These centre their argument without forcing an explicit width. The
+%%% predecessor's versions used \makebox[\linewidth] and a \linewidth
+%%% minipage, which overran the usable text width by 30pt in this layout and
+%%% produced 107 overfull boxes that spilled across the column rule.
+\newcommand{\rlabel}[1]{\par{\centering\textbf{#1}\par}}
 
-\newcommand{\rtext}[1]{%
-  \par\noindent
-  \begin{minipage}{\linewidth}
-    \centering\footnotesize
-    #1%
-  \end{minipage}\par
-}
+\newcommand{\rtext}[1]{\par{\centering\footnotesize #1\par}}

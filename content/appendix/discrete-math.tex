@@ -31,18 +31,17 @@ x_1+\cdots+x_k=n,\ x_i\ge 1 \ \Rightarrow\ \#=\binom{n-1}{k-1}
 \]
 
 \rlabel{Compositions of n:}
-\[
-\#\{\text{ordered positive sum of }n\text{ into }k\text{ parts}\}=\binom{n-1}{k-1},
-\quad
+\begin{gather*}
+\#\{\text{ordered positive sum of }n\text{ into }k\text{ parts}\}=\binom{n-1}{k-1}\\
 \#\{\text{all compositions}\}=2^{\,n-1}
-\]
+\end{gather*}
 
 \rlabel{Upper bounds via inclusion-exclusion:}
-\[
-x_1+\cdots+x_k=n,\ 0\le x_i\le u_i \Rightarrow
+\begin{gather*}
+x_1+\cdots+x_k=n,\ 0\le x_i\le u_i \Rightarrow\\
 \#=\sum_{S\subseteq\{1,\dots,k\}} (-1)^{|S|}
 \binom{n-\sum_{i\in S}(u_i+1)+k-1}{k-1}
-\]
+\end{gather*}
 \[
 \text{(toma } \binom{t}{k-1}=0 \text{ si } t<k-1)
 \]
@@ -64,7 +63,7 @@ x_1+\cdots+x_k=n,\ 0\le x_i\le u_i \Rightarrow
 \#\{\text{distinct cyclic orders of }n\text{ items}\}=(n-1)!
 \]
 
-% ===== Inclusion–Exclusion classics =====
+% ===== Inclusion--Exclusion classics =====
 \rlabel{Surjections count (onto functions):}
 \[
 \#\{f:[m]\to[n]\text{ onto}\}

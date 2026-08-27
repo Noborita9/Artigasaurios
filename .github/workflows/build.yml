@@ -41,6 +41,20 @@ jobs:
             echo "::warning::notebook.pdf is $pages pages, over the ICPC 25-page limit"
           fi
 
+      - name: No content may overflow its column
+        run: |
+          # An overfull hbox wider than a few pt visibly crosses the column rule
+          # and overlaps the neighbouring column. Tiny ones are imperceptible.
+          bad=$(grep -o 'Overfull \\hbox ([0-9.]*pt too wide' build/notebook.log \
+                | grep -o '[0-9.]*' | awk '$1 > 5' | wc -l | tr -d ' ')
+          total=$(grep -c 'Overfull .hbox' build/notebook.log || true)
+          echo "overfull boxes: $total total, $bad wider than 5pt"
+          if [ "$bad" -gt 0 ]; then
+            echo "::error::$bad box(es) overflow the column by more than 5pt"
+            grep -n 'Overfull .hbox' build/notebook.log | head -20
+            exit 1
+          fi
+
       - name: Every snippet must compile standalone
         run: ./scripts/test-compiles.sh
 
