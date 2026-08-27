@@ -4,14 +4,15 @@
  * License: CC0
  * Source: folklore
  * Description: Single-source shortest paths allowing negative edge weights, via SPFA (queue-based Bellman-Ford). Returns false if a negative cycle reachable from s is detected. Uses global adjacency list g.
+ * Usage: Define: const int INF; vec<vec<pair<int,int>>> g, where g[u] = {v, w}.
  * Time: O(VE) worst case
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int INF = 1e9;
-vec<vec<pair<int, int>>> g; // g[u] = {v, w}, sized to n vertices
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int INF = 1e9; // exclude-line
+vec<vec<pair<int, int>>> g; // g[u] = {v, w}, sized to n vertices // exclude-line
+// ------------------------------------------------------ // exclude-line
 bool spfa(int s, vec<int>& d) {
     int n = SZ(g); // needs g graph
     d.assign(n, INF);

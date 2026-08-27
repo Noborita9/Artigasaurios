@@ -4,13 +4,14 @@
  * License: CC0
  * Source: folklore
  * Description: Hierholzer's algorithm for an Eulerian path/circuit in a directed graph, given via add\_edge into global adjacency list g. get\_path(x) returns the path starting at x, assuming one exists. Uncomment the marked lines to switch to the undirected version. TODO (from predecessor notebook): test implementation.
+ * Usage: Define: const int N.
  * Time: O(V + E)
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int N = 2e5 + 5;
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int N = 2e5 + 5; // exclude-line
+// ------------------------------------------------------ // exclude-line
 // Directed version (uncomment commented code for undirected)
 struct edge {
     int y;

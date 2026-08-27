@@ -4,15 +4,16 @@
  * License: CC0
  * Source: folklore
  * Description: Divide and conquer DP optimization. Computes dp[k][i] = min over j <= i of dp[k-1][j] + cost(j,i), requiring that the optimal split point opt[k][i] is monotone in i. Fill cost[j][i] and call dnc\_dp(n, k) (1-indexed).
+ * Usage: Define: const int N, K; const ll oo; ll dp[N][K], cost[N][N];
  * Time: O(N \log N) per layer, O(K N \log N) total
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int N = 5005, K = 505;
-const ll oo = 1e18;
-ll dp[N][K], cost[N][N];
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int N = 5005, K = 505; // exclude-line
+const ll oo = 1e18; // exclude-line
+ll dp[N][K], cost[N][N]; // exclude-line
+// ------------------------------------------------------ // exclude-line
 // dp[k][i] = min(dp[k-1][j] + cost(j,i)), con j <= i
 // requiere monotonicidad: opt[k][i] <= opt[k][i+1]
 // uso: definir cost[j][i] y llamar dnc_dp(n, k)

@@ -4,14 +4,15 @@
  * License: CC0
  * Source: folklore
  * Description: Lowest common ancestor via binary lifting over global adjacency list g. K must be set so that (1 << K) > n before calling dfs(root, -1) to build the jump table; then LCA(u, v) answers queries. Distance between u and v is depth[u] + depth[v] - 2*depth[lca].
+ * Usage: Define: const int N; const int K with (1 << K) > n.
  * Time: O(N \log N) preprocessing, O(\log N) per query
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int N = 2e5 + 5;
-const int K = 18; // K should be set so that (1 << K) > n
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int N = 2e5 + 5; // exclude-line
+const int K = 18; // K should be set so that (1 << K) > n // exclude-line
+// ------------------------------------------------------ // exclude-line
 vec<int> g[N];
 int jump[K][N]; // Inicializar en -1
 int depth[N]; // dist(u,v)=depth[u]+depth[v]-2*depth[lca]

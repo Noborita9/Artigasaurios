@@ -8,9 +8,7 @@
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
 #define MD(l, r) (((l) + (r)) >> 1)
-// ------------------------------------------------------
 struct Vertex{Vertex * l, *r;int sum;};
 const int MVertex = 6000000; // ~= N * logN * 2
 Vertex pool[MVertex]; // the idea is to keep versions on vec<Vertex*> roots; roots.pb(build(ST_L, ST_R)); 

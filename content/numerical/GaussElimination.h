@@ -9,24 +9,25 @@
  * solution, 1 for a unique solution, or INF (2) when free variables remain.
  * Note gauss() copies its matrix, while gauss\_mod2() and the modular
  * variant mutate the caller's in place.
+ * Usage: Define: const int BS; const ll MOD; ll bPow(a, b, m) modular exponentiation.
  * Time: O(N M \min(N,M)) for the dense variants; the GF(2) variant divides
  * the inner work by the machine word size.
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int BS = 1005;
-const ll MOD = 1e9 + 7;
-ll bPow(ll a, ll b, ll m) {
-    ll res = 1; a %= m;
-    while (b > 0) {
-        if (b & 1) res = res * a % m;
-        a = a * a % m;
-        b >>= 1;
-    }
-    return res;
-}
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int BS = 1005; // exclude-line
+const ll MOD = 1e9 + 7; // exclude-line
+ll bPow(ll a, ll b, ll m) { // exclude-line
+    ll res = 1; a %= m; // exclude-line
+    while (b > 0) { // exclude-line
+        if (b & 1) res = res * a % m; // exclude-line
+        a = a * a % m; // exclude-line
+        b >>= 1; // exclude-line
+    } // exclude-line
+    return res; // exclude-line
+} // exclude-line
+// ------------------------------------------------------ // exclude-line
 const double EPS = 1e-9;
 const int INF = 2; // it doesn't actually have to be infinity or a big number
 

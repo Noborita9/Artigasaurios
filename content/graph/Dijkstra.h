@@ -4,14 +4,15 @@
  * License: CC0
  * Source: folklore
  * Description: Single-source shortest paths on a graph with non-negative edge weights, using a binary-heap priority queue. Uses global adjacency list G and vertex count N.
+ * Usage: Define: const int N; const ll oo.
  * Time: O((V + E) \log V)
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-const int N = 2e5 + 5;
-const ll oo = 1e18;
-// ------------------------------------------------------
+// --- deps (drop what your solution already defines) --- // exclude-line
+const int N = 2e5 + 5; // exclude-line
+const ll oo = 1e18; // exclude-line
+// ------------------------------------------------------ // exclude-line
 vec<pair<ll, ll>> G[N];
 vec<ll> dijk(ll s) { // Need more data, ask vectors by argument
     vec<ll> dist(N, oo);
