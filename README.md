@@ -22,8 +22,12 @@ The result is `notebook.pdf`. It is **not** committed — CI builds it on every 
 
 **[Download the latest notebook.pdf](https://github.com/Noborita9/Artigasaurios/releases/latest/download/notebook.pdf)**
 
-That link never changes. It is also attached to each CI run as an artifact if you need a
-build from a branch.
+That link never changes -- GitHub resolves it to whichever build is newest.
+
+Every push to `main` also publishes its own numbered release (`v1`, `v2`, ...), so you can
+fetch the exact PDF your team carried to a given contest rather than only the current one.
+The twenty most recent builds are kept. Each CI run additionally attaches the PDF as an
+artifact if you need a build from a branch.
 
 ### Requirements
 

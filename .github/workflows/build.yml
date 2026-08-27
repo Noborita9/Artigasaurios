@@ -63,20 +63,36 @@ jobs:
           name: notebook
           path: notebook.pdf
 
-      - name: Publish the PDF to the rolling "latest" release
+      - name: Publish a versioned release
         if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          notes="Built from ${GITHUB_SHA:0:7} on $(date -u +%Y-%m-%d).
-          ${{ steps.pages.outputs.count }} pages.
+          tag="v${{ github.run_number }}"
+          pages="${{ steps.pages.outputs.count }}"
+          snippets=$(find content -name '*.h' | wc -l | tr -d ' ')
+          notes="$(git log -1 --pretty='%s')
 
-          Always the current build of main. Download: \`notebook.pdf\` below."
-          if ! gh release view latest >/dev/null 2>&1; then
-            gh release create latest --title "Latest build" --notes "$notes" notebook.pdf
-          else
-            gh release edit latest --notes "$notes"
-            gh release upload latest notebook.pdf --clobber
-          fi
-          echo "PDF: https://github.com/$GITHUB_REPOSITORY/releases/latest/download/notebook.pdf" \
+          Commit \`${GITHUB_SHA:0:7}\` · $pages pages · $snippets snippets, all compiling standalone.
+
+          The link below always points at the newest build:
+          <https://github.com/$GITHUB_REPOSITORY/releases/latest/download/notebook.pdf>"
+
+          # --latest makes GitHub resolve /releases/latest/download/notebook.pdf
+          # here, so the permanent URL keeps working without a rolling tag.
+          gh release create "$tag" notebook.pdf \
+            --title "Build ${{ github.run_number }} - $pages pages" \
+            --notes "$notes" --latest
+
+          # Retire the old rolling tag once, if it is still around.
+          gh release delete latest --yes --cleanup-tag 2>/dev/null || true
+
+          # Keep the newest 20 builds; older ones are archived history nobody reads.
+          gh release list --limit 200 --json tagName,createdAt \
+            -q 'sort_by(.createdAt) | reverse | .[20:] | .[].tagName' \
+            | while read -r old; do
+                [ -n "$old" ] && gh release delete "$old" --yes --cleanup-tag || true
+              done
+
+          echo "Released $tag -> https://github.com/$GITHUB_REPOSITORY/releases/tag/$tag" \
             | tee -a "$GITHUB_STEP_SUMMARY"
