@@ -6,10 +6,7 @@
  * Description: Palindromic tree (eertree) over lowercase letters, tracking
  * per-node occurrence count (cnt) and a "heat" weight. init(s) clears only
  * the sz+2 previously-used nodes, then feeds every character through
- * add\_char. KNOWN BUG: add\_char declares cur (line 20) but its loops and
- * link[curr]/heat[curr] logic all reference an undeclared curr (starting at
- * the while on line 21) -- this does not compile as written. Ported as-is
- * per the currently-printed notebook; not fixed.
+ * add\_char.
  * Time: intended O(N \cdot \Sigma) (dominated by the next[][] clearing loop
  * in init; add\_char itself is amortized O(1) per character via the link
  * chain).
@@ -36,22 +33,22 @@ struct PalindromicTree {
     }
     void add_char(int pos) {
         int c = s[pos] - 'a', cur = last;
-        while (pos - 1 - len[curr] < 0 || s[pos - 1 - len[curr]] != s[pos])
-            curr = link[curr];
-        if (next[curr][c]) {
-            last = next[curr][c];
+        while (pos - 1 - len[cur] < 0 || s[pos - 1 - len[cur]] != s[pos])
+            cur = link[cur];
+        if (next[cur][c]) {
+            last = next[cur][c];
             cnt[last]++;
             return;
         }
         int now = sz++;
-        len[now] = len[curr] + 2;
-        if (curr == 1) heat[now] = (c + 1); // root
-        else heat[now] = heat[curr] + 2LL * (c + 1);    
-        int link_curr = link[curr];
+        len[now] = len[cur] + 2;
+        if (cur == 1) heat[now] = (c + 1); // root
+        else heat[now] = heat[cur] + 2LL * (c + 1);
+        int link_curr = link[cur];
         while (pos - 1 - len[link_curr] < 0 || s[pos - 1 - len[link_curr]] != s[pos])
             link_curr = link[link_curr];
-        link[now] = next[link_curr][c]; 
-        next[curr][c] = last = now;
+        link[now] = next[link_curr][c];
+        next[cur][c] = last = now;
         cnt[last]++;
     }
 };

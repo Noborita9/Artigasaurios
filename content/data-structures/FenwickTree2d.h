@@ -12,7 +12,7 @@
 struct BIT { // 1-Index
     vec<vec<int>> B;
     int n; // BUILD: N * N * log(N) * log(N)
-    BIT(int n_ = 1): B(n_+1,vec<int>(n_+1)), sz(n_) {}
+    BIT(int n_ = 1): B(n_+1,vec<int>(n_+1)), n(n_) {}
     void add(int i, int j, int delta){ // log(N) * log(N)
         for(int x = i; x <= n; x += LSO(x))
         for(int y = j; y <= n; y += LSO(y))

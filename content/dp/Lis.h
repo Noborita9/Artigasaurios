@@ -3,11 +3,12 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Length of the longest strictly increasing subsequence, computed via patience-sorting (binary search over the tails array d). Relies on an external sentinel oo (larger than any array value).
+ * Description: Length of the longest strictly increasing subsequence, computed via patience-sorting (binary search over the tails array d). Uses a local sentinel oo (larger than any array value).
  * Time: O(N \log N)
  * Status: untested
  */
 #pragma once
+const int oo = 1e9;
 int lis(vec<int> &a) {
     int n = SZ(a);
     vector<int> d(n+1, oo);

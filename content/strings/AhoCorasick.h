@@ -7,12 +7,13 @@
  * trie of full DFA transitions (ch = trie edges, next = goto/failure-resolved
  * transitions, link = suffix link). add\_string inserts a pattern (recording
  * its index at the ending node); build\_aho performs the BFS that fills in
- * next[] and link[] for every state. Relies on an external sentinel oo.
+ * next[] and link[] for every state. Uses a local sentinel oo.
  * Time: O(L) to insert all patterns (total length L); O(26 \cdot L) to build
  * the automaton.
  * Status: untested
  */
 #pragma once
+const int oo = 1e9;
 struct node {
     int ch[26], next[26]; // Full DFA Transitions
     int link = 0, minx = oo; // Suffix Link

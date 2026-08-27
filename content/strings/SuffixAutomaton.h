@@ -6,12 +6,13 @@
  * Description: Suffix automaton (SAM), built online by repeated sa\_extend
  * calls. st[k].len is the longest string in state k's equivalence class,
  * st[k].link its suffix link, st[k].next its transition map. Relies on an
- * external constant N sizing the state array (2 * N states).
+ * local constant N sizing the state array (2 * N states).
  * Time: O(L \log \Sigma) amortized to build over a string of length L
  * (transitions are a std::map, hence the log Sigma factor).
  * Status: untested
  */
 #pragma once
+const int N = 100005;
 struct state {int len,link;map<char,int> next;}; //clear next!!
 state st[2 * N]; // Important 2 * n
 int sz,last;
