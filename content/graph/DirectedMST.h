@@ -8,18 +8,12 @@
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-using vi = vec<int>;
-using pii = pair<int, int>;
-#define rep(i, a, b) for (int i = (a); i < (int)(b); i++)
-#define sz(x) ((int)(x).size())
-// ------------------------------------------------------
 struct RollbackUF { // Required
-	vi e; vector<pii> st;
+	vec<int> e; vec<pair<int, int>> st;
 	RollbackUF(int n) : e(n, -1) {}
 	int size(int x) { return -e[find(x)]; }
 	int find(int x) { return e[x] < 0 ? x : find(e[x]); }
-	int time() { return sz(st); }
+	int time() { return SZ(st); }
 	void rollback(int t) {
 		for (int i = time(); i --> t;)
 			e[st[i].first] = st[i].second;
@@ -29,8 +23,8 @@ struct RollbackUF { // Required
 		a = find(a), b = find(b);
 		if (a == b) return false;
 		if (e[a] > e[b]) swap(a, b);
-		st.push_back({a, e[a]});
-		st.push_back({b, e[b]});
+		st.pb({a, e[a]});
+		st.pb({b, e[b]});
 		e[a] += e[b]; e[b] = a;
 		return true;
 	}
@@ -57,16 +51,16 @@ Node *merge(Node *a, Node *b) {
 	return a;
 }
 void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); }
-pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {
+pair<ll, vec<int>> dmst(int n, int r, vec<Edge>& g) {
 	RollbackUF uf(n);
-	vector<Node*> heap(n);
+	vec<Node*> heap(n);
 	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
 	ll res = 0;
-	vi seen(n, -1), path(n), par(n);
+	vec<int> seen(n, -1), path(n), par(n);
 	seen[r] = r;
-	vector<Edge> Q(n), in(n, {-1,-1}), comp;
-	deque<tuple<int, int, vector<Edge>>> cycs;
-	rep(s,0,n) {
+	vec<Edge> Q(n), in(n, {-1,-1}), comp;
+	deque<tuple<int, int, vec<Edge>>> cycs;
+	L(s,0,n) {
 		int u = s, qi = 0, w;
 		while (seen[u] < 0) {
 			if (!heap[u]) return {-1,{}};
@@ -83,7 +77,7 @@ pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {
 				cycs.push_front({u, time, {&Q[qi], &Q[end]}});
 			}
 		}
-		rep(i,0,qi) in[uf.find(Q[i].b)] = Q[i];
+		L(i,0,qi) in[uf.find(Q[i].b)] = Q[i];
 	}
 	for (auto& [u,t,comp] : cycs) { // restore sol (optional)
 		uf.rollback(t);
@@ -91,6 +85,6 @@ pair<ll, vi> dmst(int n, int r, vector<Edge>& g) {
 		for (auto& e : comp) in[uf.find(e.b)] = e;
 		in[uf.find(inEdge.b)] = inEdge;
 	}
-	rep(i,0,n) par[i] = in[i].a;
+	L(i,0,n) par[i] = in[i].a;
 	return {res, par};
 }

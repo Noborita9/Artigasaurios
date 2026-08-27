@@ -43,8 +43,8 @@ pair<vec<int>, vec<int>> recover(kuhn& K) { // min cover
 	int n = K.n, m = K.m;
 	for (int i = 0; i < n+m; i++) K.vis[i] = 0;
 	for (int i = 0; i < n; i++) if (K.ma[i] == -1) K.dfs(i);
-	vector<int> ca, cb; // flip vis check to max indep set
-	for (int i = 0; i < n; i++) if (!K.vis[i]) ca.push_back(i);
-	for (int i = 0; i < m; i++) if (K.vis[n+i]) cb.push_back(i);
+	vec<int> ca, cb; // flip vis check to max indep set
+	for (int i = 0; i < n; i++) if (!K.vis[i]) ca.pb(i);
+	for (int i = 0; i < m; i++) if (K.vis[n+i]) cb.pb(i);
 	return {ca, cb};
 }

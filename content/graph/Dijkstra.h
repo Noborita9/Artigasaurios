@@ -9,15 +9,14 @@
  */
 #pragma once
 // --- deps (drop what your solution already defines) ---
-using pll = pair<ll, ll>;
 const int N = 2e5 + 5;
 const ll oo = 1e18;
 // ------------------------------------------------------
-vector<pll> G[N];
+vec<pair<ll, ll>> G[N];
 vec<ll> dijk(ll s) { // Need more data, ask vectors by argument
     vec<ll> dist(N, oo);
     dist[s] = 0;
-    priority_queue<pll, vector<pll>, greater<pll>> pq;
+    priority_queue<pair<ll, ll>, vec<pair<ll, ll>>, greater<pair<ll, ll>>> pq;
     pq.push({0ll, s});
     while(!pq.empty()){
         auto [d, u] = pq.top();pq.pop(); 

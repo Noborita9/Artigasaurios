@@ -30,7 +30,7 @@ ll inverse(ll a, ll m) {
 const ll root_1 = inverse(root, mod);
 const ll root_pw = 1 << 23;
 
-void ntt(vector<ll> & a, bool invert) {
+void ntt(vec<ll> & a, bool invert) {
     int n = a.size();
 
     for (int i = 1, j = 0; i < n; i++) {
@@ -66,8 +66,8 @@ void ntt(vector<ll> & a, bool invert) {
     }
 }
 
-vector<ll> multiply(vector<ll> const &a, vector<ll> const &b) {
-    vector<ll> fa(a.begin(), a.end()), fb(b.begin(), b.end());
+vec<ll> multiply(vec<ll> const &a, vec<ll> const &b) {
+    vec<ll> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     ll n = 1;
     while (n < a.size() + b.size()) 
         n <<= 1;
@@ -80,7 +80,7 @@ vector<ll> multiply(vector<ll> const &a, vector<ll> const &b) {
         fa[i] = (fa[i] * fb[i]) % mod;
     ntt(fa, true);
 
-    vector<ll> result(n);
+    vec<ll> result(n);
     for (ll i = 0; i < n; i++)
         result[i] = fa[i];
     return result;

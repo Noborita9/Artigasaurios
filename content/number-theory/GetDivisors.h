@@ -11,10 +11,10 @@
  * Status: untested
  */
 #pragma once
-vector<ll> getDivisors(const map<ll, int>& f) {
-    vector<ll> divisors = { 1 };
+vec<ll> getDivisors(const map<ll, int>& f) {
+    vec<ll> divisors = { 1 };
     for (auto [p, e] : f) {
-        vector<ll> next;
+        vec<ll> next;
         ll pe = 1;
         for (int i = 0; i <= e; i++) {
             for (ll d : divisors)next.pb(d * pe);

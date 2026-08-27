@@ -11,7 +11,7 @@
 const int oo = 1e9;
 int lis(vec<int> &a) {
     int n = SZ(a);
-    vector<int> d(n+1, oo);
+    vec<int> d(n+1, oo);
     d[0] = -oo;
     L(i,0,n){
         int l = upper_bound(d.begin(), d.end(), a[i]) - d.begin();

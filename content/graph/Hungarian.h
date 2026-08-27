@@ -8,28 +8,24 @@
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-using pii = pair<int, int>;
-// ------------------------------------------------------
-using vi = vec<int>;
 using vd = vec<ld>;
 const ld INF = 1e100;	   // Para max asignacion, INF = 0, y negar costos
 bool zero(ld x) {return fabs(x) < 1e-9;}	// Para int/ll: return x==0;
-vec<pii> ans; // Guarda las aristas usadas en el matching: [0..n)x[0..m)
+vec<pair<int, int>> ans; // Guarda las aristas usadas en el matching: [0..n)x[0..m)
 struct Hungarian{
-	int n; vec<vd> cs; vi vL, vR;
+	int n; vec<vd> cs; vec<int> vL, vR;
 	Hungarian(int N, int M) : n(max(N,M)), cs(n,vd(n)), vL(n), vR(n){
 		L(x, 0, N) L(y, 0, M) cs[x][y] = INF;
 	}
 	void set(int x, int y, ld c) { cs[x][y] = c; }
 	ld assign(){
-		int mat = 0; vd ds(n), u(n), v(n); vi dad(n), sn(n);
+		int mat = 0; vd ds(n), u(n), v(n); vec<int> dad(n), sn(n);
 		L(i, 0, n) u[i] = *min_element(ALL(cs[i]));
 		L(j, 0, n){
 			v[j] = cs[0][j]-u[0];
 			L(i, 1, n) v[j] = min(v[j], cs[i][j] - u[i]);
 		}
-		vL = vR = vi(n, -1);
+		vL = vR = vec<int>(n, -1);
 		L(i,0, n) L(j, 0, n) if(vR[j] == -1 and zero(cs[i][j] - u[i] - v[j])){
 			vL[i] = j; vR[j] = i; mat++; break;
 		}

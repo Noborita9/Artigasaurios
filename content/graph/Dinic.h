@@ -23,12 +23,12 @@ struct Dinic {
 	ll F;
 	Dinic(int n) : g(n), F(0) {}
 	void add(int a, int b, int c) {
-		g[a].emplace_back(b, c, g[b].size(), false);
-		g[b].emplace_back(a, 0, g[a].size()-1, true);
+		g[a].eb(b, c, g[b].size(), false);
+		g[b].eb(a, 0, g[a].size()-1, true);
 	}
 	bool bfs(int s, int t) {
-		lev = vector<int>(g.size(), -1); lev[s] = 0;
-		beg = vector<int>(g.size(), 0);
+		lev = vec<int>(g.size(), -1); lev[s] = 0;
+		beg = vec<int>(g.size(), 0);
 		queue<int> q; q.push(s);
 		while (q.size()) {
 			int u = q.front(); q.pop();
@@ -67,9 +67,9 @@ vec<pair<int, int>> get_cut(Dinic& g, int s, int t) {
 	while (st.size()) {
 		int u = st.back(); st.pop_back();
 		for (auto e : g.g[u]) if (!vis[e.to] and e.flow < e.cap)
-			vis[e.to] = 1, st.push_back(e.to);
+			vis[e.to] = 1, st.pb(e.to);
 	}
 	for (int i = 0; i < g.g.size(); i++) for (auto e : g.g[i])
-		if (vis[i] and !vis[e.to] and !e.res) cut.emplace_back(i, e.to);
+		if (vis[i] and !vis[e.to] and !e.res) cut.eb(i, e.to);
 	return cut;
 }

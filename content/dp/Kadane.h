@@ -8,7 +8,7 @@
  * Status: untested
  */
 #pragma once
-pair<int, pair<int,int>> kadane(vector<int>& arr) {
+pair<int, pair<int,int>> kadane(vec<int>& arr) {
     int maxSoFar = arr[0], maxEndingHere = arr[0];
     int start = 0, end = 0, s = 0;
     for(int i = 1; i < arr.size(); i++) {

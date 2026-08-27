@@ -13,7 +13,7 @@
  */
 #pragma once
 #include "Point.h"
-int inPolygon(const vector<pt>& p, pt a) { // 0: Outside, 1: Inside, 2: Boundary
+int inPolygon(const vec<pt>& p, pt a) { // 0: Outside, 1: Inside, 2: Boundary
     int ans = 0; int n = SZ(p); 
     L(i,0,n) {
         pt p1 = p[i], p2 = p[(i + 1) % n];

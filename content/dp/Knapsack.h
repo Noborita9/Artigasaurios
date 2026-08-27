@@ -8,9 +8,9 @@
  * Status: untested
  */
 #pragma once
-int knapsack(vector<int>& values, vector<int>& weights, int W) {
+int knapsack(vec<int>& values, vec<int>& weights, int W) {
     int n = values.size();
-    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
+    vec<vec<int>> dp(n + 1, vec<int>(W + 1, 0));
     
     for(int i = 1; i <= n; i++) {
         for(int w = 0; w <= W; w++) {

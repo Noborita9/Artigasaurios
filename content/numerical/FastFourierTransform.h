@@ -14,21 +14,21 @@
 #pragma once
 typedef long long ll;
 typedef complex<double> C;
-typedef vector<double> vd;
-typedef vector<ll> vll;
+typedef vec<double> vd;
+typedef vec<ll> vll;
 const double PI = acos(-1);
 
-void fft(vector<C>& a) {
+void fft(vec<C>& a) {
     int n = a.size(), L = 31 - __builtin_clz(n);
-    static vector<C> R(2, 1);
-    static vector<C> rt(2, 1);
+    static vec<C> R(2, 1);
+    static vec<C> rt(2, 1);
     for (static int k = 2; k < n; k *= 2) {
         R.resize(n); rt.resize(n);
         auto x = polar(1.0, PI / k);
         for (int i = k; i < 2 * k; i++)
             rt[i] = R[i] = i & 1 ? R[i / 2] * x : R[i / 2];
     }
-    vector<int> rev(n);
+    vec<int> rev(n);
     for (int i = 0; i < n; i++) rev[i] = (rev[i / 2] | (i & 1) << L) / 2;
     for (int i = 0; i < n; i++) if (i < rev[i]) swap(a[i], a[rev[i]]);
     for (int k = 1; k < n; k *= 2)
@@ -44,7 +44,7 @@ vll multiply(const vll& a, const vll& b) {
     if (a.empty() || b.empty()) return {};
     vd fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int L = 32 - __builtin_clz(fa.size() + fb.size() - 1), n = 1 << L;
-    vector<C> in(n), out(n);
+    vec<C> in(n), out(n);
 
     for (int i = 0; i < a.size(); i++) in[i] = C(fa[i], 0);
     for (int i = 0; i < b.size(); i++) in[i].imag(fb[i]);

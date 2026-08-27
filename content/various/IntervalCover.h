@@ -11,12 +11,9 @@
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-using vi = vec<int>;
-// ------------------------------------------------------
 template<class T>
-vi cover(pair<T, T> G, vec<pair<T, T>> I) {
-	vi S(SZ(I)), R;
+vec<int> cover(pair<T, T> G, vec<pair<T, T>> I) {
+	vec<int> S(SZ(I)), R;
 	iota(ALL(S), 0);
 	sort(ALL(S), [&](int a, int b) { return I[a] < I[b]; });
 	T cur = G.first;

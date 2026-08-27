@@ -7,12 +7,10 @@
  * character-interleaved transform of s (length 2n+1), the radius of the
  * longest palindrome centered there. odd(i)/even(i) recover the longest
  * palindrome centered on s[i], resp. between s[i-1] and s[i], as {start, length}.
- * Uses a local pair alias pii.
  * Time: O(N)
  * Status: untested
  */
 #pragma once
-using pii = pair<int, int>;
 struct Manacher {
 	vec<int> p;
 	Manacher(string const& s) {
@@ -24,7 +22,7 @@ struct Manacher {
 			if (i+p[i] > r) l = i-p[i], r = i+p[i];
 		}
 	} // Retorna palindromos de la forma {comienzo, largo}.
-	pii at(int i) const {int k = p[i]-1; return pair{i/2-k/2, k};}
-	pii odd(int i) const {return at(2*i+1);} // Mayor centrado en s[i].
-	pii even(int i) const {return at(2*i);} // Mayor centrado en s[i-1,i].
+	pair<int,int> at(int i) const {int k = p[i]-1; return pair{i/2-k/2, k};}
+	pair<int,int> odd(int i) const {return at(2*i+1);} // Mayor centrado en s[i].
+	pair<int,int> even(int i) const {return at(2*i);} // Mayor centrado en s[i-1,i].
 };

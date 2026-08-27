@@ -9,12 +9,9 @@
  * Status: untested
  */
 #pragma once
-// --- deps (drop what your solution already defines) ---
-#define rep(i, a, b) for (int i = (a); i < (b); ++i)
-// ------------------------------------------------------
 int minRotation(string s) {
 	int a=0, N=SZ(s); s += s;
-	rep(b,0,N) rep(k,0,N) {
+	L(b,0,N) L(k,0,N) {
 		if (a+k == b || s[a+k] < s[b+k]) {b += max(0, k-1); break;}
 		if (s[a+k] > s[b+k]) { a = b; break; }
 	}

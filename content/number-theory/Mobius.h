@@ -11,9 +11,9 @@
  * Status: untested
  */
 #pragma once
-vector<ll> compute_mobius(ll n) {
-    vector<ll> mu(n + 1, 1);
-    vector<bool> is_prime(n + 1, true);
+vec<ll> compute_mobius(ll n) {
+    vec<ll> mu(n + 1, 1);
+    vec<bool> is_prime(n + 1, true);
     for (ll i = 2; i <= n; i++) {
         if (is_prime[i]) { // i es un primo
             for (ll j = i; j <= n; j += i) {

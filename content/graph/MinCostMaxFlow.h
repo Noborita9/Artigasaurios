@@ -27,15 +27,15 @@ template<typename T> struct mcmf {
 	void add(int u, int v, int w, T cost) { // de u pra v com cap w e custo cost
 		edge a = edge(v, g[v].size(), 0, w, cost, false);
 		edge b = edge(u, g[u].size(), 0, 0, -cost, true);
-		g[u].push_back(a);
-		g[v].push_back(b);
+		g[u].pb(a);
+		g[v].pb(b);
 	}
 	vec<T> spfa(int s) { // nao precisa se nao tiver custo negativo
 		deque<int> q;
 		vec<bool> is_inside(g.size(), 0);
 		dist = vec<T>(g.size(), inf);
 		dist[s] = 0;
-		q.push_back(s);
+		q.pb(s);
 		is_inside[s] = true;
 		while (!q.empty()) {
 			int v = q.front();
@@ -47,7 +47,7 @@ template<typename T> struct mcmf {
 					dist[to] = dist[v] + cost;
 
 					if (is_inside[to]) continue;
-					if (!q.empty() and dist[to] > dist[q.front()]) q.push_back(to);
+					if (!q.empty() and dist[to] > dist[q.front()]) q.pb(to);
 					else q.push_front(to);
 					is_inside[to] = true;
 				}
@@ -105,7 +105,7 @@ template<typename T> struct mcmf {
 	vec<pair<int,int>> recover() {
 		vec<pair<int,int>> used;
 		for (int i = 0; i < g.size(); i++) for (edge e : g[i])
-			if(e.flow == e.cap && !e.res) used.push_back({i, e.to});
+			if(e.flow == e.cap && !e.res) used.pb({i, e.to});
 		return used;
 	}
 };
