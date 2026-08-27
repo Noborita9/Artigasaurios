@@ -15,8 +15,13 @@ make notebook     # two passes, so the table of contents settles
 make fast         # one pass, for quick iteration
 ```
 
-The result is `notebook.pdf`. It is **not** committed — CI builds it on every push and
-attaches it as an artifact.
+The result is `notebook.pdf`. It is **not** committed — CI builds it on every push to
+`main` and publishes it to a rolling release, so the current build is always one click away:
+
+**[Download the latest notebook.pdf](https://github.com/Noborita9/Artigasaurios/releases/latest/download/notebook.pdf)**
+
+That link never changes. It is also attached to each CI run as an artifact if you need a
+build from a branch.
 
 ### Requirements
 
