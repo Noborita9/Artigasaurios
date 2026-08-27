@@ -1,3 +1,15 @@
+# hash.sh needs a GNU preprocessor. Linux g++ is one; Apple's is not, so pick
+# a Homebrew gcc when present. Kept here rather than in hash.sh, which prints
+# in the notebook and must stay short enough to retype.
+# NB: make predefines CXX = c++, so ?= would never fire. Only override the
+# built-in default, never a CXX the user set deliberately.
+ifeq ($(origin CXX),default)
+CXX := $(shell for c in g++-16 g++-15 g++-14 g++-13 g++; do \
+	if command -v $$c >/dev/null 2>&1 && : | $$c -fpreprocessed -dD -E -P -x c++ - >/dev/null 2>&1; \
+	then echo $$c; break; fi; done)
+endif
+export CXX
+
 LATEXCMD = pdflatex -shell-escape -output-directory build/
 export TEXINPUTS=.:content/tex/:
 export max_print_line = 1048576

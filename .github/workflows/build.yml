@@ -41,6 +41,22 @@ jobs:
             echo "::warning::notebook.pdf is $pages pages, over the ICPC 25-page limit"
           fi
 
+      - name: Every snippet must print a content hash
+        run: |
+          # A broken hash.sh fails silently: the build still succeeds and the
+          # PDF just has no hashes, which nobody notices until a contest.
+          pdftotext notebook.pdf /tmp/nb.txt
+          want=$(grep -rho '\\nbimport[^{]*{[^}]*}' content/ | sed 's/.*{//;s/}//' | grep -c '\.h$')
+          got=0
+          for f in $(grep -rho '\\nbimport[^{]*{[^}]*}' content/ | sed 's/.*{//;s/}//' | grep '\.h$'); do
+            p=$(find content -name "$f")
+            h=$(sed '1,/#pragma once/d' "$p" | grep -v exclude-line | grep -v '^#include' \
+                | sh content/contest/hash.sh)
+            grep -q "$h" /tmp/nb.txt && got=$((got+1)) || echo "no printed hash: $f (expected $h)"
+          done
+          echo "$got of $want snippets print a verifiable hash"
+          [ "$got" -eq "$want" ]
+
       - name: No content may overflow its column
         run: |
           # An overfull hbox wider than a few pt visibly crosses the column rule
