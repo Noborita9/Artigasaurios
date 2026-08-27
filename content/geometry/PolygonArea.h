@@ -12,6 +12,7 @@
  * Status: untested
  */
 #pragma once
+#include "Point.h"
 double signed_polygon_area(vec<pt>& polygon) {
     double area = 0;
     int n = SZ(polygon);

@@ -3,16 +3,23 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Binary exponentiation of a square matrix, with a worked
- * example of using it to evaluate a linear recurrence. WARNING: the body
- * calls mult(), which is not declared anywhere in this snippet, so it does
- * not compile as written; supply a matrix-multiply that updates its first
- * argument in place. The trailing example is a bare file-scope block, not a
- * function. Known bug, ported as-is.
- * Time: O(K^3 \log b) for a K by K matrix, assuming a cubic mult().
+ * Description: Binary exponentiation of a square matrix. mult(a, b) updates
+ * a in place with a * b (mod MOD). Use to evaluate a linear recurrence: build
+ * the companion matrix, call expbinmat, and read off the answer from row 0.
+ * Time: O(K^3 \log b) for a K by K matrix.
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+const ll MOD = 1e9 + 7;
+// ------------------------------------------------------
+void mult(vec<vec<ll>>& a, vec<vec<ll>>& b) {
+    int n = SZ(a);
+    vec<vec<ll>> res(n, vec<ll>(n, 0));
+    L(i, 0, n) L(k, 0, n) if (a[i][k]) L(j, 0, n)
+        res[i][j] = (res[i][j] + a[i][k] * b[k][j]) % MOD;
+    a = res;
+}
 vec<vec<ll>> expbinmat(vec<vec<ll>> mat, ll b) {
 
     ll n = mat.size();
@@ -30,24 +37,4 @@ vec<vec<ll>> expbinmat(vec<vec<ll>> mat, ll b) {
 
     }
     return resp;
-}
-
-// Ejemplo de uso: An = C1*An-1 + C2*An-2 + C3*An-3 
-// con A0 = B0, A1 = B1, A2 = B2
-
-if (n == 0) cout << B0 << '\n';
-else if (n == 1) cout << B1 << '\n';
-else if (n == 2) cout << B2 << '\n';
-else {
-    vec<vec<ll>> M = {
-        {C1, C2, C3},
-        {1,  0,  0},
-        {0,  1,  0}
-    };
-
-    M = expbinmat(M, n - 2);
-
-    ll resp = (B2 * M[0][0] + B1 * M[0][1] + B0 * M[0][2]) % MOD;
-
-    cout << resp << '\n';
 }

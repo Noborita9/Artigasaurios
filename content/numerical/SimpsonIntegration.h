@@ -4,8 +4,7 @@
  * License: CC0
  * Source: folklore
  * Description: Composite Simpson rule for numerical integration of f over
- * [a,b] using n subintervals, rounding n up to the next even number. The
- * trailing usage example is a bare file-scope block, not a function.
+ * [a,b] using n subintervals, rounding n up to the next even number.
  * Time: O(N) evaluations of f.
  * Status: untested
  */
@@ -26,8 +25,3 @@ ld simpsonRule(function<ld(ld)> f, ld a, ld b, int n) {
     // Multiplica por h/3
     return (h / 3.0L) * s;
 }
-// Ejemplo: integrar la funcion x^2 entre 0 y 3
-auto f = [&](ld x){ return x * x; };
-ld a = 0.0L, b = 3.0L;
-int n = 1000; // numero de subintervalos
-ld resultado = simpsonRule(f, a, b, n);

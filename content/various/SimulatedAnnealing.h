@@ -7,13 +7,22 @@
  * Annealing takes a see() returning the candidate energy and an upd() that
  * commits a move, then simulate(s) runs for s seconds, accepting worsening
  * moves with probability exp(delta/temp) as the temperature falls linearly.
- * Note - WARNING: this references my\_clock and rng, neither declared here
- * nor in the team template, so it does not compile as written; supply both.
- * Ported as-is.
+ * Requires my\_clock and rng (see Rng.h).
  * Time: unknown - bounded by wall-clock seconds, not input size.
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+using my_clock = chrono::steady_clock;
+struct Random {
+	mt19937_64 engine;
+	Random(): engine(my_clock::now().time_since_epoch().count()) {}
+	template<class Int>Int integer(Int n) {return integer<Int>(0, n);} // `[0,n)`
+	template<class Int>Int integer(Int l, Int r)
+		{return uniform_int_distribution{l, r-1}(engine);} // `[l,r)`
+	double real() {return uniform_real_distribution{}(engine);} // `[0,1)`
+} rng;
+// ------------------------------------------------------
 struct Timer {
 	using time = my_clock::time_point;
 	time start = my_clock::now();
@@ -42,18 +51,3 @@ template<class See,class Upd>struct Annealing {
 		}
 	}
 };
-auto see = [&] -> double {
-    l = rng.integer(gsz);r = rng.integer(gsz);
-    swap(groups[l], groups[r]);
-    int ans = 0, rem =0;
-    L(i,0,gsz){
-        if (groups[i] > rem) {
-            rem = x;
-            ans ++;
-        }
-        rem -= groups[i];
-    }
-    swap(groups[l], groups[r]);
-    return ans;
-};
-auto upd = [&] {swap(groups[l], groups[r]);};

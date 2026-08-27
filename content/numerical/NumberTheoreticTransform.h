@@ -5,10 +5,7 @@
  * Source: folklore (cp-algorithms, adapted)
  * Description: Number Theoretic Transform modulo 998244353, using 31 as a
  * $2^{23}$-rd root of unity, plus multiply() for exact convolution of integer sequences without
- * floating point. WARNING: root\_1 is initialised at line 7 by calling
- * inverse(), which is not declared until line 10, so this does not compile as
- * written; the declaration must be moved above the constant. Known bug,
- * ported as-is.
+ * floating point.
  * Time: O(N \log N)
  * Status: untested
  */
@@ -18,12 +15,10 @@ using namespace std;
 using cd = complex<double>;
 typedef long long ll;
 const ll mod = 998244353;
-const ll root = 31;           
-const ll root_1 = inverse(root, mod); 
-const ll root_pw = 1 << 23;  
+const ll root = 31;
 
 ll inverse(ll a, ll m) {
-    ll res = 1, exp = m - 2; 
+    ll res = 1, exp = m - 2;
     while (exp) {
         if (exp % 2 == 1) res = (1LL * res * a) % m;
         a = (1LL * a * a) % m;
@@ -31,6 +26,9 @@ ll inverse(ll a, ll m) {
     }
     return res;
 }
+
+const ll root_1 = inverse(root, mod);
+const ll root_pw = 1 << 23;
 
 void ntt(vector<ll> & a, bool invert) {
     int n = a.size();

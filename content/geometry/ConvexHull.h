@@ -12,6 +12,7 @@
  * Status: untested
  */
 #pragma once
+#include "Point.h"
 double cross_product(pt O, pt A, pt B) {
     return (A - O) % (B - O);
 }

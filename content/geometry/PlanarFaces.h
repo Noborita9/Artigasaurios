@@ -8,11 +8,13 @@
  * pointers to trace each face boundary. Returns each face as a loop of point
  * COORDINATES, not vertex indices. The unbounded outer face is excluded: it
  * traces clockwise, so its signed area is negative and it is filtered out.
- * Requires Point.h.
+ * Requires Point.h and PolygonArea.h (for signed\_polygon\_area).
  * Time: O(V^2 + E \log E); the quadratic term is the dense position matrix.
  * Status: untested
  */
 #pragma once
+#include "Point.h"
+#include "PolygonArea.h"
 vec<vec<pt>> planar_faces(int n, vec<pt>& p, vec<pair<int, int>>& edges) {
     vec<vec<int>> adj(n);
 
