@@ -41,6 +41,19 @@ jobs:
             echo "::warning::notebook.pdf is $pages pages, over the ICPC 25-page limit"
           fi
 
+      - name: Code must print straight quotes, not typographic ones
+        run: |
+          # Without upquote, listings renders ' as U+2019. Code copied off the
+          # page is then invalid as typed -- and for hash.sh it silently
+          # produced d41d8c, the hash of empty input.
+          pdftotext notebook.pdf /tmp/q.txt
+          if grep -nE "\[[0-9]\]|[-+*/=(]" /tmp/q.txt | grep -q $'\u2019'; then
+            echo "::error::typographic quote found inside code; is upquote still loaded?"
+            grep -nE "\[[0-9]\]|[-+*/=(]" /tmp/q.txt | grep $'\u2019' | head -10
+            exit 1
+          fi
+          echo "no typographic quotes inside code"
+
       - name: Every snippet must print a content hash
         run: |
           # A broken hash.sh fails silently: the build still succeeds and the
