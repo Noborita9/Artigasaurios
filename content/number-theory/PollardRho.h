@@ -40,7 +40,7 @@ bool isPrime(ll n) {
         ll x = power(a, d, n);
         if (x == 1 || x == n - 1) continue;
         bool ok = false;
-        for (int i = 0; i < s; ++i) {
+        L(i, 0, s) {
             x = mul(x, x, n);
             if (x == n - 1) { ok = true; break; }
         }

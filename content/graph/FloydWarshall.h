@@ -11,8 +11,8 @@
 const int N = 10;
 int G[N][N]; // This Graph should be a copy, to de used as dintances
 void floyd(int n) {
-    for (int k = 0;k < n; k ++)
-        for (int i = 0; i < n; i ++)
-            for (int j = 0;j < n; j ++)
+    L(k, 0, n)
+        L(i, 0, n)
+            L(j, 0, n)
                 G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
 }

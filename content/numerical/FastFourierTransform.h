@@ -25,14 +25,14 @@ void fft(vec<C>& a) {
     for (static int k = 2; k < n; k *= 2) {
         R.resize(n); rt.resize(n);
         auto x = polar(1.0, PI / k);
-        for (int i = k; i < 2 * k; i++)
+        L(i, k, (2 * k))
             rt[i] = R[i] = i & 1 ? R[i / 2] * x : R[i / 2];
     }
     vec<int> rev(n);
-    for (int i = 0; i < n; i++) rev[i] = (rev[i / 2] | (i & 1) << L) / 2;
-    for (int i = 0; i < n; i++) if (i < rev[i]) swap(a[i], a[rev[i]]);
+    L(i, 0, n) rev[i] = (rev[i / 2] | (i & 1) << L) / 2;
+    L(i, 0, n) if (i < rev[i]) swap(a[i], a[rev[i]]);
     for (int k = 1; k < n; k *= 2)
-        for (int i = 0; i < n; i += 2 * k) for (int j = 0; j < k; j++) {
+        for (int i = 0; i < n; i += 2 * k) L(j, 0, k) {
             auto x = (double*)&rt[j + k], y = (double*)&a[i + j + k];
             C z(x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0]);
             a[i + j + k] = a[i + j] - z;
@@ -46,16 +46,16 @@ vll multiply(const vll& a, const vll& b) {
     int L = 32 - __builtin_clz(SZ(fa) + SZ(fb) - 1), n = 1 << L;
     vec<C> in(n), out(n);
 
-    for (int i = 0; i < SZ(a); i++) in[i] = C(fa[i], 0);
-    for (int i = 0; i < SZ(b); i++) in[i].imag(fb[i]);
+    L(i, 0, SZ(a)) in[i] = C(fa[i], 0);
+    L(i, 0, SZ(b)) in[i].imag(fb[i]);
 
     fft(in);
     for (C& x : in) x *= x;
-    for (int i = 0; i < n; i++) out[i] = in[-i & (n - 1)] - conj(in[i]);  // Corregido aqui
+    L(i, 0, n) out[i] = in[-i & (n - 1)] - conj(in[i]);  // Corregido aqui
     fft(out);
 
     vll res(SZ(a) + SZ(b) - 1);
-    for (int i = 0; i < SZ(res); i++) {
+    L(i, 0, SZ(res)) {
         res[i] = llround(imag(out[i]) / (4 * n));
     }
     return res;

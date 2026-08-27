@@ -41,7 +41,7 @@ template<typename T> struct mcmf {
 			int v = q.front();
 			q.pop_front();
 			is_inside[v] = false;
-			for (int i = 0; i < SZ(g[v]); i++) {
+			L(i, 0, SZ(g[v])) {
 				auto [to, rev, flow, cap, res, cost] = g[v][i];
 				if (flow < cap and dist[v] + cost < dist[to]) {
 					dist[to] = dist[v] + cost;
@@ -64,7 +64,7 @@ template<typename T> struct mcmf {
 			auto [d, v] = q.top();
 			q.pop();
 			if (dist[v] < d) continue;
-			for (int i = 0; i < SZ(g[v]); i++) {
+			L(i, 0, SZ(g[v])) {
 				auto [to, rev, flow, cap, res, cost] = g[v][i];
 				cost += pot[v] - pot[to];
 				if (flow < cap and dist[v] + cost < dist[to]) {
@@ -82,7 +82,7 @@ template<typename T> struct mcmf {
 		int f = 0;
 		T ret = 0;
 		while (f < flow and dijkstra(s, t, pot)) { 
-			for (int i = 0; i < SZ(g); i++)
+			L(i, 0, SZ(g))
 				if (dist[i] < inf) pot[i] += dist[i];
 			int mn_flow = flow - f, u = t;
 			while (u != s){
@@ -104,7 +104,7 @@ template<typename T> struct mcmf {
 	// Opcional: retorna as arestas originais por onde passa flow = cap
 	vec<pair<int,int>> recover() {
 		vec<pair<int,int>> used;
-		for (int i = 0; i < SZ(g); i++) for (edge e : g[i])
+		L(i, 0, SZ(g)) for (edge e : g[i])
 			if(e.flow == e.cap && !e.res) used.pb({i, e.to});
 		return used;
 	}

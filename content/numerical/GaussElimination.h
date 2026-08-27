@@ -59,7 +59,7 @@ int gauss(vec < vec<double> > a, vec<double>& ans) {
             ans[i] = a[where[i]][m] / a[where[i]][i];
     L(i, 0, n) {
         double sum = 0;
-        for (int j = 0; j < m; ++j)
+        L(j, 0, m)
             sum += ans[j] * a[i][j];
         if (abs(sum - a[i][m]) > EPS)
             return 0;
@@ -95,7 +95,7 @@ int gauss_mod2(vec< bitset<BS> > a, int n, int m, bitset<BS>& ans) {
         if (where[j] == -1) { free_col = (int)j; break; }
     }
     if (free_col != -1) ans[free_col] = 1;
-    for (int col = 0; col < m; ++col) {
+    L(col, 0, m) {
         if (where[col] == -1) continue;
         int r = where[col];
         bool v = a[r][m];

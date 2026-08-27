@@ -22,8 +22,8 @@ struct PalindromicTree {
     //  you MUST clear only the used part of the arrays:
     void init(const string& s_) {
         s = s_;
-        for(int i = 0; i < sz + 2; ++i) {
-            for(int j = 0; j < 26; ++j) next[i][j] = 0;
+        L(i, 0, (sz + 2)) {
+            L(j, 0, 26) next[i][j] = 0;
             cnt[i] = heat[i] = 0;
         }
         len[0] = 0; link[0] = 1; heat[0] = 0;

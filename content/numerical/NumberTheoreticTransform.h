@@ -50,7 +50,7 @@ void ntt(vec<ll> & a, bool invert) {
 
         for (int i = 0; i < n; i += len) {
             int w = 1;
-            for (int j = 0; j < len / 2; j++) {
+            L(j, 0, (len / 2)) {
                 int u = a[i+j], v = (int)(1LL * a[i+j+len/2] * w % mod);
                 a[i+j] = u + v < mod ? u + v : u + v - mod;
                 a[i+j+len/2] = u - v >= 0 ? u - v : u - v + mod;

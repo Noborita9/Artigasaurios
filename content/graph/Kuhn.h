@@ -41,10 +41,10 @@ struct kuhn {
 pair<vec<int>, vec<int>> recover(kuhn& K) { // min cover
 	K.matching(); 
 	int n = K.n, m = K.m;
-	for (int i = 0; i < n+m; i++) K.vis[i] = 0;
-	for (int i = 0; i < n; i++) if (K.ma[i] == -1) K.dfs(i);
+	L(i, 0, (n + m)) K.vis[i] = 0;
+	L(i, 0, n) if (K.ma[i] == -1) K.dfs(i);
 	vec<int> ca, cb; // flip vis check to max indep set
-	for (int i = 0; i < n; i++) if (!K.vis[i]) ca.pb(i);
-	for (int i = 0; i < m; i++) if (K.vis[n+i]) cb.pb(i);
+	L(i, 0, n) if (!K.vis[i]) ca.pb(i);
+	L(i, 0, m) if (K.vis[n+i]) cb.pb(i);
 	return {ca, cb};
 }

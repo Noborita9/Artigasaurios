@@ -18,7 +18,7 @@ ld simpsonRule(function<ld(ld)> f, ld a, ld b, int n) {
     ld s = f(a) + f(b);
 
     // Suma de terminos interiores con los factores apropiados
-    for (int i = 1; i < n; i++) {
+    L(i, 1, n) {
         ld x = a + i * h;
         s += (i % 2 == 1 ? 4.0L : 2.0L) * f(x);
     }

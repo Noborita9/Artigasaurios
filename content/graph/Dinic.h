@@ -69,7 +69,7 @@ vec<pair<int, int>> get_cut(Dinic& g, int s, int t) {
 		for (auto e : g.g[u]) if (!vis[e.to] and e.flow < e.cap)
 			vis[e.to] = 1, st.pb(e.to);
 	}
-	for (int i = 0; i < SZ(g.g); i++) for (auto e : g.g[i])
+	L(i, 0, SZ(g.g)) for (auto e : g.g[i])
 		if (vis[i] and !vis[e.to] and !e.res) cut.eb(i, e.to);
 	return cut;
 }
