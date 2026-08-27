@@ -9,7 +9,7 @@
  */
 #pragma once
 int knapsack(vec<int>& values, vec<int>& weights, int W) {
-    int n = values.size();
+    int n = SZ(values);
     vec<vec<int>> dp(n + 1, vec<int>(W + 1, 0));
     
     for(int i = 1; i <= n; i++) {

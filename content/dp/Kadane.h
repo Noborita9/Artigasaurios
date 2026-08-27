@@ -11,7 +11,7 @@
 pair<int, pair<int,int>> kadane(vec<int>& arr) {
     int maxSoFar = arr[0], maxEndingHere = arr[0];
     int start = 0, end = 0, s = 0;
-    for(int i = 1; i < arr.size(); i++) {
+    for(int i = 1; i < SZ(arr); i++) {
         if(maxEndingHere + arr[i] < arr[i]) {
             maxEndingHere = arr[i];
             s = i;

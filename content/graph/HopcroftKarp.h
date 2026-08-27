@@ -17,7 +17,7 @@ struct hopcroft_karp {
 		dist(n), nxt(n), ma(n, -1), mb(m, -1) {}
 	void add(int a, int b) { g[a].pb(b); }
 	bool dfs(int i) {
-		for (int &id = nxt[i]; id < g[i].size(); id++) {
+		for (int &id = nxt[i]; id < SZ(g[i]); id++) {
 			int j = g[i][id];
 			if (mb[j] == -1 or (dist[mb[j]] == dist[i]+1 and dfs(mb[j]))) {
 				ma[i] = j, mb[j] = i;
@@ -33,7 +33,7 @@ struct hopcroft_karp {
 			dist[i] = 0; q.push(i);
 		}
 		bool rep = 0;
-		while (q.size()) {
+		while (SZ(q)) {
 			int i = q.front(); q.pop();
 			for (int j : g[i]) {
 				if (mb[j] == -1) rep = 1;

@@ -25,7 +25,7 @@ void add_edge(int a, int b){
 }
 vec<int> p;
 void go(int x){
-    while(g[x].size()){
+    while(SZ(g[x])){
         int y=g[x].front().y;
         //g[y].erase(g[x].front().rev);
         g[x].pop_front();

@@ -23,14 +23,14 @@ struct Dinic {
 	ll F;
 	Dinic(int n) : g(n), F(0) {}
 	void add(int a, int b, int c) {
-		g[a].eb(b, c, g[b].size(), false);
-		g[b].eb(a, 0, g[a].size()-1, true);
+		g[a].eb(b, c, SZ(g[b]), false);
+		g[b].eb(a, 0, SZ(g[a])-1, true);
 	}
 	bool bfs(int s, int t) {
-		lev = vec<int>(g.size(), -1); lev[s] = 0;
-		beg = vec<int>(g.size(), 0);
+		lev = vec<int>(SZ(g), -1); lev[s] = 0;
+		beg = vec<int>(SZ(g), 0);
 		queue<int> q; q.push(s);
-		while (q.size()) {
+		while (SZ(q)) {
 			int u = q.front(); q.pop();
 			for (auto& i : g[u]) {
 				if (lev[i.to] != -1 or (i.flow == i.cap)) continue;
@@ -43,7 +43,7 @@ struct Dinic {
 	}
 	int dfs(int v, int s, int f = oo) {
 		if (!f or v == s) return f;
-		for (int& i = beg[v]; i < g[v].size(); i++) {
+		for (int& i = beg[v]; i < SZ(g[v]); i++) {
 			auto& e = g[v][i];
 			if (lev[e.to] != lev[v] + 1) continue;
 			int foi = dfs(e.to, s, min(f, e.cap - e.flow));
@@ -62,14 +62,14 @@ struct Dinic {
 vec<pair<int, int>> get_cut(Dinic& g, int s, int t) {
 	g.max_flow(s, t);
 	vec<pair<int, int>> cut;
-	vec<int> vis(g.g.size(), 0), st = {s};
+	vec<int> vis(SZ(g.g), 0), st = {s};
 	vis[s] = 1;
-	while (st.size()) {
+	while (SZ(st)) {
 		int u = st.back(); st.pop_back();
 		for (auto e : g.g[u]) if (!vis[e.to] and e.flow < e.cap)
 			vis[e.to] = 1, st.pb(e.to);
 	}
-	for (int i = 0; i < g.g.size(); i++) for (auto e : g.g[i])
+	for (int i = 0; i < SZ(g.g); i++) for (auto e : g.g[i])
 		if (vis[i] and !vis[e.to] and !e.res) cut.eb(i, e.to);
 	return cut;
 }

@@ -25,15 +25,15 @@ template<typename T> struct mcmf {
 	vec<T> dist;
 	mcmf(int n) : g(n), par_idx(n), par(n), inf(numeric_limits<T>::max()/3) {}
 	void add(int u, int v, int w, T cost) { // de u pra v com cap w e custo cost
-		edge a = edge(v, g[v].size(), 0, w, cost, false);
-		edge b = edge(u, g[u].size(), 0, 0, -cost, true);
+		edge a = edge(v, SZ(g[v]), 0, w, cost, false);
+		edge b = edge(u, SZ(g[u]), 0, 0, -cost, true);
 		g[u].pb(a);
 		g[v].pb(b);
 	}
 	vec<T> spfa(int s) { // nao precisa se nao tiver custo negativo
 		deque<int> q;
-		vec<bool> is_inside(g.size(), 0);
-		dist = vec<T>(g.size(), inf);
+		vec<bool> is_inside(SZ(g), 0);
+		dist = vec<T>(SZ(g), inf);
 		dist[s] = 0;
 		q.pb(s);
 		is_inside[s] = true;
@@ -41,7 +41,7 @@ template<typename T> struct mcmf {
 			int v = q.front();
 			q.pop_front();
 			is_inside[v] = false;
-			for (int i = 0; i < g[v].size(); i++) {
+			for (int i = 0; i < SZ(g[v]); i++) {
 				auto [to, rev, flow, cap, res, cost] = g[v][i];
 				if (flow < cap and dist[v] + cost < dist[to]) {
 					dist[to] = dist[v] + cost;
@@ -57,14 +57,14 @@ template<typename T> struct mcmf {
 	}
 	bool dijkstra(int s, int t, vec<T>& pot) {
 		priority_queue<pair<T, int>, vec<pair<T, int>>, greater<>> q;
-		dist = vec<T>(g.size(), inf);
+		dist = vec<T>(SZ(g), inf);
 		dist[s] = 0;
 		q.emplace(0, s);
-		while (q.size()) {
+		while (SZ(q)) {
 			auto [d, v] = q.top();
 			q.pop();
 			if (dist[v] < d) continue;
-			for (int i = 0; i < g[v].size(); i++) {
+			for (int i = 0; i < SZ(g[v]); i++) {
 				auto [to, rev, flow, cap, res, cost] = g[v][i];
 				cost += pot[v] - pot[to];
 				if (flow < cap and dist[v] + cost < dist[to]) {
@@ -77,12 +77,12 @@ template<typename T> struct mcmf {
 		return dist[t] < inf;
 	}
 	pair<int, T> min_cost_flow(int s, int t, int flow = (int)1e9) {
-		vec<T> pot(g.size(), 0);
+		vec<T> pot(SZ(g), 0);
 		pot = spfa(s); // mudar algoritmo de caminho minimo aqui
 		int f = 0;
 		T ret = 0;
 		while (f < flow and dijkstra(s, t, pot)) { 
-			for (int i = 0; i < g.size(); i++)
+			for (int i = 0; i < SZ(g); i++)
 				if (dist[i] < inf) pot[i] += dist[i];
 			int mn_flow = flow - f, u = t;
 			while (u != s){
@@ -104,7 +104,7 @@ template<typename T> struct mcmf {
 	// Opcional: retorna as arestas originais por onde passa flow = cap
 	vec<pair<int,int>> recover() {
 		vec<pair<int,int>> used;
-		for (int i = 0; i < g.size(); i++) for (edge e : g[i])
+		for (int i = 0; i < SZ(g); i++) for (edge e : g[i])
 			if(e.flow == e.cap && !e.res) used.pb({i, e.to});
 		return used;
 	}

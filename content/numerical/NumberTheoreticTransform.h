@@ -31,7 +31,7 @@ const ll root_1 = inverse(root, mod);
 const ll root_pw = 1 << 23;
 
 void ntt(vec<ll> & a, bool invert) {
-    int n = a.size();
+    int n = SZ(a);
 
     for (int i = 1, j = 0; i < n; i++) {
         int bit = n >> 1;
@@ -69,7 +69,7 @@ void ntt(vec<ll> & a, bool invert) {
 vec<ll> multiply(vec<ll> const &a, vec<ll> const &b) {
     vec<ll> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     ll n = 1;
-    while (n < a.size() + b.size()) 
+    while (n < SZ(a) + SZ(b)) 
         n <<= 1;
     fa.resize(n);
     fb.resize(n);

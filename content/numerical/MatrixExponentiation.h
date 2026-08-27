@@ -22,7 +22,7 @@ void mult(vec<vec<ll>>& a, vec<vec<ll>>& b) {
 }
 vec<vec<ll>> expbinmat(vec<vec<ll>> mat, ll b) {
 
-    ll n = mat.size();
+    ll n = SZ(mat);
 
     vec<vec<ll>> resp(n, vec<ll>(n, 0));
     L(i, 0, n) {

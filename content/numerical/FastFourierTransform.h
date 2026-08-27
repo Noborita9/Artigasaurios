@@ -19,7 +19,7 @@ typedef vec<ll> vll;
 const double PI = acos(-1);
 
 void fft(vec<C>& a) {
-    int n = a.size(), L = 31 - __builtin_clz(n);
+    int n = SZ(a), L = 31 - __builtin_clz(n);
     static vec<C> R(2, 1);
     static vec<C> rt(2, 1);
     for (static int k = 2; k < n; k *= 2) {
@@ -43,19 +43,19 @@ void fft(vec<C>& a) {
 vll multiply(const vll& a, const vll& b) {
     if (a.empty() || b.empty()) return {};
     vd fa(a.begin(), a.end()), fb(b.begin(), b.end());
-    int L = 32 - __builtin_clz(fa.size() + fb.size() - 1), n = 1 << L;
+    int L = 32 - __builtin_clz(SZ(fa) + SZ(fb) - 1), n = 1 << L;
     vec<C> in(n), out(n);
 
-    for (int i = 0; i < a.size(); i++) in[i] = C(fa[i], 0);
-    for (int i = 0; i < b.size(); i++) in[i].imag(fb[i]);
+    for (int i = 0; i < SZ(a); i++) in[i] = C(fa[i], 0);
+    for (int i = 0; i < SZ(b); i++) in[i].imag(fb[i]);
 
     fft(in);
     for (C& x : in) x *= x;
     for (int i = 0; i < n; i++) out[i] = in[-i & (n - 1)] - conj(in[i]);  // Corregido aqui
     fft(out);
 
-    vll res(a.size() + b.size() - 1);
-    for (int i = 0; i < res.size(); i++) {
+    vll res(SZ(a) + SZ(b) - 1);
+    for (int i = 0; i < SZ(res); i++) {
         res[i] = llround(imag(out[i]) / (4 * n));
     }
     return res;

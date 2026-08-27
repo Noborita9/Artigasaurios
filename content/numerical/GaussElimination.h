@@ -31,8 +31,8 @@ const double EPS = 1e-9;
 const int INF = 2; // it doesn't actually have to be infinity or a big number
 
 int gauss(vec < vec<double> > a, vec<double>& ans) {
-    int n = (int)a.size();
-    int m = (int)a[0].size() - 1;
+    int n = SZ(a);
+    int m = SZ(a[0]) - 1;
     vec<int> where(m, -1);
     for (int col = 0, row = 0; col < m && row < n; ++col) {
         int sel = row;
@@ -116,8 +116,8 @@ int gauss_mod2(vec< bitset<BS> > a, int n, int m, bitset<BS>& ans) {
 }
 
 int gauss_mod(vec<vec<ll>>& a, vec<ll>& ans) {
-    int n = (int)a.size();
-    int m = (int)a[0].size() - 1;
+    int n = SZ(a);
+    int m = SZ(a[0]) - 1;
     L(i, 0, n) L(j, 0, m + 1) {
         a[i][j] %= MOD;
         if (a[i][j] < 0) a[i][j] += MOD;
