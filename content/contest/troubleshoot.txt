@@ -1,3 +1,14 @@
+Verifying a snippet you typed
+	Type it into its own file, exactly as printed. No includes, no template,
+	no main. Include nothing you were not shown.
+	h Dijkstra.cpp          # or: sh hash.sh < Dijkstra.cpp
+	Compare the 6 chars to the notebook page. Comments and whitespace are
+	ignored, so skip the comments and indent how you like.
+	Only once it matches: read it into your solution (:r Dijkstra.cpp in vim)
+	and then adapt it. Adapt first and the hash can never match.
+	A mismatch says THAT you erred, not where. Check the line count first.
+	Needs cpp or g++. Ubuntu and Git Bash are fine; macOS needs brew install gcc.
+
 Pre-submit checklist
 	Read the full problem statement again.
 	Is the output format exactly right? Trailing newline, case, spacing.
