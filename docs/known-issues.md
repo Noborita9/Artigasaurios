@@ -61,4 +61,15 @@ used it, and it did not earn the page space.
   predecessor.
 - **`appendix/discrete-math.tex`** renders one line of Spanish (line 47) and
   carries a stray CP-1252 byte on line 67. Both inherited verbatim.
-- **Page count is 20 of the ICPC limit of 25.** CI warns if a build exceeds 25.
+- **Page count is 21 of the ICPC limit of 25.** CI warns if a build exceeds 25.
+
+## Imported from KACTL
+
+Three snippets come from [KACTL](https://github.com/kth-competitive-programming/kactl)
+rather than the predecessor repo: `FastEratosthenes.h`, `MinRotation.h` and
+`IntervalCover.h`. Their original authors and licenses are preserved in their
+headers. Rather than translate their bodies into this notebook's macro dialect
+- which risks introducing a bug in code that was already correct - each carries
+a small alias block (`rep`, `vi`, `pii`, `sz`) in its deps section, the same
+approach `graph/DirectedMST.h` already uses. Like everything else here they are
+`Status: untested` in this notebook; upstream stress-tests them.
