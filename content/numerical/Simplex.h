@@ -5,7 +5,8 @@
  * Source: folklore
  * Description: Simplex method for linear programs in standard form: maximise
  * c dot x subject to Ax <= b, x >= 0. Returns the optimal value together with
- * the achieving vector.
+ * the achieving vector. Sentinels: NaN if the program is infeasible, and
+ * +infinity if it is unbounded - test for both before using the value.
  * Time: exponential in the worst case; polynomial in practice on typical
  * contest inputs.
  * Status: untested

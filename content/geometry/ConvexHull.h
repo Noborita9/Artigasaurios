@@ -4,9 +4,10 @@
  * License: CC0
  * Source: folklore (monotone chain)
  * Description: Andrew monotone-chain convex hull over pt. Sorts and dedupes
- * the input in place, then builds the lower and upper chains. Collinear
- * points are dropped (the turn test uses a strict EPS comparison). Requires
- * Point.h.
+ * the input in place, then builds the lower and upper chains, returning them
+ * counter-clockwise. Note the turn test pops only on a strict right turn
+ * (cross < -EPS), so collinear points on a hull edge are KEPT, not removed.
+ * Requires Point.h.
  * Time: O(N \log N), dominated by the sort.
  * Status: untested
  */

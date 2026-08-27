@@ -7,8 +7,10 @@
  * matrix: gauss() over doubles with partial pivoting, gauss\_mod2() over
  * GF(2) using bitset rows, and a modular variant. Each returns 0 for no
  * solution, 1 for a unique solution, or INF (2) when free variables remain.
- * Note gauss\_mod2 takes bitset<BS>, so the caller must define BS as a
- * compile-time constant; that is an expected external, not a defect.
+ * Note gauss() copies its matrix, while gauss\_mod2() and the modular
+ * variant mutate the caller's in place. Externals the caller must supply:
+ * BS (a compile-time constant, for bitset<BS>), and MOD and bPow for the
+ * modular variant.
  * Time: O(N M \min(N,M)) for the dense variants; the GF(2) variant divides
  * the inner work by the machine word size.
  * Status: untested

@@ -1,5 +1,5 @@
 /**
- * Author: Joaquin Bonora
+ * Author: Joaquin Bonora, Juan Manuel Duarte
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore

@@ -1,10 +1,10 @@
 /**
- * Author: Joaquin Bonora
+ * Author: Joaquin Bonora, Juan Manuel Duarte
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore (cp-algorithms, adapted)
- * Description: Number Theoretic Transform modulo 998244353 with primitive root
- * 31, plus multiply() for exact convolution of integer sequences without
+ * Description: Number Theoretic Transform modulo 998244353, using 31 as a
+ * $2^{23}$-rd root of unity, plus multiply() for exact convolution of integer sequences without
  * floating point. WARNING: root\_1 is initialised at line 7 by calling
  * inverse(), which is not declared until line 10, so this does not compile as
  * written; the declaration must be moved above the constant. Known bug,
