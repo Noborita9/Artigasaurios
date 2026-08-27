@@ -3,11 +3,15 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Heavy-light decomposition over global adjacency list g, mapping the tree onto positions pos[] queryable with an external segment tree st (query must support a max range query, referenced as st.query). Call dfs(root) then decompose(root, root) to build; query(a, b) answers a path max query.
+ * Description: Heavy-light decomposition over global adjacency list g, mapping the tree onto positions pos[] queryable with an external segment tree st (query must support a max range query, referenced as st.query). Call build(root) to build; query(a, b) answers a path max query.
  * Time: O(N) preprocessing, O(\log^2 N) per query
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+const int N = 2e5 + 5;
+struct { int query(int, int); } st; // external segment tree with a max range query
+// ------------------------------------------------------
 int ans[N], par[N], depth[N], head[N], pos[N];
 vec<int> heavy(N, - 1);
 int t = 0;
@@ -45,5 +49,7 @@ int query(int a, int b) {
     resp = max(resp, st.query(pos[a], pos[b]));
     return resp;
 }
-dfs(root);
-decompose(root, root);
+void build(int root) {
+    dfs(root);
+    decompose(root, root);
+}

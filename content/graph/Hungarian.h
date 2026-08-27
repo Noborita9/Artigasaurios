@@ -8,6 +8,9 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+using pii = pair<int, int>;
+// ------------------------------------------------------
 using vi = vec<int>;
 using vd = vec<ld>;
 const ld INF = 1e100;	   // Para max asignacion, INF = 0, y negar costos

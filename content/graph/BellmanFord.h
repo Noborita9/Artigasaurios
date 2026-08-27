@@ -8,6 +8,11 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+using pii = pair<int, int>;
+const int INF = 1e9;
+vec<vec<pii>> g; // g[u] = {v, w}, sized to n vertices
+// ------------------------------------------------------
 bool spfa(int s, vec<int>& d) {
     int n = SZ(g); // needs g graph
     d.assign(n, INF);

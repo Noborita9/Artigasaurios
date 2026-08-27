@@ -8,13 +8,18 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+using pll = pair<ll, ll>;
+const int N = 2e5 + 5;
+const ll oo = 1e18;
+// ------------------------------------------------------
 vector<pll> G[N];
 vec<ll> dijk(ll s) { // Need more data, ask vectors by argument
     vec<ll> dist(N, oo);
     dist[s] = 0;
     priority_queue<pll, vector<pll>, greater<pll>> pq;
     pq.push({0ll, s});
-    while(!q.empty()){
+    while(!pq.empty()){
         auto [d, u] = pq.top();pq.pop(); 
         if (d != dist[u]) continue;
         for (auto [v, w] : G[u]){

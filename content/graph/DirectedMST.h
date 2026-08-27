@@ -8,6 +8,12 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+using vi = vec<int>;
+using pii = pair<int, int>;
+#define rep(i, a, b) for (int i = (a); i < (int)(b); i++)
+#define sz(x) ((int)(x).size())
+// ------------------------------------------------------
 struct RollbackUF { // Required
 	vi e; vector<pii> st;
 	RollbackUF(int n) : e(n, -1) {}

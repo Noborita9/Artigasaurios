@@ -8,6 +8,10 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+const int N = 2e5 + 5;
+vec<int> G[N];
+// ------------------------------------------------------
 vec<int> dfs_num(N, -1), dfs_low(N, -1), in_stack(N);
 int dfs_count = 0;
 int numSCC = 0;

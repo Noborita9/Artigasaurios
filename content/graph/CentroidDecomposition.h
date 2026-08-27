@@ -8,6 +8,10 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+const int N = 2e5 + 5;
+vec<int> G[N], g[N];
+// ------------------------------------------------------
 int sz[N];
 bool removed[N];
 int getSize(int u, int p){

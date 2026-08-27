@@ -8,6 +8,9 @@
  * Status: untested
  */
 #pragma once
+// --- deps (drop what your solution already defines) ---
+const int N = 2e5 + 5;
+// ------------------------------------------------------
 // Directed version (uncomment commented code for undirected)
 struct edge {
     int y;
