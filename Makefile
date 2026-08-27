@@ -7,6 +7,7 @@ help:
 	@echo ""
 	@echo "	make fast		- build once (quick iteration)"
 	@echo "	make notebook		- build properly (two passes)"
+	@echo "	make test-compiles	- compile every snippet standalone"
 	@echo "	make showexcluded	- list headers no chapter.tex imports"
 	@echo "	make clean		- remove build intermediates"
 	@echo "	make veryclean		- also remove notebook.pdf"
@@ -28,8 +29,11 @@ veryclean: clean
 build:
 	mkdir -p build/
 
+test-compiles:
+	./scripts/test-compiles.sh
+
 showexcluded: | build
 	grep -Rho '\\nbimport[^{]*{[^}]*}' content/ | sed 's/.*{//; s/}//' > build/headers_included
 	find ./content -path ./content/tex -prune -o \( -name "*.h" -o -name "*.py" -o -name "*.java" \) -print | grep -vFf build/headers_included || true
 
-.PHONY: help fast notebook clean veryclean showexcluded
+.PHONY: help fast notebook clean veryclean showexcluded test-compiles

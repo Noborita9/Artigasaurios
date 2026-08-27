@@ -19,7 +19,7 @@ struct pt {  // for 3D add z coordinate, define EPS
 	pt(){}
 	double norm2(){return *this**this;}
 	double norm(){return sqrt(norm2());}
-	bool operator==(pt p){return abs(x-p.x)<=EPS&&abs(y-p.y)<=EPS;}
+	bool operator==(pt p)const{return abs(x-p.x)<=EPS&&abs(y-p.y)<=EPS;}
 	pt operator+(pt p){return pt(x+p.x,y+p.y);}
 	pt operator-(pt p){return pt(x-p.x,y-p.y);}
 	pt operator*(double t){return pt(x*t,y*t);}

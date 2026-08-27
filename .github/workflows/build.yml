@@ -18,7 +18,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-recommended texlive-latex-extra \
-            texlive-fonts-recommended texlive-plain-generic poppler-utils
+            texlive-fonts-recommended texlive-plain-generic poppler-utils g++
 
       - name: Build the notebook
         run: make notebook
@@ -41,27 +41,8 @@ jobs:
             echo "::warning::notebook.pdf is $pages pages, over the ICPC 25-page limit"
           fi
 
-      - name: Advisory standalone-compile report (non-blocking)
-        continue-on-error: true
-        run: |
-          # These snippets are fragments meant to be pasted into a solution, not
-          # standalone translation units. This reports; it never gates.
-          # See docs/known-issues.md.
-          TMP=$(mktemp -d)
-          sed -e '/^#pragma GCC/d' -e '/^void solve/,$d' content/contest/template.cpp > "$TMP/prelude.h"
-          pass=0; fail=0; : > "$TMP/failing"
-          for h in $(find content -name '*.h' | sort); do
-            { cat "$TMP/prelude.h"; echo "#include \"$PWD/$h\""; echo "int main(){}"; } > "$TMP/tu.cpp"
-            if g++ -std=c++20 -fsyntax-only -w "$TMP/tu.cpp" 2>/dev/null; then
-              pass=$((pass+1))
-            else
-              fail=$((fail+1)); echo "- \`$h\`" >> "$TMP/failing"
-            fi
-          done
-          { echo "### Standalone compile report";
-            echo "$pass compile standalone, $fail do not.";
-            echo; echo "<details><summary>Not standalone</summary>"; echo;
-            cat "$TMP/failing"; echo; echo "</details>"; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Every snippet must compile standalone
+        run: ./scripts/test-compiles.sh
 
       - uses: actions/upload-artifact@v4
         with:

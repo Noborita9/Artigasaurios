@@ -11,8 +11,10 @@ six-character content hash you can check against what you typed during a contest
 ## Building
 
 ```sh
-make notebook     # two passes, so the table of contents settles
-make fast         # one pass, for quick iteration
+make notebook        # two passes, so the table of contents settles
+make fast            # one pass, for quick iteration
+make test-compiles   # every snippet must compile standalone
+make showexcluded    # headers no chapter.tex imports
 ```
 
 The result is `notebook.pdf`. It is **not** committed — CI builds it on every push to
@@ -86,10 +88,21 @@ Snippets are written against the macros in `content/contest/template.cpp` —
 **not** KACTL's `rep`/`sz`/`all`/`vi` dialect: the code is ours and so is the muscle
 memory. We adopted KACTL's machinery, not its idiom.
 
-Snippets are fragments meant to be pasted into a solution, not standalone files. Most
-do not compile on their own. See [docs/known-issues.md](docs/known-issues.md), which
-also lists the bugs known to exist in the ported code — **including one that compiles
-and silently returns wrong answers**. Read it before trusting a snippet.
+Every snippet compiles on its own — `make test-compiles` enforces it and CI fails the
+build otherwise. Where a snippet needs solution-level declarations, they sit in a short
+marked block at the top:
+
+```cpp
+// --- deps (drop what your solution already defines) ---
+const int N = 2e5 + 5;
+// ------------------------------------------------------
+```
+
+Delete those lines when pasting into a solution that already has them.
+
+Compiling is not correctness: every snippet is still `Status: untested` and there are
+no stress tests. See [docs/known-issues.md](docs/known-issues.md) for what is fixed,
+what is still open, and the three snippets that are GCC-only.
 
 ## Credits
 
