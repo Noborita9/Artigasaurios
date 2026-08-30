@@ -11,13 +11,13 @@
 #pragma once
 // --- deps (drop what your solution already defines) --- // exclude-line
 const int N = 2e5 + 5; // exclude-line
-vec<int> G[N], g[N]; // exclude-line
+vec<int> g[N]; // exclude-line
 // ------------------------------------------------------ // exclude-line
 int sz[N];
 bool removed[N];
 int getSize(int u, int p){
     sz[u] = 1;
-    for(int v: G[u]) if (v != p && !removed[v]){
+    for(int v: g[u]) if (v != p && !removed[v]){
         sz[u] += getSize(v, u);
     }
     return sz[u];
