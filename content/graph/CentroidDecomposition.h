@@ -3,8 +3,8 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Centroid decomposition of a tree given by global adjacency lists G/g. build(u) recursively finds the centroid of each remaining component, marks it removed, and recurses into the resulting subtrees, returning the root of the decomposition tree.
- * Usage: Define: const int N; vec<int> G[N] (tree) and g[N] (centroid tree).
+ * Description: Centroid decomposition of a tree given by the global adjacency list g, which the caller builds. build(u) recursively finds the centroid of each remaining component, marks it removed, and recurses into the resulting subtrees, returning the root of the decomposition.
+ * Usage: Define: const int N; vec<int> g[N], the tree.
  * Time: O(N \log N)
  * Status: untested
  */
@@ -30,6 +30,6 @@ int centroid(int u, int p, int tz){
 int build(int u){
     int c = centroid(u, -1, getSize(u, -1));
     removed[c] = 1;
-    for (int v: G[c]) if (!removed[v]) { build(v); }
+    for (int v: g[c]) if (!removed[v]) { build(v); }
     return c;
 }
