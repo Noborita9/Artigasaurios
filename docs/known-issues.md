@@ -41,12 +41,14 @@ used it, and it did not earn the page space.
 
 ## Still open
 
-- **Nothing is tested.** Every snippet is `Status: untested`. Compiling is not
-  correctness — it means the code parses, nothing more. There are no stress
-  tests.
+- **Almost nothing is tested.** 73 of 74 snippets are `Status: untested`.
+  Compiling is not correctness — it means the code parses, nothing more. The one
+  exception is `graph/VirtualTree.h`, stress-tested against a brute-force LCA
+  closure on 3000 random trees under ASan/UBSan.
 - **Three snippets are GCC-only** and will not build under Apple clang:
   `OrderStatisticTree.h` (needs libstdc++'s `ext/pb_ds`), `SparseTable.h` and
-  `LcaConstant.h` (both use `__lg`). ICPC judges run GCC, so this is fine for
+  `LcaConstant.h` (both use `__lg`, which also makes `VirtualTree.h` GCC-only,
+  since it includes `LcaConstant.h`). ICPC judges run GCC, so this is fine for
   contests; on macOS use `brew install gcc` and `CXX=g++-16 make test-compiles`.
 - **`EPS` is defined twice with different values** — `geometry/Point.h` uses
   `1e-7`, `numerical/GaussElimination.h` uses `1e-9`. They never share a
