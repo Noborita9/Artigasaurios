@@ -4,23 +4,13 @@
  * License: CC0
  * Source: folklore
  * Description: A number mod MOD, for hashing. Products go through
- * \_\_int128, so MOD may be up to 62 bits -- unlike plain 64-bit modular code,
- * which overflows past about 3e9. (62, not 63: + and - work before reducing,
- * so 2*MOD must still fit in an ll.) The default is the Mersenne prime
- * $2^{61}-1$, big enough that a single hash needs no second modulus. raw
- * skips the reduction for a value already in range, which is what makes the
- * branches worth having; the public constructor normalizes anything, negatives
- * included. The value is the field h; compare hashes with a.h == b.h.
- * HashInterval precomputes prefix hashes and base powers of a string, then
- * hashInterval(a, b) is the polynomial hash of s[a, b) in O(1). Equal
- * substrings always hash equal; unequal ones collide with probability about
- * len/MOD per comparison, so one modulus this size needs no second one.
- * hashString is the whole-string hash on its own, with no vectors built,
- * for when there is nothing to query -- comparing two strings, or keying a
- * map by one. It agrees with hashInterval(0, n) on the same string.
- * Usage: Define: const ll MOD, prime. HashInterval hi(s); hi.hashInterval(a, b).
+ * \_\_int128, so MOD can be up to 62 bits -- not 63, as + and - work before
+ * reducing. The default $2^{61}-1$ is wide enough to need no second modulus.
+ * The constructor normalizes negatives, raw skips that when already in range.
+ * HashInterval hashes any substring in O(1), hashString the whole string.
+ * Usage: Define: const ll MOD, prime.
  * Time: O(1) per H operation, O(N) to build HashInterval
- * Status: stress-tested against \_\_int128 arithmetic and brute-force hashes
+ * Status: stress-tested against brute force
  */
 #pragma once
 // --- deps (drop what your solution already defines) --- // exclude-line

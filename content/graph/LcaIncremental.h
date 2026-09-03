@@ -3,16 +3,12 @@
  * Date: 2026-09-03
  * License: CC0
  * Source: folklore (skew-binary jump pointers, Myers 1983)
- * Description: Lowest common ancestor on a tree that is grown one leaf at a
- * time, with no preprocessing pass: add\_leaf(u) hangs a new node under u and
- * returns its id in $O(1)$, query(u, v) answers in $O(\log N)$. Each node keeps a
- * single jump pointer j, laid out so that repeatedly following j climbs the
- * tree in skew-binary steps. Node 0 is the root. Useful when the tree is only
- * revealed as queries arrive, or when it is built by a DFS that pushes on
- * entry and never needs to pop. Depth d is exposed:
- * dist(u, v) = d[u] + d[v] - 2*d[query(u, v)].
+ * Description: LCA on a tree grown one leaf at a time, with no preprocessing
+ * pass: add\_leaf(u) hangs a new node under u and returns its id. Each node
+ * keeps a single jump pointer, in skew-binary layout, so a query climbs in
+ * $O(\log N)$ steps. Node 0 is the root; dist(u, v) = d[u]+d[v]-2*d[query(u, v)].
  * Time: O(1) per insertion, O(\log N) per query
- * Status: stress-tested against brute force on 2000 random trees
+ * Status: stress-tested against brute force
  */
 #pragma once
 struct DynLCA {
