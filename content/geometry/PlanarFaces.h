@@ -3,12 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Extracts the interior faces of a planar straight-line graph.
- * Sorts each vertex adjacency list by polar angle, then walks next-edge
- * pointers to trace each face boundary. Returns each face as a loop of point
- * COORDINATES, not vertex indices. The unbounded outer face is excluded: it
- * traces clockwise, so its signed area is negative and it is filtered out.
- * Requires Point.h and PolygonArea.h (for signed\_polygon\_area).
+ * Description: The interior faces of a planar straight-line graph, each
+ * returned as a loop of point COORDINATES, not vertex indices. The unbounded
+ * outer face is dropped. Requires Point.h and PolygonArea.h (for
+ * signed\_polygon\_area).
  * Time: O(V^2 + E \log E); the quadratic term is the dense position matrix.
  * Status: untested
  */

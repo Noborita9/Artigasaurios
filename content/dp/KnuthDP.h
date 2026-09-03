@@ -3,7 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Knuth's optimization for interval DP of the form dp[i][j] = min over i<=k<j of dp[i][k] + dp[k+1][j] + cost(i,j), applicable when opt[i][j-1] <= opt[i][j] <= opt[i+1][j] (e.g. cost satisfies the quadrangle inequality). Define cost(i,j) and call knuth\_dp(n); its local dp/opt need dp[i][i]=0 and opt[i][i]=i set right after allocation, before the main loop.
+ * Description: Knuth's optimization for dp[i][j] = min over i<=k<j of
+ * dp[i][k] + dp[k+1][j] + cost(i,j), valid when opt[i][j-1] <= opt[i][j] <=
+ * opt[i+1][j] (e.g. cost obeys the quadrangle inequality). Define cost and
+ * call knuth\_dp(n); it needs dp[i][i]=0 and opt[i][i]=i set first.
  * Usage: Define: const ll oo; ll cost(int i, int j) for your problem.
  * Time: O(N^2)
  * Status: untested

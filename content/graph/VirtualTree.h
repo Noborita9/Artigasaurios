@@ -3,13 +3,11 @@
  * Date: 2026-08-29
  * License: CC0
  * Source: folklore
- * Description: Virtual (auxiliary) tree over a subset S of vertices: the
- * minimal tree containing S that is closed under LCA, so it has fewer than
- * 2|S| nodes. build\_virt fills virt[] with (child, distance) pairs and
- * returns the root; only downward edges are added, so a DFS from the root
- * visits each node once. Nodes keep their original ids. Clears virt[] for
- * every node it touches, so consecutive queries do not need a global reset.
- * Returns -1 for an empty subset. Requires LcaConstant.h, built first.
+ * Description: The minimal tree containing a subset S and closed under LCA,
+ * so fewer than 2|S| nodes. build\_virt fills virt[] with downward (child,
+ * distance) edges and returns the root, or -1 if S is empty; it clears
+ * virt[] as it goes, so back-to-back queries need no reset. Needs
+ * LcaConstant.h, built first.
  * Usage: Define: const int N. LCA lca(n); add edges; lca.build(root).
  * Time: O(K \log K) for |S| = K, dominated by the two sorts.
  * Status: stress-tested against brute force on 3000 random trees

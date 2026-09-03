@@ -3,12 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Factorizes a 64-bit integer $n$. isPrime is a deterministic
- * Miller-Rabin test (witnesses \{2,3,5,7,11,13,17,19,23\} for a fast
- * small-factor check, then the standard 64-bit-safe witness set). rho is
- * Pollard's rho with Floyd cycle detection to find one nontrivial factor.
- * fact recursively splits $n$ with rho until every factor is prime,
- * accumulating exponents in the output map.
+ * Description: Factorizes a 64-bit integer $n$. isPrime is deterministic
+ * Miller-Rabin, valid over the whole 64-bit range; rho is Pollard's rho with
+ * Floyd cycle detection, finding one nontrivial factor; fact splits $n$ until
+ * every factor is prime, accumulating exponents in the output map.
  * Time: isPrime O(\log^2 n). rho expected O(n^{1/4}). fact expected
  * O(n^{1/4} \log n) to fully factor n.
  * Status: untested

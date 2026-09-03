@@ -3,11 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Aho-Corasick automaton over lowercase patterns, built as a
- * trie of full DFA transitions (ch = trie edges, next = goto/failure-resolved
- * transitions, link = suffix link). add\_string inserts a pattern (recording
- * its index at the ending node); build\_aho performs the BFS that fills in
- * next[] and link[] for every state. Uses a local sentinel oo.
+ * Description: Aho-Corasick over lowercase patterns, as a trie with full DFA
+ * transitions: ch = trie edges, next = failure-resolved transitions, link =
+ * suffix link. add\_string inserts a pattern and records its index at the end
+ * node; build\_aho runs the BFS that fills next[] and link[].
  * Time: O(L) to insert all patterns (total length L); O(26 \cdot L) to build
  * the automaton.
  * Status: untested

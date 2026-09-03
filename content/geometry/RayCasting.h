@@ -3,11 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore (ray casting / crossing number)
- * Description: Point-in-polygon test by ray casting, returning 0 outside,
- * 1 inside, 2 on the boundary. Handles the boundary case before counting
- * crossings. Note the crossing test assigns the cross product to an ll while
- * pt stores doubles, so the value is truncated; that is safe for integral
- * coordinates but loses information otherwise. Requires Point.h.
+ * Description: Point-in-polygon by ray casting: 0 outside, 1 inside, 2 on
+ * the boundary, which it tests before counting crossings. The crossing test
+ * puts a cross product in an ll while pt holds doubles, so it truncates --
+ * safe for integral coordinates only. Requires Point.h.
  * Time: O(N)
  * Status: untested
  */

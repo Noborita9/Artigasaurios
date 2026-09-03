@@ -3,12 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Standalone integer-arithmetic alternative to Point.h, taking
- * points as pair<ll,ll> instead of the pt struct: cross and dot products of
- * the vectors P1P2 and P1P3, and Euclidean distance. Note these two
- * representations are incompatible and do not interoperate; pick one per
- * problem. Exact integer cross products avoid the precision loss of the
- * double-based pt.
+ * Description: Integer-arithmetic alternative to Point.h, on pair<ll,ll>
+ * rather than the pt struct: cross and dot of P1P2 with P1P3, and Euclidean
+ * distance. Exact, unlike double-based pt -- but the two representations do
+ * not interoperate, so pick one per problem.
  * Time: O(1) per operation.
  * Status: untested
  */

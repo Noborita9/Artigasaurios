@@ -3,7 +3,10 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Mo's algorithm: offline square-root decomposition over queries. Sort queries by (block of l, r) with alternating direction per block to reduce cursor movement; hilbertorder() is an alternative sort key for the more efficient Hilbert-curve variant. add()/rem() and the state/answer extraction are meant to be filled in per problem.
+ * Description: Mo's algorithm, offline square-root decomposition over
+ * queries. Sorts by (block of l, r), alternating direction per block to cut
+ * cursor movement; hilbertorder() is a faster alternative key. Fill in
+ * add(), rem() and the answer extraction per problem.
  * Time: O((N+Q)\sqrt N) amortized.
  * Status: untested
  */

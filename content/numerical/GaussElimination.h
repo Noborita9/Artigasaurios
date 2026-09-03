@@ -3,12 +3,11 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore (cp-algorithms, adapted)
- * Description: Gaussian elimination in three flavours over an augmented
- * matrix: gauss() over doubles with partial pivoting, gauss\_mod2() over
- * GF(2) using bitset rows, and a modular variant. Each returns 0 for no
- * solution, 1 for a unique solution, or INF (2) when free variables remain.
- * Note gauss() copies its matrix, while gauss\_mod2() and the modular
- * variant mutate the caller's in place.
+ * Description: Gaussian elimination over an augmented matrix in three
+ * flavours: gauss() over doubles with partial pivoting, gauss\_mod2() over
+ * GF(2) with bitset rows, and a modular variant. Each returns 0 for no
+ * solution, 1 for one, INF (2) when free variables remain. gauss() copies
+ * its matrix; the other two mutate the caller's.
  * Usage: Define: const int BS; const ll MOD; the ModPow snippet for bPow(a, b, m).
  * Time: O(N M \min(N,M)) for the dense variants; the GF(2) variant divides
  * the inner work by the machine word size.
