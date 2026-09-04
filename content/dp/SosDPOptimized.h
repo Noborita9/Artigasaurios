@@ -6,7 +6,7 @@
  * Description: Memory-optimized Sum Over Subsets DP. For every mask x,
  * computes the sum of a[s] over all submasks s of x. Since layer i + 1 only
  * depends on layer i, the same array can be updated in place.
- * Usage: a must have size $2^n$. Call sos\_dp\_optimized(a, n).
+ * Usage: a must have size $2^n$. Call sos_dp_optimized(a, n).
  * Time: O(n 2^n), O(2^n) memory
  * Status: untested
  */
