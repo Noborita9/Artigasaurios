@@ -1,55 +1,34 @@
 /**
  * Author: Joaquin Bonora
- * Date: 2026-08-26
- * License: CC0
- * Source: folklore
- * Description: Suffix array construction by prefix doubling with counting
- * sort (csort) instead of comparison sort, plus Kasai's algorithm (compute\_lcp)
- * for the LCP array between lexicographically adjacent suffixes. compute\_sa
- * appends an implicit sentinel (n = |s|+1).
- * Time: O(N \log N) for compute\_sa (O(\log N) doubling rounds, O(N) counting
- * sort each); O(N) for compute\_lcp.
- * Status: untested
+ * Date: 2026-09-21
+ * License: Unknown
+ * Source: KACTL (Chinese IOI team paper, 2009)
+ * Description: Suffix array by prefix doubling with counting sort, plus
+ * Kasai's LCP in the same constructor. A nul sentinel is appended, so sa
+ * has size |s|+1 and sa[0] = |s|. lcp[i] is the longest common prefix of
+ * sa[i-1] and sa[i], with lcp[0] = 0. The input must be nul-free ASCII.
+ * Time: O(N \log N)
+ * Status: stress-tested against a naive suffix sort
  */
 #pragma once
-#define RB(x) ((x) < n ? r[x] : 0)
-void csort(vec<int>& sa, vec<int>& r, int k) {
-	int n = SZ(sa);
-	vec<int> f(max(255, n)), t(n);
-	L(i,0, n) ++f[RB(i+k)];
-	int sum = 0;
-	L(i,0, max(255, n)) f[i] = (sum += f[i]) - f[i];
-	L(i,0, n) t[f[RB(sa[i]+k)]++] = sa[i];
-	sa = t;
-}
-vec<int> compute_sa(string& s){ // O(n*log2(n))
-	int n = SZ(s) + 1, rank;
-	vec<int> sa(n), r(n), t(n);
-	iota(ALL(sa), 0);
-	L(i,0, n) r[i] = s[i];
-	for (int k = 1; k < n; k *= 2) {
-		csort(sa, r, k), csort(sa, r, 0);
-		t[sa[0]] = rank = 0;
-		L(i, 1, n) {
-			if(r[sa[i]] != r[sa[i-1]] || RB(sa[i]+k) != RB(sa[i-1]+k)) ++rank;
-			t[sa[i]] = rank;
-		}
-		r = t;
-		if (r[sa[n-1]] == n-1) break;
+struct SuffixArray {
+	vec<int> sa, lcp;
+	SuffixArray(string s, int lim=256) { // lim = alphabet size
+		s.pb(0); int n = SZ(s), k = 0, a, b; // sentinel sorts first
+		vec<int> x(ALL(s)), y(n), ws(max(n, lim)); // x: rank of each suffix
+		sa = lcp = y, iota(ALL(sa), 0);
+		for (int j = 0, p = 0; p < n; j = max(1, j*2), lim = p) {
+			p = j, iota(ALL(y), n-j); // y: suffixes by rank of 2nd half,
+			L(i,0,n) if (sa[i] >= j) y[p++] = sa[i] - j; // shorter ones first
+			fill(ALL(ws), 0); // stable counting sort of y by 1st half
+			L(i,0,n) ws[x[i]]++;
+			L(i,1,lim) ws[i] += ws[i-1];
+			for (int i = n; i--;) sa[--ws[x[y[i]]]] = y[i];
+			swap(x, y), p = 1, x[sa[0]] = 0; // y holds the old ranks now
+			L(i,1,n) a = sa[i-1], b = sa[i], x[b] = // equal halves share
+				(y[a] == y[b] && y[a+j] == y[b+j]) ? p-1 : p++; // a rank
+		} // loop ends when p == n, i.e. every suffix has its own rank
+		for (int i = 0, j; i < n-1; lcp[x[i++]] = k) // Kasai: x is the rank
+			for (k && k--, j = sa[x[i]-1]; s[i+k] == s[j+k]; k++); // of i
 	}
-	return sa; // sa[i] = i-th suffix of s in lexicographical order
-}
-vec<int> compute_lcp(string& s, vec<int>& sa){
-	int n = SZ(s) + 1, K = 0;
-	vec<int> lcp(n), plcp(n), phi(n);
-	phi[sa[0]] = -1;
-	L(i, 1, n) phi[sa[i]] = sa[i-1];
-	L(i,0,n) {
-		if (phi[i] < 0) { plcp[i] = 0; continue; }
-		while(s[i+K] == s[phi[i]+K]) ++K;
-		plcp[i] = K;
-		K = max(K - 1, 0);
-	}
-	L(i,0, n) lcp[i] = plcp[sa[i]];
-	return lcp; // lcp[i] = longest common prefix between sa[i-1] and sa[i]
-}
+};
