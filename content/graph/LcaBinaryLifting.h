@@ -31,13 +31,13 @@ void dfs(int u, int p){
 int LCA(int u, int v){
     if (depth[u] < depth[v]) swap(u, v); // Make u the deepest
     for (int i= K-1; i>=0; i--){ // make them same depth
-        if (jump[i][u] != -1 && depth[jump[i][u]] >= depth[v]){ 
+        if (jump[i][u] != -1 and depth[jump[i][u]] >= depth[v]){ 
             u = jump[i][u];
         }
     }
     if (u == v) return u; // u is parent of v
     for (int i= K-1; i>=0; i--){
-        if (jump[i][u] != jump[i][v] && jump[i][u] != -1 && jump[i][v] != -1){
+        if (jump[i][u] != jump[i][v] and jump[i][u] != -1 and jump[i][v] != -1){
             u = jump[i][u];
             v = jump[i][v];
         }

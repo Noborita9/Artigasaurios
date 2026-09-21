@@ -23,7 +23,7 @@ void sa_init(){
 void sa_extend(char c){
 	int k=sz++,p;
 	st[k].len=st[last].len+1;
-	for(p=last;p!=-1&&!st[p].next.count(c);p=st[p].link)st[p].next[c]=k;
+	for(p=last;p!=-1 and !st[p].next.count(c);p=st[p].link)st[p].next[c]=k;
 	if(p==-1)st[k].link=0;
 	else {
 		int q=st[p].next[c];
@@ -32,7 +32,7 @@ void sa_extend(char c){
 			int w=sz++; // Is clone should not be counted!!!
 			st[w].len=st[p].len+1;
 			st[w].next=st[q].next;st[w].link=st[q].link;
-			for(;p!=-1&&st[p].next[c]==q;p=st[p].link)st[p].next[c]=w;
+			for(;p!=-1 and st[p].next[c]==q;p=st[p].link)st[p].next[c]=w;
 			st[q].link=st[k].link=w;
 		}
 	}

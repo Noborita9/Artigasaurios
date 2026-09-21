@@ -18,7 +18,7 @@ int gauss(vec < vec<double> > a, vec<double>& ans) {
     int n = SZ(a);
     int m = SZ(a[0]) - 1;
     vec<int> where(m, -1);
-    for (int col = 0, row = 0; col < m && row < n; ++col) {
+    for (int col = 0, row = 0; col < m and row < n; ++col) {
         int sel = row;
         L(i, row, n)
             if (abs(a[i][col]) > abs(a[sel][col]))

@@ -25,7 +25,7 @@ struct PushRelabel {
 	}
 	void addFlow(Edge& e, ll f) {
 		Edge &back = g[e.dest][e.back];
-		if (!ec[e.dest] && f) hs[H[e.dest]].pb(e.dest); // just became active
+		if (!ec[e.dest] and f) hs[H[e.dest]].pb(e.dest); // just became active
 		e.f += f; e.c -= f; ec[e.dest] += f;
 		back.f -= f; back.c += f; ec[back.dest] -= f;
 	}
@@ -40,13 +40,13 @@ struct PushRelabel {
 			while (ec[u] > 0) // discharge u
 				if (cur[u] == g[u].data() + SZ(g[u])) { // scanned every edge
 					H[u] = 1e9; // relabel u to just above its lowest neighbour
-					for (Edge& e : g[u]) if (e.c && H[u] > H[e.dest]+1)
+					for (Edge& e : g[u]) if (e.c and H[u] > H[e.dest]+1)
 						H[u] = H[e.dest]+1, cur[u] = &e;
-					if (++co[H[u]], !--co[hi] && hi < v) // gap at height hi:
-						L(i, 0, v) if (hi < H[i] && H[i] < v) // nothing above
+					if (++co[H[u]], !--co[hi] and hi < v) // gap at height hi:
+						L(i, 0, v) if (hi < H[i] and H[i] < v) // nothing above
 							--co[H[i]], H[i] = v + 1; // it can reach t again
 					hi = H[u];
-				} else if (cur[u]->c && H[u] == H[cur[u]->dest]+1)
+				} else if (cur[u]->c and H[u] == H[cur[u]->dest]+1)
 					addFlow(*cur[u], min(ec[u], cur[u]->c)); // push downhill
 				else ++cur[u];
 		}

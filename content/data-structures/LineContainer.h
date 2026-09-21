@@ -27,10 +27,10 @@ struct HullDynamic : public multiset<Line> { // for maximum
 		iterator z=next(y);
 		if(y==begin()){
 			if(z==end())return false;
-			return y->m==z->m&&y->b<=z->b;
+			return y->m==z->m and y->b<=z->b;
 		}
 		iterator x=prev(y);
-		if(z==end())return y->m==x->m&&y->b<=x->b;
+		if(z==end())return y->m==x->m and y->b<=x->b;
 		return 1.0*(x->b-y->b)*(z->m-y->m)>=1.0*(y->b-z->b)*(y->m-x->m);
 	}//Take care of overflow!
 	iterator next(iterator y){return ++y;}
@@ -39,8 +39,8 @@ struct HullDynamic : public multiset<Line> { // for maximum
 		iterator y=insert((Line){m,b});
 		y->it=y;y->end=end();
 		if(bad(y)){erase(y);return;}
-		while(next(y)!=end()&&bad(next(y)))erase(next(y));
-		while(y!=begin()&&bad(prev(y)))erase(prev(y));
+		while(next(y)!=end() and bad(next(y)))erase(next(y));
+		while(y!=begin() and bad(prev(y)))erase(prev(y));
 	}
 	tc eval(tc x){
 		Line l=*lower_bound((Line){x,is_query});

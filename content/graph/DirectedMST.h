@@ -25,7 +25,7 @@ struct Node { /// lazy skew heap node
 	Edge top() { prop(); return key; }
 };
 Node *merge(Node *a, Node *b) {
-	if (!a || !b) return a ?: b;
+	if (!a or !b) return a ?: b;
 	a->prop(), b->prop();
 	if (a->key.w > b->key.w) swap(a, b);
 	swap(a->l, (a->r = merge(b, a->r)));

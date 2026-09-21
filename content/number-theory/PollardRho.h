@@ -36,7 +36,7 @@ bool isPrime(ll n) {
     for (ll a : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
         if (a % n == 0) continue;
         ll x = power(a, d, n);
-        if (x == 1 || x == n - 1) continue;
+        if (x == 1 or x == n - 1) continue;
         bool ok = false;
         L(i, 0, s) {
             x = mul(x, x, n);

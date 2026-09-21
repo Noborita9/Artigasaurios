@@ -23,9 +23,9 @@ struct ST { // max st with 0s as defualt
         }
     }
     void upd(int v, int L, int R, int ql, int qr, ll w) {
-        if (qr <= L || ql >= R) return;
+        if (qr <= L or ql >= R) return;
         push(v, L, R);
-        if (ql <= L && R <= qr){
+        if (ql <= L and R <= qr){
             lz[v] = w;
             st[v] += w;
             return;
@@ -36,9 +36,9 @@ struct ST { // max st with 0s as defualt
         st[v] = max(st[2*v], st[2*v+1]);
     }
     ll query(int v, int L, int R, int ql, int qr) {
-        if (ql >= R || qr <= L) return 0ll;
+        if (ql >= R or qr <= L) return 0ll;
         push(v, L, R);
-        if(ql <= L && R <= qr) return st[v];
+        if(ql <= L and R <= qr) return st[v];
         int m = (L + R) / 2;
         return max(query(2 * v, L, m, ql, qr), query(2 * v + 1, m, R, ql, qr));
     }

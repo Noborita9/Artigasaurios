@@ -36,7 +36,7 @@ void decompose(int u, int h){
     head[u] = h;
     pos[u] = t ++;
     if (heavy[u] != -1){ decompose(heavy[u], h); }
-    for (int v: g[u]) if (v != par[u] && v != heavy[u]) {
+    for (int v: g[u]) if (v != par[u] and v != heavy[u]) {
         decompose(v, v);
     }
 }

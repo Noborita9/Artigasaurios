@@ -12,7 +12,7 @@
 int minRotation(string s) {
 	int a=0, N=SZ(s); s += s;
 	L(b,0,N) L(k,0,N) {
-		if (a+k == b || s[a+k] < s[b+k]) {b += max(0, k-1); break;}
+		if (a+k == b or s[a+k] < s[b+k]) {b += max(0, k-1); break;}
 		if (s[a+k] > s[b+k]) { a = b; break; }
 	}
 	return a;

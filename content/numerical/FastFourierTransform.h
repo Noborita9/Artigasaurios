@@ -41,7 +41,7 @@ void fft(vec<C>& a) {
 }
 
 vll multiply(const vll& a, const vll& b) {
-    if (a.empty() || b.empty()) return {};
+    if (a.empty() or b.empty()) return {};
     vd fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int L = 32 - __builtin_clz(SZ(fa) + SZ(fb) - 1), n = 1 << L;
     vec<C> in(n), out(n);

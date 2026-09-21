@@ -17,14 +17,14 @@ int sz[N];
 bool removed[N];
 int getSize(int u, int p){
     sz[u] = 1;
-    for(int v: g[u]) if (v != p && !removed[v]){
+    for(int v: g[u]) if (v != p and !removed[v]){
         sz[u] += getSize(v, u);
     }
     return sz[u];
 }
 int centroid(int u, int p, int tz){
     for (int v: g[u])
-        if (v != p && !removed[v] && sz[v] * 2 > tz) return centroid(v, u, tz);
+        if (v != p and !removed[v] and sz[v] * 2 > tz) return centroid(v, u, tz);
     return u;
 }
 int build(int u){

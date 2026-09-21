@@ -15,7 +15,7 @@ int lis(vec<int> &a) {
     d[0] = -oo;
     L(i,0,n){
         int l = upper_bound(d.begin(), d.end(), a[i]) - d.begin();
-        if (d[l-1] < a[i] && a[i] < d[l]) d[l] = a[i];
+        if (d[l-1] < a[i] and a[i] < d[l]) d[l] = a[i];
     }
     int ans = 0;
     for (int l = 0; l <= n; l++) if (d[l] < oo) ans = l;

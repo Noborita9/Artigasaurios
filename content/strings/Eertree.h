@@ -33,7 +33,7 @@ struct PalindromicTree {
     }
     void add_char(int pos) {
         int c = s[pos] - 'a', cur = last;
-        while (pos - 1 - len[cur] < 0 || s[pos - 1 - len[cur]] != s[pos])
+        while (pos - 1 - len[cur] < 0 or s[pos - 1 - len[cur]] != s[pos])
             cur = link[cur];
         if (next[cur][c]) {
             last = next[cur][c];
@@ -45,7 +45,7 @@ struct PalindromicTree {
         if (cur == 1) heat[now] = (c + 1); // root
         else heat[now] = heat[cur] + 2LL * (c + 1);
         int link_curr = link[cur];
-        while (pos - 1 - len[link_curr] < 0 || s[pos - 1 - len[link_curr]] != s[pos])
+        while (pos - 1 - len[link_curr] < 0 or s[pos - 1 - len[link_curr]] != s[pos])
             link_curr = link[link_curr];
         link[now] = next[link_curr][c];
         next[cur][c] = last = now;

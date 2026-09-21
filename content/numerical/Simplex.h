@@ -30,7 +30,7 @@ pair<ld, vec<ld>> simplex(vec<vec<ld>> A, vec<ld> b, vec<ld> c) {
         L(j, 0, m) if (j != y) A[x][j] *= inv;
         A[x][y] = inv;
 
-        L(i, 0, n) if (i != x && fabsl(A[i][y]) > EPS) {
+        L(i, 0, n) if (i != x and fabsl(A[i][y]) > EPS) {
             ld coef = A[i][y];
             b[i] -= coef * b[x];
             L(j, 0, m) if (j != y) A[i][j] -= coef * A[x][j];

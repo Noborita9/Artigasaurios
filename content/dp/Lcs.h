@@ -20,7 +20,7 @@ string getLCS(string& s1, string& s2) {
     // Reconstruct the LCS
     string lcs;
     int i = n, j = m;
-    while(i > 0 && j > 0) {
+    while(i > 0 and j > 0) {
         if(s1[i-1] == s2[j-1]) {
             lcs += s1[i-1];
             i--; j--;

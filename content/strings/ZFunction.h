@@ -14,7 +14,7 @@ vec<int> zfun(const string &w){
   	z[0] = n;
 	L(i, 1, n) {
 		if (i <= r) {z[i] = min(r - i + 1, z[i - l]);}
-		while (i + z[i] < n && w[z[i]] == w[i + z[i]]) {++z[i];}
+		while (i + z[i] < n and w[z[i]] == w[i + z[i]]) {++z[i];}
 		if (i + z[i] - 1 > r) {l = i, r = i + z[i] - 1;}
 	}
 	return z;

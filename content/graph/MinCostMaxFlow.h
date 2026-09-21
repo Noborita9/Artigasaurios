@@ -105,7 +105,7 @@ template<typename T> struct mcmf {
 	vec<pair<int,int>> recover() {
 		vec<pair<int,int>> used;
 		L(i, 0, SZ(g)) for (edge e : g[i])
-			if(e.flow == e.cap && !e.res) used.pb({i, e.to});
+			if(e.flow == e.cap and !e.res) used.pb({i, e.to});
 		return used;
 	}
 };

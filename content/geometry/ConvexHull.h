@@ -22,18 +22,18 @@ vec<pt> convex_hull(vec<pt>& points) {
     points.erase(unique(ALL(points)), points.end());
     vec<pt> hull;
     for (const auto& p : points) {
-        while (SZ(hull) >= 2 && cross_product(hull[SZ(hull) - 2], hull[SZ(hull) - 1], p) < -EPS)
+        while (SZ(hull) >= 2 and cross_product(hull[SZ(hull) - 2], hull[SZ(hull) - 1], p) < -EPS)
             hull.pop_back();
 
-        if (hull.empty() || !(hull.back() == p))
+        if (hull.empty() or !(hull.back() == p))
             hull.pb(p);
     }
     int t = SZ(hull) + 1;
     for (int i = SZ(points) - 1; i >= 0; i--) {
-        while (SZ(hull) >= t && cross_product(hull[SZ(hull) - 2], hull[SZ(hull) - 1], points[i]) < -EPS)
+        while (SZ(hull) >= t and cross_product(hull[SZ(hull) - 2], hull[SZ(hull) - 1], points[i]) < -EPS)
             hull.pop_back();
 
-        if (hull.empty() || !(hull.back() == points[i]))
+        if (hull.empty() or !(hull.back() == points[i]))
             hull.pb(points[i]);
     }
     hull.pop_back();

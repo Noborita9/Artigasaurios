@@ -26,9 +26,9 @@ struct SuffixArray {
 			for (int i = n; i--;) sa[--ws[x[y[i]]]] = y[i];
 			swap(x, y), p = 1, x[sa[0]] = 0; // y holds the old ranks now
 			L(i,1,n) a = sa[i-1], b = sa[i], x[b] = // equal halves share
-				(y[a] == y[b] && y[a+j] == y[b+j]) ? p-1 : p++; // a rank
+				(y[a] == y[b] and y[a+j] == y[b+j]) ? p-1 : p++; // a rank
 		} // loop ends when p == n, i.e. every suffix has its own rank
 		for (int i = 0, j; i < n-1; lcp[x[i++]] = k) // Kasai: x is the rank
-			for (k && k--, j = sa[x[i]-1]; s[i+k] == s[j+k]; k++); // of i
+			for (k and k--, j = sa[x[i]-1]; s[i+k] == s[j+k]; k++); // of i
 	}
 };

@@ -18,7 +18,7 @@ struct SQRTDecomp {
     int query(int l, int r){ // O(BLOCK_SIZE) // [l, r)
         int ans = 0;
         for (int i = l; i < r;) {
-            if (i + BLOCK_SIZE >= r || (i % BLOCK_SIZE) != 0) ans += B[i ++];
+            if (i + BLOCK_SIZE >= r or (i % BLOCK_SIZE) != 0) ans += B[i ++];
             else { ans += Bs[Bid[i]]; i += BLOCK_SIZE;}
         }
         return ans;

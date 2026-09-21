@@ -18,7 +18,7 @@ struct Manacher {
 		vec<char> t(m); L(i, 0, n) t[2*i+1] = s[i];
 		p.resize(m); L(i, 1, m) {
 			if (i < r) p[i] = min(r-i, p[l+r-i]);
-			while (p[i] <= i && i < m-p[i] && t[i-p[i]] == t[i+p[i]]) ++p[i];
+			while (p[i] <= i and i < m-p[i] and t[i-p[i]] == t[i+p[i]]) ++p[i];
 			if (i+p[i] > r) l = i-p[i], r = i+p[i];
 		}
 	} // Returns palindromes as {start, length}.

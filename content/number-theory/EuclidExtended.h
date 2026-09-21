@@ -56,5 +56,5 @@ bool findSolutionWithConstraints(ll a, ll b, ll c, ll x_min, ll y_min, ll &x, ll
         y += k * a;
     }
 
-    return x >= x_min && y >= y_min;
+    return x >= x_min and y >= y_min;
 }

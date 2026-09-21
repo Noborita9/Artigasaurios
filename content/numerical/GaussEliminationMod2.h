@@ -18,7 +18,7 @@ int gauss_mod2(vec<bitset<BS>> a, int n, int m, bitset<BS>& ans) {
     const int INF = 2;
     vec<int> where(m, -1);
     int row = 0;
-    for (int col = 0; col < m && row < n; ++col) {
+    for (int col = 0; col < m and row < n; ++col) {
         int sel = -1;
         L(i, row, n) {
             if (a[i][col]) { sel = (int)i; break; }
@@ -27,7 +27,7 @@ int gauss_mod2(vec<bitset<BS>> a, int n, int m, bitset<BS>& ans) {
         swap(a[sel], a[row]);
         where[col] = row;
         L(i, 0, n) {
-            if ((int)i != row && a[i][col]) a[i] ^= a[row];
+            if ((int)i != row and a[i][col]) a[i] ^= a[row];
         }
         ++row;
     }
@@ -42,14 +42,14 @@ int gauss_mod2(vec<bitset<BS>> a, int n, int m, bitset<BS>& ans) {
         int r = where[col];
         bool v = a[r][m];
         L(j, 0, m) {
-            if (where[j] == -1 && a[r][j] && ans[j]) v ^= 1;
+            if (where[j] == -1 and a[r][j] and ans[j]) v ^= 1;
         }
         ans[col] = v;
     }
     L(i, 0, n) {
         bool lhs = 0;
         L(j, 0, m) {
-            if (ans[j] && a[i][j]) lhs ^= 1;
+            if (ans[j] and a[i][j]) lhs ^= 1;
         }
         if (lhs != a[i][m]) return 0;
     }

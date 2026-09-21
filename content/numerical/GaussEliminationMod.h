@@ -25,7 +25,7 @@ int gauss_mod(vec<vec<ll>>& a, vec<ll>& ans) {
         if (a[i][j] < 0) a[i][j] += MOD;
     }
     vec<int> where(m, -1);
-    for (int col = 0, row = 0; col < m && row < n; ++col) {
+    for (int col = 0, row = 0; col < m and row < n; ++col) {
         int sel = -1;
         L(i, row, n) {
             if (a[i][col] != 0) { sel = (int)i; break; }
@@ -34,7 +34,7 @@ int gauss_mod(vec<vec<ll>>& a, vec<ll>& ans) {
         swap(a[sel], a[row]);
         where[col] = row;
         ll inv_pivot = bPow(a[row][col], MOD - 2, MOD);
-        L(i, 0, n) if ((int)i != row && a[i][col] != 0) {
+        L(i, 0, n) if ((int)i != row and a[i][col] != 0) {
             ll c = (a[i][col] * inv_pivot) % MOD;
             L(j, col, m + 1) {
                 ll sub = (a[row][j] * c) % MOD;
