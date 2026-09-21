@@ -1,24 +1,24 @@
 /**
  * Author: Joaquin Bonora
- * Date: 2026-08-26
+ * Date: 2026-09-16
  * License: CC0
- * Source: folklore
- * Description: Sparse table for idempotent range-min queries (change the op to switch to range-max/gcd/etc). Static after construction.
+ * Source: KACTL (kth-competitive-programming/kactl), content/data-structures/RMQ.h
+ * Description: Sparse table for idempotent range queries over half-open $[l, r)$
+ * (change the op to switch min for max/gcd/etc). Static after construction.
  * Time: O(N \log N) construction, O(1) per query.
- * Status: untested
+ * Status: stress-tested against brute force
  */
 #pragma once
-struct SPT {
-    vec<vec<int>> st;
-    SPT(vec<int> &a) {
-        int n = SZ(a), K = 0; while((1<<K)<=n) K ++;
-        st = vec<vec<int>>(K, vec<int>(n));
-        L(i,0,n) st[0][i] = a[i];
-        L(i,1,K) for (int j = 0; j + (1 << i) <= n; j ++) 
-            st[i][j] = min(st[i-1][j], st[i - 1][j + (1 << (i - 1))]); // change op
+template<class T> struct SPT {
+    vec<vec<T>> st;
+    SPT(const vec<T> &a): st(1, a) {
+        for (int pw = 1, k = 1; pw * 2 <= SZ(a); pw *= 2, k ++) {
+            st.emplace_back(SZ(a) - pw * 2 + 1);
+            L(j,0,SZ(st[k])) st[k][j] = min(st[k-1][j], st[k-1][j + pw]); // change op
+        }
     }
-    int get(int l, int r) {
-        int bit = __lg(r - l + 1);
-        return min(st[bit][l], st[bit][r - (1<<bit) + 1]); // change op
+    T get(int l, int r) { // [l, r), needs l < r
+        int k = __lg(r - l);
+        return min(st[k][l], st[k][r - (1 << k)]); // change op
     }
 };

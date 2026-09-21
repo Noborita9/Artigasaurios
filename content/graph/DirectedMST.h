@@ -3,33 +3,14 @@
  * Date: 2026-08-26
  * License: CC0
  * Source: folklore
- * Description: Minimum spanning arborescence rooted at r (Edmonds/Chu-Liu-Edmonds via lazy skew heaps and a rollback DSU). dmst(n, r, g) returns {-1, {}} if there is no arborescence, otherwise the total weight and, for each node, the parent edge chosen.
+ * Description: Minimum spanning arborescence rooted at r (Chu-Liu/Edmonds via
+ * lazy skew heaps and a rollback DSU). Returns {-1, {}} if r cannot reach every
+ * node, else the total weight and each node's parent. Needs UnionFind.h.
  * Time: O(E \log V)
- * Status: untested
+ * Status: stress-tested against brute force
  */
 #pragma once
-struct RollbackUF { // Required
-	vec<int> e; vec<pair<int, int>> st;
-	RollbackUF(int n) : e(n, -1) {}
-	int size(int x) { return -e[find(x)]; }
-	int find(int x) { return e[x] < 0 ? x : find(e[x]); }
-	int time() { return SZ(st); }
-	void rollback(int t) {
-		for (int i = time(); i --> t;)
-			e[st[i].first] = st[i].second;
-		st.resize(t);
-	}
-	bool join(int a, int b) {
-		a = find(a), b = find(b);
-		if (a == b) return false;
-		if (e[a] > e[b]) swap(a, b);
-		st.pb({a, e[a]});
-		st.pb({b, e[b]});
-		e[a] += e[b]; e[b] = a;
-		return true;
-	}
-};
-
+#include "../data-structures/UnionFind.h"
 struct Edge { int a, b; ll w; };
 struct Node { /// lazy skew heap node
 	Edge key;
@@ -52,7 +33,7 @@ Node *merge(Node *a, Node *b) {
 }
 void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); }
 pair<ll, vec<int>> dmst(int n, int r, vec<Edge>& g) {
-	RollbackUF uf(n);
+	DSURollback uf(n);
 	vec<Node*> heap(n);
 	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
 	ll res = 0;
