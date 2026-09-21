@@ -32,12 +32,12 @@ bool findSolutionWithConstraints(ll a, ll b, ll c, ll x_min, ll y_min, ll &x, ll
     x *= c / g;
     y *= c / g;
 
-    // Ajustamos las variables a/g y b/g para mover las soluciones
+    // Step by a/g and b/g to walk the family of solutions
     a /= g;
     b /= g;
 
     if (x < x_min) {
-        ll k = (x_min - x + b - 1) / b;  // Redondeo hacia arriba
+        ll k = (x_min - x + b - 1) / b;  // Round up
         x += k * b;
         y -= k * a;
     } else if (x > x_min) {
@@ -47,7 +47,7 @@ bool findSolutionWithConstraints(ll a, ll b, ll c, ll x_min, ll y_min, ll &x, ll
     }
 
     if (y < y_min) {
-        ll k = (y_min - y + a - 1) / a;  // Redondeo hacia arriba
+        ll k = (y_min - y + a - 1) / a;  // Round up
         x += k * b;
         y -= k * a;
     } else if (y > y_min) {

@@ -21,8 +21,8 @@ struct Manacher {
 			while (p[i] <= i && i < m-p[i] && t[i-p[i]] == t[i+p[i]]) ++p[i];
 			if (i+p[i] > r) l = i-p[i], r = i+p[i];
 		}
-	} // Retorna palindromos de la forma {comienzo, largo}.
+	} // Returns palindromes as {start, length}.
 	pair<int,int> at(int i) const {int k = p[i]-1; return pair{i/2-k/2, k};}
-	pair<int,int> odd(int i) const {return at(2*i+1);} // Mayor centrado en s[i].
-	pair<int,int> even(int i) const {return at(2*i);} // Mayor centrado en s[i-1,i].
+	pair<int,int> odd(int i) const {return at(2*i+1);} // Longest centered at s[i].
+	pair<int,int> even(int i) const {return at(2*i);} // Longest centered between s[i-1] and s[i].
 };

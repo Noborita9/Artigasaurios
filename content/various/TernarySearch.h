@@ -11,7 +11,7 @@
  * Status: untested
  */
 #pragma once
-// Minimo de `f` en `(l,r)`.
+// Minimum of `f` on `(l,r)`.
 template<class Fun>ll ternary(Fun f, ll l, ll r) {
 	for (ll d = r-l; d > 2; d = r-l) {
 		ll a = l + d/3, b = r - d/3;
@@ -19,7 +19,7 @@ template<class Fun>ll ternary(Fun f, ll l, ll r) {
 	}
 	return l + 1;
 }
-// para error < EPS, usar iters=log((r-l)/EPS)/log(1.618)
+// for error < EPS, use iters=log((r-l)/EPS)/log(1.618)
 template<class Fun>double golden(Fun f, double l, double r, int iters){
 	double const ratio = (3-sqrt(5))/2;
 	double x1=l+(r-l)*ratio, x2=r-(r-l)*ratio, f1=f(x1), f2=f(x2);

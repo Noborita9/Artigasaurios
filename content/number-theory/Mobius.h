@@ -15,13 +15,13 @@ vec<ll> compute_mobius(ll n) {
     vec<ll> mu(n + 1, 1);
     vec<bool> is_prime(n + 1, true);
     for (ll i = 2; i <= n; i++) {
-        if (is_prime[i]) { // i es un primo
+        if (is_prime[i]) { // i is prime
             for (ll j = i; j <= n; j += i) {
-                mu[j] *= -1; // Multiplicamos por -1 para cada primo
+                mu[j] *= -1; // Flip the sign once per prime
                 is_prime[j] = false;
             }
             for (ll j = i * i; j <= n; j += i * i) {
-                mu[j] = 0; // Si tiene un cuadrado de un primo, se pone en 0
+                mu[j] = 0; // Zero if divisible by a prime squared
             }
         }
     }

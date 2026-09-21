@@ -27,7 +27,7 @@ struct Random { // exclude-line
 struct Timer {
 	using time = my_clock::time_point;
 	time start = my_clock::now();
-	double elapsed() { // Segundos desde el inicio.
+	double elapsed() { // Seconds since construction.
 		time now = my_clock::now();
 		return chrono::duration<double>(now - start).count();
 	}
@@ -39,7 +39,7 @@ template<class See,class Upd>struct Annealing {
 	Upd upd;
 	Annealing(See _see, Upd _upd): see{_see}, upd{_upd}
 		{curr = low = see(), upd();}
-	void simulate(double s, double mult=1) { // Simula por `s` segundos.
+	void simulate(double s, double mult=1) { // Run for `s` seconds.
 		double t0 = timer.elapsed();
 		for (double t = t0; t-t0 < s; t = timer.elapsed()) {
 			energy near = see();

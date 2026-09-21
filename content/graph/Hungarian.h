@@ -9,9 +9,9 @@
  */
 #pragma once
 using vd = vec<ld>;
-const ld INF = 1e100;	   // Para max asignacion, INF = 0, y negar costos
-bool zero(ld x) {return fabs(x) < 1e-9;}	// Para int/ll: return x==0;
-vec<pair<int, int>> ans; // Guarda las aristas usadas en el matching: [0..n)x[0..m)
+const ld INF = 1e100;	   // For max assignment, INF = 0 and negate the costs
+bool zero(ld x) {return fabs(x) < 1e-9;}	// For int/ll: return x==0;
+vec<pair<int, int>> ans; // Edges used by the matching: [0..n)x[0..m)
 struct Hungarian{
 	int n; vec<vd> cs; vec<int> vL, vR;
 	Hungarian(int N, int M) : n(max(N,M)), cs(n,vd(n)), vL(n), vR(n){

@@ -42,11 +42,11 @@ void decompose(int u, int h){
 }
 int query(int a, int b) {
     int resp = -1;
-    for (; head[a] != head[b]; b = par[head[b]]){ // Subi todo el heavy path y a su padre // Next
+    for (; head[a] != head[b]; b = par[head[b]]){ // Climb the whole heavy path, then its parent // Next
         if (depth[head[a]] > depth[head[b]]) swap(a, b);
         resp = max(resp, st.query(pos[head[b]], pos[b])); // pos[head[b]] < pos[b]
     }
-    if (depth[a] > depth[b]) swap(a, b); // Una vez misma path(head) entonces es una query [a,b]
+    if (depth[a] > depth[b]) swap(a, b); // Same path(head) now, so it is a single query [a,b]
     resp = max(resp, st.query(pos[a], pos[b]));
     return resp;
 }

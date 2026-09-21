@@ -12,9 +12,9 @@
 // const ll oo = (ll)1e18;
 template<typename T> struct mcmf {
 	struct edge {
-		int to, rev, flow, cap; // para, id da reversa, fluxo, capacidade
-		bool res; // se eh reversa
-		T cost; // custo da unidade de fluxo
+		int to, rev, flow, cap; // dest, reverse id, flow, capacity
+		bool res; // true if reverse edge
+		T cost; // cost per unit of flow
 		edge() : to(0), rev(0), flow(0), cap(0), cost(0), res(false) {}
 		edge(int to_, int rev_, int flow_, int cap_, T cost_, bool res_)
 			: to(to_), rev(rev_), flow(flow_), cap(cap_), res(res_), cost(cost_) {}
@@ -24,13 +24,13 @@ template<typename T> struct mcmf {
 	T inf;
 	vec<T> dist;
 	mcmf(int n) : g(n), par_idx(n), par(n), inf(numeric_limits<T>::max()/3) {}
-	void add(int u, int v, int w, T cost) { // de u pra v com cap w e custo cost
+	void add(int u, int v, int w, T cost) { // u to v with cap w and cost
 		edge a = edge(v, SZ(g[v]), 0, w, cost, false);
 		edge b = edge(u, SZ(g[u]), 0, 0, -cost, true);
 		g[u].pb(a);
 		g[v].pb(b);
 	}
-	vec<T> spfa(int s) { // nao precisa se nao tiver custo negativo
+	vec<T> spfa(int s) { // not needed without negative costs
 		deque<int> q;
 		vec<bool> is_inside(SZ(g), 0);
 		dist = vec<T>(SZ(g), inf);
@@ -78,7 +78,7 @@ template<typename T> struct mcmf {
 	}
 	pair<int, T> min_cost_flow(int s, int t, int flow = (int)1e9) {
 		vec<T> pot(SZ(g), 0);
-		pot = spfa(s); // mudar algoritmo de caminho minimo aqui
+		pot = spfa(s); // swap the shortest-path algorithm here
 		int f = 0;
 		T ret = 0;
 		while (f < flow and dijkstra(s, t, pot)) { 
@@ -101,7 +101,7 @@ template<typename T> struct mcmf {
 		}
 		return make_pair(f, ret);
 	}
-	// Opcional: retorna as arestas originais por onde passa flow = cap
+	// Optional: the original edges carrying flow = cap
 	vec<pair<int,int>> recover() {
 		vec<pair<int,int>> used;
 		L(i, 0, SZ(g)) for (edge e : g[i])

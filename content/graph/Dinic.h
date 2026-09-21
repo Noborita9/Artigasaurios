@@ -10,8 +10,8 @@
 #pragma once
 const int oo = (int)1e9;
 struct Dinic {
-	bool scaling = false; // com scaling -> O(nm log(MAXCAP)),
-	int lim;                    // com constante alta
+	bool scaling = false; // with scaling -> O(nm log(MAXCAP)),
+	int lim;                    // but a large constant
 	struct edge {
 		int to, cap, rev, flow;
 		bool res;
