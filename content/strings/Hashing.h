@@ -7,9 +7,9 @@
  * \_\_int128, so MOD can be up to 62 bits -- not 63, as + and - work before
  * reducing. The default $2^{61}-1$ is wide enough to need no second modulus.
  * The constructor normalizes negatives, raw skips that when already in range.
- * HashInterval hashes any substring in O(1), hashString the whole string.
+ * Hash.get(a,b) hashes any substring in O(1), hashString the whole string.
  * Usage: Define: const ll MOD, prime.
- * Time: O(1) per H operation, O(N) to build HashInterval
+ * Time: O(1) per H operation, O(N) to build Hash
  * Status: stress-tested against brute force
  */
 #pragma once
@@ -37,15 +37,15 @@ struct H {
     H& operator*=(const H& rhs) { return *this = *this * rhs; }
 };
 const H C = (ll)1e11 + 3; // base; any large random value
-struct HashInterval {
+struct Hash {
     vec<H> ha, pw;
-    HashInterval(const string& str) : ha(SZ(str)+1), pw(ha) {
+    Hash(const string& str) : ha(SZ(str)+1), pw(ha) {
         pw[0] = 1;
         L(i, 0, SZ(str))
             ha[i+1] = ha[i] * C + str[i],
             pw[i+1] = pw[i] * C;
     }
-    H hashInterval(int a, int b) const { // hash [a, b)
+    H get(int a, int b) const { // hash [a, b)
         return ha[b] - ha[a] * pw[b - a];
     }
 };
