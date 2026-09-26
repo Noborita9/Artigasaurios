@@ -9,7 +9,7 @@
  */
 #pragma once
 // O(nm + f * m log n)
-// const ll oo = (ll)1e18;
+const ll oo = (ll)1e18; // exclude-line
 template<typename T> struct mcmf {
 	struct edge {
 		int to, rev, flow, cap; // dest, reverse id, flow, capacity

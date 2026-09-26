@@ -1,57 +1,65 @@
 /**
  * Author: Joaquin Bonora
- * Date: 2026-08-26
+ * Date: 2026-09-24
  * License: CC0
  * Source: folklore
- * Description: Hungarian algorithm (Jonker-Volgenant style) for minimum-cost perfect assignment in an N x M bipartite graph. Unset entries default to cost INF; for maximum assignment set INF to 0 and negate costs. assign() returns the total cost and appends the chosen edges to the global ans vector.
- * Time: O(N^3)
- * Status: untested
+ * Description: Hungarian algorithm for minimum-cost assignment in an $N \times M$ bipartite graph with $N \le M$. Returns $\{min\_cost, match\}$, where $match[i]$ is the matched column (0-indexed) for task $i$.
+ * Time: O(N^2 M)
+ * Status: tested
  */
 #pragma once
-using vd = vec<ld>;
-const ld INF = 1e100;	   // For max assignment, INF = 0 and negate the costs
-bool zero(ld x) {return fabs(x) < 1e-9;}	// For int/ll: return x==0;
-vec<pair<int, int>> ans; // Edges used by the matching: [0..n)x[0..m)
-struct Hungarian{
-	int n; vec<vd> cs; vec<int> vL, vR;
-	Hungarian(int N, int M) : n(max(N,M)), cs(n,vd(n)), vL(n), vR(n){
-		L(x, 0, N) L(y, 0, M) cs[x][y] = INF;
-	}
-	void set(int x, int y, ld c) { cs[x][y] = c; }
-	ld assign(){
-		int mat = 0; vd ds(n), u(n), v(n); vec<int> dad(n), sn(n);
-		L(i, 0, n) u[i] = *min_element(ALL(cs[i]));
-		L(j, 0, n){
-			v[j] = cs[0][j]-u[0];
-			L(i, 1, n) v[j] = min(v[j], cs[i][j] - u[i]);
-		}
-		vL = vR = vec<int>(n, -1);
-		L(i,0, n) L(j, 0, n) if(vR[j] == -1 and zero(cs[i][j] - u[i] - v[j])){
-			vL[i] = j; vR[j] = i; mat++; break;
-		}
-		for(; mat < n; mat ++){
-			int s = 0, j = 0, i;
-			while(vL[s] != -1) s++;
-			fill(ALL(dad), -1); fill(ALL(sn), 0);
-			L(k, 0, n) ds[k] = cs[s][k]-u[s]-v[k];
-			while(true){
-				j = -1;
-				L(k, 0, n) if(!sn[k] and (j == -1 or ds[k] < ds[j])) j = k;
-				sn[j] = 1; i = vR[j];
-				if(i == -1) break;
-				L(k, 0, n) if(!sn[k]){
-					auto new_ds = ds[j] + cs[i][k] - u[i]-v[k];
-					if(ds[k] > new_ds) ds[k]=new_ds, dad[k]=j;
-				}
-			}
-			L(k, 0, n) if(k!=j and sn[k]){
-				auto w = ds[k]-ds[j]; v[k] += w, u[vR[k]] -= w;
-			}			
-			u[s] += ds[j];
-			while(dad[j] >= 0){ int d = dad[j]; vR[j] = vR[d]; vL[vR[j]] = j; j = d; }
-			vR[j] = s; vL[s] = j;
-		}
-		ld value = 0; L(i, 0, n) value += cs[i][vL[i]], ans.pb({i, vL[i]});
-		return value;
-	}
+template<typename T> struct hungarian {
+    int n, m; // n tasks (rows), m workers (cols), requires n <= m
+    vector<vector<T>> a;
+    vector<T> u, v, minv;
+    vector<int> p, way;
+    vector<char> used;
+    T inf;
+    hungarian(int n_, int m_) : n(n_), m(m_),
+        u(n + 1, 0), v(m + 1, 0), minv(m + 1), p(m + 1, 0), way(m + 1, 0),
+        used(m + 1) {
+        a = vector<vector<T>>(n, vector<T>(m));
+        inf = numeric_limits<T>::max() / 2; // Headroom to prevent potential overflow
+    }
+    // Returns: {min_cost, matching}
+    // match[i] = matched column index (0-indexed) for task i (0-indexed)
+    pair<T, vector<int>> assignment() {
+        for (int i = 1; i <= n; i++) {
+            p[0] = i;
+            int j0 = 0;
+            fill(minv.begin(), minv.end(), inf);
+            fill(used.begin(), used.end(), 0);
+            do {
+                used[j0] = 1;
+                int i0 = p[j0], j1 = -1;
+                T delta = inf;
+                const T* row = a[i0 - 1].data();
+                T u_i0 = u[i0];
+                for (int j = 1; j <= m; j++) {
+                    if (!used[j]) {
+                        T cur = row[j - 1] - u_i0 - v[j];
+                        if (cur < minv[j]) minv[j] = cur, way[j] = j0;
+                        if (minv[j] < delta) delta = minv[j], j1 = j;
+                    }
+                }
+                for (int j = 0; j <= m; j++) {
+                    if (used[j]) u[p[j]] += delta, v[j] -= delta;
+                    else minv[j] -= delta;
+                }
+                j0 = j1;
+            } while (p[j0] != 0);
+            do {
+                int j1 = way[j0];
+                p[j0] = p[j1];
+                j0 = j1;
+            } while (j0);
+        }
+        vector<int> match(n);
+        for (int j = 1; j <= m; j++) {
+            if (p[j] > 0 && p[j] <= n) {
+                match[p[j] - 1] = j - 1;
+            }
+        }
+        return make_pair(-v[0], match);
+    }
 };
