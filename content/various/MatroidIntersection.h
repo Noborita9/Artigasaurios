@@ -15,12 +15,16 @@ vec<int> matroid_intersect(int N, M1& m1, M2& m2) {
     vec<bool> I(N, 0);
     while (true) {
         m1.clear(); m2.clear();
-        L(i, 0, N) if (I[i]) m1.add(i), m2.add(i);
+        vec<int> in, out;
+        L(i, 0, N) {
+            if (I[i]) m1.add(i), m2.add(i), in.pb(i);
+            else out.pb(i);
+        }
         vec<int> p(N, -1);
         vec<bool> vis(N, 0), snk(N, 0);
         queue<int> q;
         int tar = -1;
-        L(i, 0, N) if (!I[i]) {
+        for (int i : out) {
             bool c1 = m1.can_add(i), c2 = m2.can_add(i);
             if (c1 && c2) { tar = i; break; }
             if (c1) q.push(i), vis[i] = 1;
@@ -31,10 +35,10 @@ vec<int> matroid_intersect(int N, M1& m1, M2& m2) {
             int u = q.front(); q.pop();
             if (snk[u]) { tar = u; break; }
             if (!I[u]) { 
-                L(v, 0, N) if (I[v] && !vis[v] && m2.can_swap(u, v))
+                for (int v : in) if (!vis[v] && m2.can_swap(u, v))
                     vis[v] = 1, p[v] = u, q.push(v);
             } else { 
-                L(v, 0, N) if (!I[v] && !vis[v] && m1.can_swap(v, u))
+                for (int v : out) if (!vis[v] && m1.can_swap(v, u))
                     vis[v] = 1, p[v] = u, q.push(v);
             }
         }
@@ -52,6 +56,6 @@ struct ColorMatroid {
     void clear() { c.assign(n, 0); }
     void add(int i) { c[ec[i]] = 1; }
     bool can_add(int i) { return !c[ec[i]]; }
-    bool can_swap(int out, int in) { return ec[out] == ec[in]; }
+    bool can_swap(int add, int rem) { return ec[add] == ec[rem]; }
 };
 */
