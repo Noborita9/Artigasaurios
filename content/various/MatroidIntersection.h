@@ -4,8 +4,8 @@
  * License: CC0
  * Source: folklore
  * Description: Computes the maximum common independent set of two matroids.
- * m1 and m2 must implement clear(), add(i), can_add(i), and can_swap(out, in).
- * Time: O(r^2 N + r N^2 T_{swap}) where r is rank and T_{swap} is time to check swap
+ * m1 and m2 must implement clear(), add(i), can\_add(i), and can\_swap(out, in).
+ * Time: O(r^2 N + r N^2 T_{swap}) where $r$ is rank and $T_{swap}$ is time to check swap
  * Status: untested
  */
 #pragma once
@@ -49,13 +49,3 @@ vec<int> matroid_intersect(int N, M1& m1, M2& m2) {
     L(i, 0, N) if (I[i]) ans.pb(i);
     return ans;
 }
-/* Example: Colorful Matroid (At most one edge of each color)
-struct ColorMatroid {
-    int n; vec<int> c, ec;
-    ColorMatroid(int n_, vec<int> ec_): n(n_), c(n), ec(ec_) {}
-    void clear() { c.assign(n, 0); }
-    void add(int i) { c[ec[i]] = 1; }
-    bool can_add(int i) { return !c[ec[i]]; }
-    bool can_swap(int add, int rem) { return ec[add] == ec[rem]; }
-};
-*/
