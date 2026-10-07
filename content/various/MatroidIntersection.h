@@ -14,7 +14,7 @@
 template<class M1, class M2>
 vec<int> matroid_intersect(int n, M1& m1, M2& m2) {
     vec<char> I(n, 0);
-    L(i, 0, n) if (m1.check(i) && m2.check(i))
+    L(i, 0, n) if (m1.check(i) and m2.check(i))
         I[i] = 1, m1.add(i), m2.add(i);
     while (true) {
         vec<int> frm(n, -1), in, out;
@@ -23,7 +23,7 @@ vec<int> matroid_intersect(int n, M1& m1, M2& m2) {
         auto fwd = [&](int a) {
             vec<int> ans; m1.clear();
             for (int v : in) if (v != a) m1.add(v);
-            for (int b : out) if (frm[b] == -1 && m1.check(b))
+            for (int b : out) if (frm[b] == -1 and m1.check(b))
                 ans.pb(b), frm[b] = a;
             return ans;
         };
@@ -43,7 +43,7 @@ vec<int> matroid_intersect(int n, M1& m1, M2& m2) {
             return n;
         };
         bool aug = 0;
-        while (!q.empty() && !aug) {
+        while (!q.empty() and !aug) {
             int a = q.front(), c; q.pop();
             for (int b : fwd(a))
                 while ((c = back(b)) >= 0) if (c == n) {
